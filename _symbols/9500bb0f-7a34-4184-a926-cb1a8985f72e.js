@@ -3232,7 +3232,7 @@ function create_fragment(ctx) {
 			attr(input1, "class", "svelte-15f55d3");
 			attr(button, "class", "button svelte-15f55d3");
 			attr(button, "type", "submit");
-			attr(form, "action", "https://formsubmit.co/uygulamalifelsefedernegi@gmail.com");
+			attr(form, "action", "https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5");
 			attr(form, "method", "POST");
 			attr(form, "class", "svelte-15f55d3");
 			attr(section, "class", "section-container svelte-15f55d3");
