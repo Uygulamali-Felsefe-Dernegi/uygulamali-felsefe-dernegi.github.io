@@ -331,6 +331,9 @@ function set_data(text, data) {
         return;
     text.data = data;
 }
+function toggle_class(element, name, toggle) {
+    element.classList[toggle ? 'add' : 'remove'](name);
+}
 function custom_event(type, detail, { bubbles = false, cancelable = false } = {}) {
     const e = document.createEvent('CustomEvent');
     e.initCustomEvent(type, bubbles, cancelable, detail);
@@ -2897,7 +2900,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (109:6) {:else}
+// (111:6) {:else}
 function create_else_block(ctx) {
 	let label;
 	let span;
@@ -2905,8 +2908,28 @@ function create_else_block(ctx) {
 	let t0;
 	let t1;
 	let input;
+	let input_name_value;
 	let input_type_value;
 	let input_placeholder_value;
+
+	let input_levels = [
+		/*input*/ ctx[6].required ? { required: true } : {},
+		{
+			name: input_name_value = /*input*/ ctx[6].label
+		},
+		{
+			type: input_type_value = /*input*/ ctx[6].type || "text"
+		},
+		{
+			placeholder: input_placeholder_value = /*input*/ ctx[6].placeholder
+		}
+	];
+
+	let input_data = {};
+
+	for (let i = 0; i < input_levels.length; i += 1) {
+		input_data = assign(input_data, input_levels[i]);
+	}
 
 	return {
 		c() {
@@ -2927,9 +2950,9 @@ function create_else_block(ctx) {
 			t1 = claim_space(label_nodes);
 
 			input = claim_element(label_nodes, "INPUT", {
+				name: true,
 				type: true,
-				placeholder: true,
-				class: true
+				placeholder: true
 			});
 
 			label_nodes.forEach(detach);
@@ -2937,9 +2960,8 @@ function create_else_block(ctx) {
 		},
 		h() {
 			attr(span, "class", "svelte-15f55d3");
-			attr(input, "type", input_type_value = /*input*/ ctx[6].type || "text");
-			attr(input, "placeholder", input_placeholder_value = /*input*/ ctx[6].placeholder);
-			attr(input, "class", "svelte-15f55d3");
+			set_attributes(input, input_data);
+			toggle_class(input, "svelte-15f55d3", true);
 			attr(label, "class", "svelte-15f55d3");
 		},
 		m(target, anchor) {
@@ -2948,17 +2970,19 @@ function create_else_block(ctx) {
 			append_hydration(span, t0);
 			append_hydration(label, t1);
 			append_hydration(label, input);
+			if (input.autofocus) input.focus();
 		},
 		p(ctx, dirty) {
 			if (dirty & /*inputs*/ 1 && t0_value !== (t0_value = /*input*/ ctx[6].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*inputs*/ 1 && input_type_value !== (input_type_value = /*input*/ ctx[6].type || "text")) {
-				attr(input, "type", input_type_value);
-			}
+			set_attributes(input, input_data = get_spread_update(input_levels, [
+				dirty & /*inputs*/ 1 && (/*input*/ ctx[6].required ? { required: true } : {}),
+				dirty & /*inputs*/ 1 && input_name_value !== (input_name_value = /*input*/ ctx[6].label) && { name: input_name_value },
+				dirty & /*inputs*/ 1 && input_type_value !== (input_type_value = /*input*/ ctx[6].type || "text") && { type: input_type_value },
+				dirty & /*inputs*/ 1 && input_placeholder_value !== (input_placeholder_value = /*input*/ ctx[6].placeholder) && { placeholder: input_placeholder_value }
+			]));
 
-			if (dirty & /*inputs*/ 1 && input_placeholder_value !== (input_placeholder_value = /*input*/ ctx[6].placeholder)) {
-				attr(input, "placeholder", input_placeholder_value);
-			}
+			toggle_class(input, "svelte-15f55d3", true);
 		},
 		d(detaching) {
 			if (detaching) detach(label);
@@ -2966,7 +2990,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (104:6) {#if input.type === "textarea"}
+// (106:6) {#if input.type === "textarea"}
 function create_if_block(ctx) {
 	let label;
 	let span;
@@ -2974,6 +2998,8 @@ function create_if_block(ctx) {
 	let t0;
 	let t1;
 	let textarea;
+	let textarea_name_value;
+	let textarea_placeholder_value;
 
 	return {
 		c() {
@@ -2992,13 +3018,21 @@ function create_if_block(ctx) {
 			t0 = claim_text(span_nodes, t0_value);
 			span_nodes.forEach(detach);
 			t1 = claim_space(label_nodes);
-			textarea = claim_element(label_nodes, "TEXTAREA", { class: true });
+
+			textarea = claim_element(label_nodes, "TEXTAREA", {
+				name: true,
+				placeholder: true,
+				class: true
+			});
+
 			children(textarea).forEach(detach);
 			label_nodes.forEach(detach);
 			this.h();
 		},
 		h() {
 			attr(span, "class", "svelte-15f55d3");
+			attr(textarea, "name", textarea_name_value = /*input*/ ctx[6].label);
+			attr(textarea, "placeholder", textarea_placeholder_value = /*input*/ ctx[6].placeholder);
 			attr(textarea, "class", "svelte-15f55d3");
 			attr(label, "class", "svelte-15f55d3");
 		},
@@ -3011,6 +3045,14 @@ function create_if_block(ctx) {
 		},
 		p(ctx, dirty) {
 			if (dirty & /*inputs*/ 1 && t0_value !== (t0_value = /*input*/ ctx[6].label + "")) set_data(t0, t0_value);
+
+			if (dirty & /*inputs*/ 1 && textarea_name_value !== (textarea_name_value = /*input*/ ctx[6].label)) {
+				attr(textarea, "name", textarea_name_value);
+			}
+
+			if (dirty & /*inputs*/ 1 && textarea_placeholder_value !== (textarea_placeholder_value = /*input*/ ctx[6].placeholder)) {
+				attr(textarea, "placeholder", textarea_placeholder_value);
+			}
 		},
 		d(detaching) {
 			if (detaching) detach(label);
@@ -3018,7 +3060,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (103:4) {#each inputs as input, i}
+// (105:4) {#each inputs as input, i}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -3074,9 +3116,13 @@ function create_fragment(ctx) {
 	let div1;
 	let t3;
 	let form;
+	let input0;
 	let t4;
-	let button;
+	let input1;
 	let t5;
+	let t6;
+	let button;
+	let t7;
 	let current;
 	let each_value_1 = /*social*/ ctx[1];
 	let each_blocks_1 = [];
@@ -3113,14 +3159,18 @@ function create_fragment(ctx) {
 
 			t3 = space();
 			form = element("form");
+			input0 = element("input");
+			t4 = space();
+			input1 = element("input");
+			t5 = space();
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t4 = space();
+			t6 = space();
 			button = element("button");
-			t5 = text(/*submit_label*/ ctx[4]);
+			t7 = text(/*submit_label*/ ctx[4]);
 			this.h();
 		},
 		l(nodes) {
@@ -3147,17 +3197,21 @@ function create_fragment(ctx) {
 			div1_nodes.forEach(detach);
 			div2_nodes.forEach(detach);
 			t3 = claim_space(section_nodes);
-			form = claim_element(section_nodes, "FORM", { class: true });
+			form = claim_element(section_nodes, "FORM", { action: true, method: true, class: true });
 			var form_nodes = children(form);
+			input0 = claim_element(form_nodes, "INPUT", { type: true, name: true, class: true });
+			t4 = claim_space(form_nodes);
+			input1 = claim_element(form_nodes, "INPUT", { type: true, name: true, class: true });
+			t5 = claim_space(form_nodes);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].l(form_nodes);
 			}
 
-			t4 = claim_space(form_nodes);
+			t6 = claim_space(form_nodes);
 			button = claim_element(form_nodes, "BUTTON", { class: true, type: true });
 			var button_nodes = children(button);
-			t5 = claim_text(button_nodes, /*submit_label*/ ctx[4]);
+			t7 = claim_text(button_nodes, /*submit_label*/ ctx[4]);
 			button_nodes.forEach(detach);
 			form_nodes.forEach(detach);
 			section_nodes.forEach(detach);
@@ -3168,8 +3222,18 @@ function create_fragment(ctx) {
 			attr(div0, "class", "body svelte-15f55d3");
 			attr(div1, "class", "social-links svelte-15f55d3");
 			attr(div2, "class", "content svelte-15f55d3");
+			attr(input0, "type", "hidden");
+			attr(input0, "name", "_subject");
+			input0.value = "New Contact Form Submission";
+			attr(input0, "class", "svelte-15f55d3");
+			attr(input1, "type", "hidden");
+			attr(input1, "name", "_next");
+			input1.value = "https://uygulamalifelsefedernegi.org/organization/contact/success";
+			attr(input1, "class", "svelte-15f55d3");
 			attr(button, "class", "button svelte-15f55d3");
 			attr(button, "type", "submit");
+			attr(form, "action", "https://formsubmit.co/uygulamalifelsefedernegi@gmail.com");
+			attr(form, "method", "POST");
 			attr(form, "class", "svelte-15f55d3");
 			attr(section, "class", "section-container svelte-15f55d3");
 		},
@@ -3192,6 +3256,10 @@ function create_fragment(ctx) {
 
 			append_hydration(section, t3);
 			append_hydration(section, form);
+			append_hydration(form, input0);
+			append_hydration(form, t4);
+			append_hydration(form, input1);
+			append_hydration(form, t5);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				if (each_blocks[i]) {
@@ -3199,9 +3267,9 @@ function create_fragment(ctx) {
 				}
 			}
 
-			append_hydration(form, t4);
+			append_hydration(form, t6);
 			append_hydration(form, button);
-			append_hydration(button, t5);
+			append_hydration(button, t7);
 			current = true;
 		},
 		p(ctx, [dirty]) {
@@ -3246,7 +3314,7 @@ function create_fragment(ctx) {
 					} else {
 						each_blocks[i] = create_each_block(child_ctx);
 						each_blocks[i].c();
-						each_blocks[i].m(form, t4);
+						each_blocks[i].m(form, t6);
 					}
 				}
 
@@ -3257,7 +3325,7 @@ function create_fragment(ctx) {
 				each_blocks.length = each_value.length;
 			}
 
-			if (!current || dirty & /*submit_label*/ 16) set_data(t5, /*submit_label*/ ctx[4]);
+			if (!current || dirty & /*submit_label*/ 16) set_data(t7, /*submit_label*/ ctx[4]);
 		},
 		i(local) {
 			if (current) return;
