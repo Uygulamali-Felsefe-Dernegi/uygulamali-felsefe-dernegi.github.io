@@ -3234,7 +3234,7 @@ function create_else_block_1(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = /*hovered_link*/ ctx[3] == /*link*/ ctx[13] && create_if_block_5(ctx);
+	let if_block = /*hovered_link*/ ctx[2] == /*link*/ ctx[13] && create_if_block_5(ctx);
 
 	function mouseover_handler(...args) {
 		return /*mouseover_handler*/ ctx[8](/*link*/ ctx[13], ...args);
@@ -3298,11 +3298,11 @@ function create_else_block_1(ctx) {
 			ctx = new_ctx;
 			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[13].label + "")) set_data(t0, t0_value);
 
-			if (/*hovered_link*/ ctx[3] == /*link*/ ctx[13]) {
+			if (/*hovered_link*/ ctx[2] == /*link*/ ctx[13]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
-					if (dirty & /*hovered_link, site_nav*/ 10) {
+					if (dirty & /*hovered_link, site_nav*/ 6) {
 						transition_in(if_block, 1);
 					}
 				} else {
@@ -4147,7 +4147,7 @@ function create_fragment(ctx) {
 			props: { height: "30", icon: "eva:menu-outline" }
 		});
 
-	let if_block2 = /*mobileNavOpen*/ ctx[5] && create_if_block(ctx);
+	let if_block2 = /*mobileNavOpen*/ ctx[4] && create_if_block(ctx);
 
 	return {
 		c() {
@@ -4239,7 +4239,7 @@ function create_fragment(ctx) {
 			option0.value = option0.__value;
 			option1.__value = "en";
 			option1.value = option1.__value;
-			if (/*selectedLang*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[9].call(select));
+			if (/*selectedLang*/ ctx[5] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[9].call(select));
 			attr(div0, "class", "language-picker");
 			attr(nav, "class", "svelte-1r0q49y");
 			attr(div1, "class", "desktop-nav svelte-1r0q49y");
@@ -4271,7 +4271,7 @@ function create_fragment(ctx) {
 			append_hydration(option0, t2);
 			append_hydration(select, option1);
 			append_hydration(option1, t3);
-			select_option(select, /*selectedLang*/ ctx[2], true);
+			select_option(select, /*selectedLang*/ ctx[5], true);
 			append_hydration(header, t4);
 			append_hydration(header, div2);
 			append_hydration(div2, a1);
@@ -4285,6 +4285,7 @@ function create_fragment(ctx) {
 
 			if (!mounted) {
 				dispose = [
+					listen(select, "change", langChangeHandler),
 					listen(select, "change", /*select_change_handler*/ ctx[9]),
 					listen(button, "click", /*click_handler*/ ctx[10])
 				];
@@ -4305,7 +4306,7 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 26) {
+			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 14) {
 				each_value_2 = /*site_nav*/ ctx[1];
 				let i;
 
@@ -4332,8 +4333,8 @@ function create_fragment(ctx) {
 				check_outros();
 			}
 
-			if (dirty & /*selectedLang*/ 4) {
-				select_option(select, /*selectedLang*/ ctx[2]);
+			if (dirty & /*selectedLang*/ 32) {
+				select_option(select, /*selectedLang*/ ctx[5]);
 			}
 
 			if (current_block_type_1 === (current_block_type_1 = select_block_type_2(ctx)) && if_block1) {
@@ -4348,11 +4349,11 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (/*mobileNavOpen*/ ctx[5]) {
+			if (/*mobileNavOpen*/ ctx[4]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 
-					if (dirty & /*mobileNavOpen*/ 32) {
+					if (dirty & /*mobileNavOpen*/ 16) {
 						transition_in(if_block2, 1);
 					}
 				} else {
@@ -4414,7 +4415,25 @@ function create_fragment(ctx) {
 	};
 }
 
-let currentLang = 'tr';
+function langChangeHandler(e) {
+	const currentUrl = new URL(window.location.href);
+	const selectedLang = e.currentTarget.value;
+	let newUrl = new URL(window.location.href);
+
+	if (selectedLang == 'en') {
+		if (currentUrl.pathname.split('/')[0] !== 'en') {
+			newUrl.pathname = `/en${currentUrl.pathname}`;
+		}
+	} else {
+		if (currentUrl.pathname.split('/')[0] === 'en') {
+			newUrl.pathname = currentUrl.pathname.split('/').filter((e, i) => i > 0).join('/');
+		}
+	}
+
+	if (currentUrl.href != newUrl.href) {
+		window.location.href = newUrl.href;
+	}
+}
 
 function instance($$self, $$props, $$invalidate) {
 	let { props } = $$props;
@@ -4427,7 +4446,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	onMount(() => {
 		const currentUrl = new URL(window.location.href);
-		$$invalidate(2, selectedLang = currentUrl.pathname.split('/')[0] == 'en' ? 'en' : 'tr');
+		$$invalidate(5, selectedLang = currentUrl.pathname.split('/')[0] == 'en' ? 'en' : 'tr');
 	});
 
 	function focus_handler(event) {
@@ -4435,17 +4454,17 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	const mouseover_handler = function (link, e) {
-		$$invalidate(3, hovered_link = link);
-		$$invalidate(4, hovered_link_container = e.currentTarget);
+		$$invalidate(2, hovered_link = link);
+		$$invalidate(3, hovered_link_container = e.currentTarget);
 	};
 
 	function select_change_handler() {
 		selectedLang = select_value(this);
-		$$invalidate(2, selectedLang);
+		$$invalidate(5, selectedLang);
 	}
 
-	const click_handler = () => $$invalidate(5, mobileNavOpen = true);
-	const click_handler_1 = () => $$invalidate(5, mobileNavOpen = false);
+	const click_handler = () => $$invalidate(4, mobileNavOpen = true);
+	const click_handler_1 = () => $$invalidate(4, mobileNavOpen = false);
 
 	$$self.$$set = $$props => {
 		if ('props' in $$props) $$invalidate(6, props = $$props.props);
@@ -4453,38 +4472,13 @@ function instance($$self, $$props, $$invalidate) {
 		if ('site_nav' in $$props) $$invalidate(1, site_nav = $$props.site_nav);
 	};
 
-	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*selectedLang*/ 4) {
-			if (selectedLang && selectedLang !== currentLang) {
-				const currentUrl = new URL(window.location.href);
-
-				if (currentUrl.pathname == '/') {
-					window.location.href = `/${selectedLang}`;
-				}
-
-				// parse lang code and replace it, it cn be omitted as well for /en/...
-				let newUrl;
-
-				if (currentUrl.pathname.match(new RegExp(`/${currentLang}`))) {
-					newUrl = currentUrl.pathname.replace(new RegExp(`/${currentLang}`), `/${selectedLang}`);
-				} else {
-					newUrl = currentUrl.pathname = `/${selectedLang}${currentUrl.pathname}`;
-				}
-
-				if (currentUrl.pathname !== newUrl) {
-					window.location.href = newUrl;
-				}
-			}
-		}
-	};
-
 	return [
 		logo,
 		site_nav,
-		selectedLang,
 		hovered_link,
 		hovered_link_container,
 		mobileNavOpen,
+		selectedLang,
 		props,
 		focus_handler,
 		mouseover_handler,
