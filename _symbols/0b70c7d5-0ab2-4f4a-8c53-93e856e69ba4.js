@@ -4468,7 +4468,7 @@ function instance($$self, $$props, $$invalidate) {
 				if (currentUrl.pathname.match(new RegExp(`/${currentLang}`))) {
 					newUrl = currentUrl.pathname.replace(new RegExp(`/${currentLang}`), `/${selectedLang}`);
 				} else {
-					newUrl = currentUrl.pathname = `/${selectedLang}${currenUrl.pathname}`;
+					newUrl = currentUrl.pathname = `/${selectedLang}${currentUrl.pathname}`;
 				}
 
 				if (currentUrl.pathname !== newUrl) {
