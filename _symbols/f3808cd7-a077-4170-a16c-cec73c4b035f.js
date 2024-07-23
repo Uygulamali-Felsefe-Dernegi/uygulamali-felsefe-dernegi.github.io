@@ -3228,7 +3228,7 @@ function create_fragment(ctx) {
 			attr(input0, "class", "svelte-15f55d3");
 			attr(input1, "type", "hidden");
 			attr(input1, "name", "_next");
-			input1.value = "https://uygulamalifelsefedernegi.org/organization/contact/success";
+			input1.value = "https://uygulamalifelsefedernegi.org/success";
 			attr(input1, "class", "svelte-15f55d3");
 			attr(button, "class", "button svelte-15f55d3");
 			attr(button, "type", "submit");
