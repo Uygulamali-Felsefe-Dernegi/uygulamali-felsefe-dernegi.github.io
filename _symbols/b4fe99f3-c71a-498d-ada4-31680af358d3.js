@@ -3168,7 +3168,7 @@ function get_each_context_3(ctx, list, i) {
 	return child_ctx;
 }
 
-// (179:31) 
+// (186:31) 
 function create_if_block_7(ctx) {
 	let img;
 	let img_src_value;
@@ -3205,7 +3205,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (177:6) {#if logo.title}
+// (184:6) {#if logo.title}
 function create_if_block_6(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
@@ -3229,7 +3229,7 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (187:12) {:else}
+// (194:12) {:else}
 function create_else_block_1(ctx) {
 	let div;
 	let button;
@@ -3242,7 +3242,7 @@ function create_else_block_1(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = /*hovered_link*/ ctx[2] == /*link*/ ctx[16] && create_if_block_5(ctx);
+	let if_block = /*hovered_link*/ ctx[3] == /*link*/ ctx[16] && create_if_block_5(ctx);
 
 	function mouseover_handler(...args) {
 		return /*mouseover_handler*/ ctx[11](/*link*/ ctx[16], ...args);
@@ -3278,9 +3278,9 @@ function create_else_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span, "class", "down-arr svelte-1px87zc");
+			attr(span, "class", "down-arr svelte-1p7ce7s");
 			attr(button, "type", "button");
-			attr(div, "class", "subnav-container svelte-1px87zc");
+			attr(div, "class", "subnav-container svelte-1p7ce7s");
 		},
 		m(target, anchor) {
 			insert_hydration(target, div, anchor);
@@ -3306,11 +3306,11 @@ function create_else_block_1(ctx) {
 			ctx = new_ctx;
 			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[16].label + "")) set_data(t0, t0_value);
 
-			if (/*hovered_link*/ ctx[2] == /*link*/ ctx[16]) {
+			if (/*hovered_link*/ ctx[3] == /*link*/ ctx[16]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
-					if (dirty & /*hovered_link, site_nav*/ 6) {
+					if (dirty & /*hovered_link, site_nav*/ 10) {
 						transition_in(if_block, 1);
 					}
 				} else {
@@ -3347,7 +3347,7 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (185:12) {#if !submenu || !submenu.length}
+// (192:12) {#if !submenu || !submenu.length}
 function create_if_block_4(ctx) {
 	let a;
 	let t_value = /*link*/ ctx[16].label + "";
@@ -3368,7 +3368,7 @@ function create_if_block_4(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-1px87zc");
+			attr(a, "class", "link svelte-1p7ce7s");
 			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
 			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
 		},
@@ -3395,7 +3395,7 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (190:16) {#if hovered_link == link}
+// (197:16) {#if hovered_link == link}
 function create_if_block_5(ctx) {
 	let nav;
 	let nav_transition;
@@ -3429,7 +3429,7 @@ function create_if_block_5(ctx) {
 			this.h();
 		},
 		h() {
-			attr(nav, "class", "subnav svelte-1px87zc");
+			attr(nav, "class", "subnav svelte-1p7ce7s");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3490,7 +3490,7 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (192:18) {#each submenu as {link}}
+// (199:18) {#each submenu as {link}}
 function create_each_block_3(ctx) {
 	let a;
 	let t_value = /*link*/ ctx[16].label + "";
@@ -3511,7 +3511,7 @@ function create_each_block_3(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-1px87zc");
+			attr(a, "class", "link svelte-1p7ce7s");
 			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
 			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
 		},
@@ -3536,7 +3536,7 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (184:8) {#each site_nav as { link, submenu }}
+// (191:8) {#each site_nav as { link, submenu }}
 function create_each_block_2(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -3610,7 +3610,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (212:31) 
+// (219:31) 
 function create_if_block_3(ctx) {
 	let img;
 	let img_src_value;
@@ -3647,7 +3647,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (210:6) {#if logo.title}
+// (217:6) {#if logo.title}
 function create_if_block_2(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
@@ -3671,7 +3671,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (227:4) {#if mobileNavOpen}
+// (234:4) {#if mobileNavOpen}
 function create_if_block(ctx) {
 	let nav;
 	let t;
@@ -3732,9 +3732,9 @@ function create_if_block(ctx) {
 		h() {
 			attr(button, "id", "close");
 			attr(button, "aria-label", "Close Navigation");
-			attr(button, "class", "svelte-1px87zc");
+			attr(button, "class", "svelte-1p7ce7s");
 			attr(nav, "id", "popup");
-			attr(nav, "class", "svelte-1px87zc");
+			attr(nav, "class", "svelte-1p7ce7s");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3823,7 +3823,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (232:12) {:else}
+// (239:12) {:else}
 function create_else_block(ctx) {
 	let button;
 	let t0_value = /*link*/ ctx[16].label + "";
@@ -3869,9 +3869,9 @@ function create_else_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(button, "class", "mobile-subnav-title svelte-1px87zc");
+			attr(button, "class", "mobile-subnav-title svelte-1p7ce7s");
 			attr(button, "type", "button");
-			attr(nav, "class", "mobile-subnav svelte-1px87zc");
+			attr(nav, "class", "mobile-subnav svelte-1p7ce7s");
 		},
 		m(target, anchor) {
 			insert_hydration(target, button, anchor);
@@ -3939,7 +3939,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (230:12) {#if !submenu || !submenu.length}
+// (237:12) {#if !submenu || !submenu.length}
 function create_if_block_1(ctx) {
 	let a;
 	let t_value = /*link*/ ctx[16].label + "";
@@ -3981,7 +3981,7 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (235:18) {#each submenu as {link}}
+// (242:18) {#each submenu as {link}}
 function create_each_block_1(ctx) {
 	let a;
 	let t_value = /*link*/ ctx[16].label + "";
@@ -4003,7 +4003,7 @@ function create_each_block_1(ctx) {
 		},
 		h() {
 			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			attr(a, "class", "svelte-1px87zc");
+			attr(a, "class", "svelte-1p7ce7s");
 			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
 		},
 		m(target, anchor) {
@@ -4027,7 +4027,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (229:8) {#each site_nav as { link, submenu }}
+// (236:8) {#each site_nav as { link, submenu }}
 function create_each_block(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -4160,7 +4160,7 @@ function create_fragment(ctx) {
 			props: { height: "30", icon: "eva:menu-outline" }
 		});
 
-	let if_block2 = /*mobileNavOpen*/ ctx[4] && create_if_block(ctx);
+	let if_block2 = /*mobileNavOpen*/ ctx[5] && create_if_block(ctx);
 
 	return {
 		c() {
@@ -4239,7 +4239,7 @@ function create_fragment(ctx) {
 			if (if_block1) if_block1.l(a1_nodes);
 			a1_nodes.forEach(detach);
 			t5 = claim_space(div3_nodes);
-			div2 = claim_element(div3_nodes, "DIV", {});
+			div2 = claim_element(div3_nodes, "DIV", { class: true });
 			var div2_nodes = children(div2);
 			button0 = claim_element(div2_nodes, "BUTTON", { id: true, "aria-label": true });
 			var button0_nodes = children(button0);
@@ -4259,22 +4259,23 @@ function create_fragment(ctx) {
 		},
 		h() {
 			attr(a0, "href", "/");
-			attr(a0, "class", "logo svelte-1px87zc");
+			attr(a0, "class", "logo svelte-1p7ce7s");
 			option0.__value = "tr";
 			option0.value = option0.__value;
 			option1.__value = "en";
 			option1.value = option1.__value;
-			if (/*selectedLang*/ ctx[5] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
+			if (/*currentLang*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
 			attr(div0, "class", "language-picker");
-			attr(nav, "class", "svelte-1px87zc");
-			attr(div1, "class", "desktop-nav svelte-1px87zc");
+			attr(nav, "class", "svelte-1p7ce7s");
+			attr(div1, "class", "desktop-nav svelte-1p7ce7s");
 			attr(a1, "href", "/");
-			attr(a1, "class", "logo svelte-1px87zc");
+			attr(a1, "class", "logo svelte-1p7ce7s");
 			attr(button0, "id", "open");
 			attr(button0, "aria-label", "Open mobile navigation");
-			attr(button1, "class", "lang-swither-mobile svelte-1px87zc");
-			attr(div3, "class", "mobile-nav svelte-1px87zc");
-			attr(header, "class", "section-container svelte-1px87zc");
+			attr(button1, "class", "lang-swither-mobile svelte-1p7ce7s");
+			attr(div2, "class", "mobile-actions-container svelte-1p7ce7s");
+			attr(div3, "class", "mobile-nav svelte-1p7ce7s");
+			attr(header, "class", "section-container svelte-1p7ce7s");
 		},
 		m(target, anchor) {
 			insert_hydration(target, header, anchor);
@@ -4297,7 +4298,7 @@ function create_fragment(ctx) {
 			append_hydration(option0, t2);
 			append_hydration(select, option1);
 			append_hydration(option1, t3);
-			select_option(select, /*selectedLang*/ ctx[5], true);
+			select_option(select, /*currentLang*/ ctx[2], true);
 			append_hydration(header, t4);
 			append_hydration(header, div3);
 			append_hydration(div3, a1);
@@ -4316,7 +4317,7 @@ function create_fragment(ctx) {
 			if (!mounted) {
 				dispose = [
 					listen(window_1, "mousemove", /*handleMouseout*/ ctx[7]),
-					listen(select, "change", langChangeHandler),
+					listen(select, "change", toggleLanguage),
 					listen(select, "change", /*select_change_handler*/ ctx[12]),
 					listen(button0, "click", /*click_handler*/ ctx[13]),
 					listen(button1, "click", /*toggleMobileLangChange*/ ctx[8])
@@ -4338,7 +4339,7 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 14) {
+			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 26) {
 				each_value_2 = /*site_nav*/ ctx[1];
 				let i;
 
@@ -4365,8 +4366,8 @@ function create_fragment(ctx) {
 				check_outros();
 			}
 
-			if (dirty & /*selectedLang*/ 32) {
-				select_option(select, /*selectedLang*/ ctx[5]);
+			if (dirty & /*currentLang*/ 4) {
+				select_option(select, /*currentLang*/ ctx[2]);
 			}
 
 			if (current_block_type_1 === (current_block_type_1 = select_block_type_2(ctx)) && if_block1) {
@@ -4383,11 +4384,11 @@ function create_fragment(ctx) {
 
 			if ((!current || dirty & /*otherLang*/ 64) && t7_value !== (t7_value = /*otherLang*/ ctx[6].toUpperCase() + "")) set_data(t7, t7_value);
 
-			if (/*mobileNavOpen*/ ctx[4]) {
+			if (/*mobileNavOpen*/ ctx[5]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 
-					if (dirty & /*mobileNavOpen*/ 16) {
+					if (dirty & /*mobileNavOpen*/ 32) {
 						transition_in(if_block2, 1);
 					}
 				} else {
@@ -4468,6 +4469,11 @@ function langChangeHandler(selectedLang) {
 	}
 }
 
+function toggleLanguage(e) {
+	const selectedLang = e.currentTarget.value;
+	langChangeHandler(selectedLang);
+}
+
 function instance($$self, $$props, $$invalidate) {
 	let otherLang;
 	let { props } = $$props;
@@ -4476,17 +4482,17 @@ function instance($$self, $$props, $$invalidate) {
 	let hovered_link = null;
 	let hovered_link_container = null;
 	let mobileNavOpen = false;
-	let selectedLang;
+	let currentLang = 'tr';
 
 	function handleMouseout(e) {
 		if (!e.composedPath().includes(hovered_link_container)) {
-			$$invalidate(2, hovered_link = null);
+			$$invalidate(3, hovered_link = null);
 		}
 	}
 
 	onMount(() => {
 		const currentUrl = new URL(window.location.href);
-		$$invalidate(5, selectedLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
+		$$invalidate(2, currentLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
 	});
 
 	function toggleMobileLangChange() {
@@ -4498,17 +4504,17 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	const mouseover_handler = function (link, e) {
-		$$invalidate(2, hovered_link = link);
-		$$invalidate(3, hovered_link_container = e.currentTarget);
+		$$invalidate(3, hovered_link = link);
+		$$invalidate(4, hovered_link_container = e.currentTarget);
 	};
 
 	function select_change_handler() {
-		selectedLang = select_value(this);
-		$$invalidate(5, selectedLang);
+		currentLang = select_value(this);
+		$$invalidate(2, currentLang);
 	}
 
-	const click_handler = () => $$invalidate(4, mobileNavOpen = true);
-	const click_handler_1 = () => $$invalidate(4, mobileNavOpen = false);
+	const click_handler = () => $$invalidate(5, mobileNavOpen = true);
+	const click_handler_1 = () => $$invalidate(5, mobileNavOpen = false);
 
 	$$self.$$set = $$props => {
 		if ('props' in $$props) $$invalidate(9, props = $$props.props);
@@ -4516,15 +4522,19 @@ function instance($$self, $$props, $$invalidate) {
 		if ('site_nav' in $$props) $$invalidate(1, site_nav = $$props.site_nav);
 	};
 
-	$$invalidate(6, otherLang = 'en' );
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*currentLang*/ 4) {
+			$$invalidate(6, otherLang = currentLang == 'tr' ? 'en' : 'tr');
+		}
+	};
 
 	return [
 		logo,
 		site_nav,
+		currentLang,
 		hovered_link,
 		hovered_link_container,
 		mobileNavOpen,
-		selectedLang,
 		otherLang,
 		handleMouseout,
 		toggleMobileLangChange,
