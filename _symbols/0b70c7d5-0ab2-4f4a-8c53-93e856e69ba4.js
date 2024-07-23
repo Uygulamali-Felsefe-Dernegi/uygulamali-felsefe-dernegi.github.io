@@ -4421,12 +4421,12 @@ function langChangeHandler(e) {
 	let newUrl = new URL(window.location.href);
 
 	if (selectedLang == 'en') {
-		if (currentUrl.pathname.split('/')[0] !== 'en') {
+		if (currentUrl.pathname.split('/')[1] !== 'en') {
 			newUrl.pathname = `/en${currentUrl.pathname}`;
 		}
 	} else {
-		if (currentUrl.pathname.split('/')[0] === 'en') {
-			newUrl.pathname = currentUrl.pathname.split('/').filter((e, i) => i > 0).join('/');
+		if (currentUrl.pathname.split('/')[1] === 'en') {
+			newUrl.pathname = currentUrl.pathname.split('/').filter((e, i) => i != 1).join('/');
 		}
 	}
 
@@ -4446,7 +4446,7 @@ function instance($$self, $$props, $$invalidate) {
 
 	onMount(() => {
 		const currentUrl = new URL(window.location.href);
-		$$invalidate(5, selectedLang = currentUrl.pathname.split('/')[0] == 'en' ? 'en' : 'tr');
+		$$invalidate(5, selectedLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
 	});
 
 	function focus_handler(event) {
