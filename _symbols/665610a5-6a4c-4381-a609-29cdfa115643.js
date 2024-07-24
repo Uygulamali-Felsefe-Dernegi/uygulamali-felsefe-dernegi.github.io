@@ -3077,7 +3077,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (185:22) 
+// (190:22) 
 function create_if_block_2(ctx) {
 	let div;
 	let t_value = /*form*/ ctx[0].success_message + "";
@@ -3126,9 +3126,11 @@ function create_if_block_2(ctx) {
 function create_if_block(ctx) {
 	let form_1;
 	let label;
-	let input;
-	let input_placeholder_value;
-	let t;
+	let input0;
+	let input0_placeholder_value;
+	let t0;
+	let input1;
+	let t1;
 	let button;
 	let current_block_type_index;
 	let if_block;
@@ -3150,8 +3152,10 @@ function create_if_block(ctx) {
 		c() {
 			form_1 = element("form");
 			label = element("label");
-			input = element("input");
-			t = space();
+			input0 = element("input");
+			t0 = space();
+			input1 = element("input");
+			t1 = space();
 			button = element("button");
 			if_block.c();
 			this.h();
@@ -3162,15 +3166,17 @@ function create_if_block(ctx) {
 			label = claim_element(form_1_nodes, "LABEL", { class: true });
 			var label_nodes = children(label);
 
-			input = claim_element(label_nodes, "INPUT", {
+			input0 = claim_element(label_nodes, "INPUT", {
 				name: true,
 				type: true,
 				placeholder: true,
 				class: true
 			});
 
+			t0 = claim_space(label_nodes);
+			input1 = claim_element(label_nodes, "INPUT", { name: true, type: true, class: true });
 			label_nodes.forEach(detach);
-			t = claim_space(form_1_nodes);
+			t1 = claim_space(form_1_nodes);
 			button = claim_element(form_1_nodes, "BUTTON", { class: true, type: true });
 			var button_nodes = children(button);
 			if_block.l(button_nodes);
@@ -3179,11 +3185,16 @@ function create_if_block(ctx) {
 			this.h();
 		},
 		h() {
-			input.required = true;
-			attr(input, "name", "Email");
-			attr(input, "type", "text");
-			attr(input, "placeholder", input_placeholder_value = /*form*/ ctx[0].placeholder);
-			attr(input, "class", "svelte-1fvdocl");
+			input0.required = true;
+			attr(input0, "name", "Email");
+			attr(input0, "type", "text");
+			attr(input0, "placeholder", input0_placeholder_value = /*form*/ ctx[0].placeholder);
+			attr(input0, "class", "svelte-1fvdocl");
+			input1.hidden = true;
+			attr(input1, "name", "Fields[]");
+			attr(input1, "type", "text");
+			input1.value = "";
+			attr(input1, "class", "svelte-1fvdocl");
 			attr(label, "class", "svelte-1fvdocl");
 			attr(button, "class", "button svelte-1fvdocl");
 			attr(button, "type", "submit");
@@ -3192,8 +3203,10 @@ function create_if_block(ctx) {
 		m(target, anchor) {
 			insert_hydration(target, form_1, anchor);
 			append_hydration(form_1, label);
-			append_hydration(label, input);
-			append_hydration(form_1, t);
+			append_hydration(label, input0);
+			append_hydration(label, t0);
+			append_hydration(label, input1);
+			append_hydration(form_1, t1);
 			append_hydration(form_1, button);
 			if_blocks[current_block_type_index].m(button, null);
 			current = true;
@@ -3204,8 +3217,8 @@ function create_if_block(ctx) {
 			}
 		},
 		p(ctx, dirty) {
-			if (!current || dirty & /*form*/ 1 && input_placeholder_value !== (input_placeholder_value = /*form*/ ctx[0].placeholder)) {
-				attr(input, "placeholder", input_placeholder_value);
+			if (!current || dirty & /*form*/ 1 && input0_placeholder_value !== (input0_placeholder_value = /*form*/ ctx[0].placeholder)) {
+				attr(input0, "placeholder", input0_placeholder_value);
 			}
 
 			let previous_block_index = current_block_type_index;
@@ -3252,7 +3265,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (180:8) {:else}
+// (185:8) {:else}
 function create_else_block(ctx) {
 	let icon;
 	let current;
@@ -3285,7 +3298,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (178:8) {#if !submitting}
+// (183:8) {#if !submitting}
 function create_if_block_1(ctx) {
 	let t_value = /*form*/ ctx[0].button_label + "";
 	let t;
