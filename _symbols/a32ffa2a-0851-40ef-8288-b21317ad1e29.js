@@ -540,7 +540,7 @@ class SvelteComponent {
 
 function create_fragment(ctx) {
 	let html_tag;
-	let raw_value = `<iframe title="form" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hq/form?c=dd58ec6a" width="100%" style="height: 0;"></iframe>` + "";
+	let raw_value = `<iframe title="form" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hq/form?c=8870c5ff" width="100%" style="height: 0;"></iframe>` + "";
 	let html_anchor;
 
 	return {
