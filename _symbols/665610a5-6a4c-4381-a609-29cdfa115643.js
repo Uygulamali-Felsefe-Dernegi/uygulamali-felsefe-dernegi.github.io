@@ -3180,7 +3180,7 @@ function create_if_block(ctx) {
 		},
 		h() {
 			input.required = true;
-			attr(input, "name", "email");
+			attr(input, "name", "Email");
 			attr(input, "type", "text");
 			attr(input, "placeholder", input_placeholder_value = /*form*/ ctx[0].placeholder);
 			attr(input, "class", "svelte-1fvdocl");
