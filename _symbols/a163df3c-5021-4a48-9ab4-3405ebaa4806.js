@@ -1,4 +1,4 @@
-// Site Navigation (copy) - Updated July 25, 2024
+// Site Header (copy) - Updated July 26, 2024
 function noop() { }
 const identity = x => x;
 function assign(tar, src) {
@@ -405,6 +405,14 @@ function set_data(text, data) {
     if (text.data === data)
         return;
     text.data = data;
+}
+function set_style(node, key, value, important) {
+    if (value == null) {
+        node.style.removeProperty(key);
+    }
+    else {
+        node.style.setProperty(key, value, important ? 'important' : '');
+    }
 }
 function select_option(select, value, mounting) {
     for (let i = 0; i < select.options.length; i += 1) {
@@ -3144,31 +3152,31 @@ const { window: window_1 } = globals;
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
-	child_ctx[17] = list[i].submenu;
+	child_ctx[18] = list[i].link;
+	child_ctx[19] = list[i].submenu;
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
+	child_ctx[18] = list[i].link;
 	return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
-	child_ctx[17] = list[i].submenu;
+	child_ctx[18] = list[i].link;
+	child_ctx[19] = list[i].submenu;
 	return child_ctx;
 }
 
 function get_each_context_3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
+	child_ctx[18] = list[i].link;
 	return child_ctx;
 }
 
-// (194:31) 
+// (226:33) 
 function create_if_block_7(ctx) {
 	let img;
 	let img_src_value;
@@ -3205,7 +3213,7 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (192:6) {#if logo.title}
+// (224:8) {#if logo.title}
 function create_if_block_6(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
@@ -3229,11 +3237,11 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (202:12) {:else}
+// (234:12) {:else}
 function create_else_block_1(ctx) {
 	let div;
 	let button;
-	let t0_value = /*link*/ ctx[16].label + "";
+	let t0_value = /*link*/ ctx[18].label + "";
 	let t0;
 	let t1;
 	let span;
@@ -3242,10 +3250,10 @@ function create_else_block_1(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = /*hovered_link*/ ctx[3] == /*link*/ ctx[16] && create_if_block_5(ctx);
+	let if_block = /*hovered_link*/ ctx[5] == /*link*/ ctx[18] && create_if_block_5(ctx);
 
 	function mouseover_handler(...args) {
-		return /*mouseover_handler*/ ctx[11](/*link*/ ctx[16], ...args);
+		return /*mouseover_handler*/ ctx[13](/*link*/ ctx[18], ...args);
 	}
 
 	return {
@@ -3278,10 +3286,10 @@ function create_else_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span, "class", "down-arr svelte-wh61o8");
+			attr(span, "class", "down-arr svelte-1ctshzv");
 			attr(button, "type", "button");
-			attr(button, "class", "svelte-wh61o8");
-			attr(div, "class", "subnav-container svelte-wh61o8");
+			attr(button, "class", "svelte-1ctshzv");
+			attr(div, "class", "subnav-container svelte-1ctshzv");
 		},
 		m(target, anchor) {
 			insert_hydration(target, div, anchor);
@@ -3296,7 +3304,7 @@ function create_else_block_1(ctx) {
 
 			if (!mounted) {
 				dispose = [
-					listen(div, "focus", /*focus_handler*/ ctx[10]),
+					listen(div, "focus", /*focus_handler*/ ctx[12]),
 					listen(div, "mouseover", mouseover_handler)
 				];
 
@@ -3305,13 +3313,13 @@ function create_else_block_1(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[16].label + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*site_nav*/ 4) && t0_value !== (t0_value = /*link*/ ctx[18].label + "")) set_data(t0, t0_value);
 
-			if (/*hovered_link*/ ctx[3] == /*link*/ ctx[16]) {
+			if (/*hovered_link*/ ctx[5] == /*link*/ ctx[18]) {
 				if (if_block) {
 					if_block.p(ctx, dirty);
 
-					if (dirty & /*hovered_link, site_nav*/ 10) {
+					if (dirty & /*hovered_link, site_nav*/ 36) {
 						transition_in(if_block, 1);
 					}
 				} else {
@@ -3348,10 +3356,10 @@ function create_else_block_1(ctx) {
 	};
 }
 
-// (200:12) {#if !submenu || !submenu.length}
+// (232:12) {#if !submenu || !submenu.length}
 function create_if_block_4(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[18].label + "";
 	let t;
 	let a_href_value;
 
@@ -3369,23 +3377,23 @@ function create_if_block_4(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-wh61o8");
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "class", "link svelte-1ctshzv");
+			attr(a, "href", a_href_value = /*link*/ ctx[18].url);
+			toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[18].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[18].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty & /*site_nav, window*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 			}
 		},
 		i: noop,
@@ -3396,12 +3404,12 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (205:16) {#if hovered_link == link}
+// (237:16) {#if hovered_link == link}
 function create_if_block_5(ctx) {
 	let nav;
 	let nav_transition;
 	let current;
-	let each_value_3 = /*submenu*/ ctx[17];
+	let each_value_3 = /*submenu*/ ctx[19];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_3.length; i += 1) {
@@ -3430,7 +3438,7 @@ function create_if_block_5(ctx) {
 			this.h();
 		},
 		h() {
-			attr(nav, "class", "subnav svelte-wh61o8");
+			attr(nav, "class", "subnav svelte-1ctshzv");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3444,8 +3452,8 @@ function create_if_block_5(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value_3 = /*submenu*/ ctx[17];
+			if (dirty & /*site_nav, window*/ 4) {
+				each_value_3 = /*submenu*/ ctx[19];
 				let i;
 
 				for (i = 0; i < each_value_3.length; i += 1) {
@@ -3491,10 +3499,10 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (207:18) {#each submenu as {link}}
+// (239:18) {#each submenu as {link}}
 function create_each_block_3(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[18].label + "";
 	let t;
 	let a_href_value;
 
@@ -3512,23 +3520,23 @@ function create_each_block_3(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-wh61o8");
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "class", "link svelte-1ctshzv");
+			attr(a, "href", a_href_value = /*link*/ ctx[18].url);
+			toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[18].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[18].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty & /*site_nav, window*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 			}
 		},
 		d(detaching) {
@@ -3537,7 +3545,7 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (199:8) {#each site_nav as { link, submenu }}
+// (231:8) {#each site_nav as { link, submenu }}
 function create_each_block_2(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -3547,7 +3555,7 @@ function create_each_block_2(ctx) {
 	const if_blocks = [];
 
 	function select_block_type_1(ctx, dirty) {
-		if (!/*submenu*/ ctx[17] || !/*submenu*/ ctx[17].length) return 0;
+		if (!/*submenu*/ ctx[19] || !/*submenu*/ ctx[19].length) return 0;
 		return 1;
 	}
 
@@ -3611,7 +3619,7 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (227:31) 
+// (259:33) 
 function create_if_block_3(ctx) {
 	let img;
 	let img_src_value;
@@ -3648,7 +3656,7 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (225:6) {#if logo.title}
+// (257:8) {#if logo.title}
 function create_if_block_2(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
@@ -3672,7 +3680,7 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (242:4) {#if mobileNavOpen}
+// (274:6) {#if mobileNavOpen}
 function create_if_block(ctx) {
 	let nav;
 	let t;
@@ -3682,7 +3690,7 @@ function create_if_block(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let each_value = /*site_nav*/ ctx[1];
+	let each_value = /*site_nav*/ ctx[2];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value.length; i += 1) {
@@ -3733,9 +3741,9 @@ function create_if_block(ctx) {
 		h() {
 			attr(button, "id", "close");
 			attr(button, "aria-label", "Close Navigation");
-			attr(button, "class", "svelte-wh61o8");
+			attr(button, "class", "svelte-1ctshzv");
 			attr(nav, "id", "popup");
-			attr(nav, "class", "svelte-wh61o8");
+			attr(nav, "class", "svelte-1ctshzv");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3752,13 +3760,13 @@ function create_if_block(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*click_handler_1*/ ctx[14]);
+				dispose = listen(button, "click", /*click_handler_1*/ ctx[16]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value = /*site_nav*/ ctx[1];
+			if (dirty & /*site_nav, window*/ 4) {
+				each_value = /*site_nav*/ ctx[2];
 				let i;
 
 				for (i = 0; i < each_value.length; i += 1) {
@@ -3824,16 +3832,19 @@ function create_if_block(ctx) {
 	};
 }
 
-// (247:12) {:else}
+// (279:12) {:else}
 function create_else_block(ctx) {
 	let button;
-	let t0_value = /*link*/ ctx[16].label + "";
+	let t0_value = /*link*/ ctx[18].label + "";
 	let t0;
 	let t1;
+	let span;
+	let t2;
+	let t3;
 	let nav;
 	let nav_transition;
 	let current;
-	let each_value_1 = /*submenu*/ ctx[17];
+	let each_value_1 = /*submenu*/ ctx[19];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_1.length; i += 1) {
@@ -3845,6 +3856,9 @@ function create_else_block(ctx) {
 			button = element("button");
 			t0 = text(t0_value);
 			t1 = space();
+			span = element("span");
+			t2 = text(">");
+			t3 = space();
 			nav = element("nav");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -3857,8 +3871,13 @@ function create_else_block(ctx) {
 			button = claim_element(nodes, "BUTTON", { class: true, type: true });
 			var button_nodes = children(button);
 			t0 = claim_text(button_nodes, t0_value);
+			t1 = claim_space(button_nodes);
+			span = claim_element(button_nodes, "SPAN", { class: true });
+			var span_nodes = children(span);
+			t2 = claim_text(span_nodes, ">");
+			span_nodes.forEach(detach);
 			button_nodes.forEach(detach);
-			t1 = claim_space(nodes);
+			t3 = claim_space(nodes);
 			nav = claim_element(nodes, "NAV", { class: true });
 			var nav_nodes = children(nav);
 
@@ -3870,14 +3889,18 @@ function create_else_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(button, "class", "mobile-subnav-title svelte-wh61o8");
+			attr(span, "class", "down-arr svelte-1ctshzv");
+			attr(button, "class", "mobile-subnav-title svelte-1ctshzv");
 			attr(button, "type", "button");
-			attr(nav, "class", "mobile-subnav svelte-wh61o8");
+			attr(nav, "class", "mobile-subnav svelte-1ctshzv");
 		},
 		m(target, anchor) {
 			insert_hydration(target, button, anchor);
 			append_hydration(button, t0);
-			insert_hydration(target, t1, anchor);
+			append_hydration(button, t1);
+			append_hydration(button, span);
+			append_hydration(span, t2);
+			insert_hydration(target, t3, anchor);
 			insert_hydration(target, nav, anchor);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
@@ -3889,10 +3912,10 @@ function create_else_block(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[16].label + "")) set_data(t0, t0_value);
+			if ((!current || dirty & /*site_nav*/ 4) && t0_value !== (t0_value = /*link*/ ctx[18].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value_1 = /*submenu*/ ctx[17];
+			if (dirty & /*site_nav, window*/ 4) {
+				each_value_1 = /*submenu*/ ctx[19];
 				let i;
 
 				for (i = 0; i < each_value_1.length; i += 1) {
@@ -3932,7 +3955,7 @@ function create_else_block(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(button);
-			if (detaching) detach(t1);
+			if (detaching) detach(t3);
 			if (detaching) detach(nav);
 			destroy_each(each_blocks, detaching);
 			if (detaching && nav_transition) nav_transition.end();
@@ -3940,10 +3963,10 @@ function create_else_block(ctx) {
 	};
 }
 
-// (245:12) {#if !submenu || !submenu.length}
+// (277:12) {#if !submenu || !submenu.length}
 function create_if_block_1(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[18].label + "";
 	let t;
 	let a_href_value;
 
@@ -3961,16 +3984,16 @@ function create_if_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
+			attr(a, "href", a_href_value = /*link*/ ctx[18].url);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[18].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[18].url)) {
 				attr(a, "href", a_href_value);
 			}
 		},
@@ -3982,10 +4005,10 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (250:18) {#each submenu as {link}}
+// (282:18) {#each submenu as {link}}
 function create_each_block_1(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[18].label + "";
 	let t;
 	let a_href_value;
 
@@ -4003,23 +4026,23 @@ function create_each_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			attr(a, "class", "svelte-wh61o8");
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "href", a_href_value = /*link*/ ctx[18].url);
+			attr(a, "class", "svelte-1ctshzv");
+			toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[18].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[18].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty & /*site_nav, window*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[18].url === window.location.pathname);
 			}
 		},
 		d(detaching) {
@@ -4028,7 +4051,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (244:8) {#each site_nav as { link, submenu }}
+// (276:10) {#each site_nav as { link, submenu }}
 function create_each_block(ctx) {
 	let current_block_type_index;
 	let if_block;
@@ -4038,7 +4061,7 @@ function create_each_block(ctx) {
 	const if_blocks = [];
 
 	function select_block_type_3(ctx, dirty) {
-		if (!/*submenu*/ ctx[17] || !/*submenu*/ ctx[17].length) return 0;
+		if (!/*submenu*/ ctx[19] || !/*submenu*/ ctx[19].length) return 0;
 		return 1;
 	}
 
@@ -4104,6 +4127,7 @@ function create_each_block(ctx) {
 
 function create_fragment(ctx) {
 	let header;
+	let div4;
 	let div1;
 	let a0;
 	let t0;
@@ -4124,9 +4148,14 @@ function create_fragment(ctx) {
 	let icon;
 	let t6;
 	let button1;
-	let t7_value = /*otherLang*/ ctx[6].toUpperCase() + "";
+	let t7_value = /*otherLang*/ ctx[8].toUpperCase() + "";
 	let t7;
 	let t8;
+	let t9;
+	let div5;
+	let h1;
+	let t10;
+	let header_aria_label_value;
 	let current;
 	let mounted;
 	let dispose;
@@ -4138,7 +4167,7 @@ function create_fragment(ctx) {
 
 	let current_block_type = select_block_type(ctx);
 	let if_block0 = current_block_type && current_block_type(ctx);
-	let each_value_2 = /*site_nav*/ ctx[1];
+	let each_value_2 = /*site_nav*/ ctx[2];
 	let each_blocks = [];
 
 	for (let i = 0; i < each_value_2.length; i += 1) {
@@ -4161,11 +4190,12 @@ function create_fragment(ctx) {
 			props: { height: "30", icon: "eva:menu-outline" }
 		});
 
-	let if_block2 = /*mobileNavOpen*/ ctx[5] && create_if_block(ctx);
+	let if_block2 = /*mobileNavOpen*/ ctx[7] && create_if_block(ctx);
 
 	return {
 		c() {
 			header = element("header");
+			div4 = element("div");
 			div1 = element("div");
 			a0 = element("a");
 			if (if_block0) if_block0.c();
@@ -4196,12 +4226,24 @@ function create_fragment(ctx) {
 			t7 = text(t7_value);
 			t8 = space();
 			if (if_block2) if_block2.c();
+			t9 = space();
+			div5 = element("div");
+			h1 = element("h1");
+			t10 = text(/*headline*/ ctx[1]);
 			this.h();
 		},
 		l(nodes) {
-			header = claim_element(nodes, "HEADER", { class: true });
+			header = claim_element(nodes, "HEADER", {
+				style: true,
+				role: true,
+				"aria-label": true,
+				class: true
+			});
+
 			var header_nodes = children(header);
-			div1 = claim_element(header_nodes, "DIV", { class: true });
+			div4 = claim_element(header_nodes, "DIV", { class: true });
+			var div4_nodes = children(div4);
+			div1 = claim_element(div4_nodes, "DIV", { class: true });
 			var div1_nodes = children(div1);
 			a0 = claim_element(div1_nodes, "A", { href: true, class: true });
 			var a0_nodes = children(a0);
@@ -4232,8 +4274,8 @@ function create_fragment(ctx) {
 			div0_nodes.forEach(detach);
 			nav_nodes.forEach(detach);
 			div1_nodes.forEach(detach);
-			t4 = claim_space(header_nodes);
-			div3 = claim_element(header_nodes, "DIV", { class: true });
+			t4 = claim_space(div4_nodes);
+			div3 = claim_element(div4_nodes, "DIV", { class: true });
 			var div3_nodes = children(div3);
 			a1 = claim_element(div3_nodes, "A", { href: true, class: true });
 			var a1_nodes = children(a1);
@@ -4255,33 +4297,49 @@ function create_fragment(ctx) {
 			t8 = claim_space(div3_nodes);
 			if (if_block2) if_block2.l(div3_nodes);
 			div3_nodes.forEach(detach);
+			div4_nodes.forEach(detach);
+			t9 = claim_space(header_nodes);
+			div5 = claim_element(header_nodes, "DIV", { class: true });
+			var div5_nodes = children(div5);
+			h1 = claim_element(div5_nodes, "H1", { class: true });
+			var h1_nodes = children(h1);
+			t10 = claim_text(h1_nodes, /*headline*/ ctx[1]);
+			h1_nodes.forEach(detach);
+			div5_nodes.forEach(detach);
 			header_nodes.forEach(detach);
 			this.h();
 		},
 		h() {
 			attr(a0, "href", "/");
-			attr(a0, "class", "logo svelte-wh61o8");
+			attr(a0, "class", "logo svelte-1ctshzv");
 			option0.__value = "tr";
 			option0.value = option0.__value;
 			option1.__value = "en";
 			option1.value = option1.__value;
-			attr(select, "class", "svelte-wh61o8");
-			if (/*currentLang*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
-			attr(div0, "class", "language-picker svelte-wh61o8");
-			attr(nav, "class", "svelte-wh61o8");
-			attr(div1, "class", "desktop-nav svelte-wh61o8");
+			attr(select, "class", "svelte-1ctshzv");
+			if (/*currentLang*/ ctx[4] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[14].call(select));
+			attr(div0, "class", "language-picker svelte-1ctshzv");
+			attr(nav, "class", "svelte-1ctshzv");
+			attr(div1, "class", "desktop-nav svelte-1ctshzv");
 			attr(a1, "href", "/");
-			attr(a1, "class", "logo svelte-wh61o8");
+			attr(a1, "class", "logo svelte-1ctshzv");
 			attr(button0, "id", "open");
 			attr(button0, "aria-label", "Open mobile navigation");
-			attr(button1, "class", "lang-swither-mobile svelte-wh61o8");
-			attr(div2, "class", "mobile-actions-container svelte-wh61o8");
-			attr(div3, "class", "mobile-nav svelte-wh61o8");
-			attr(header, "class", "section-container svelte-wh61o8");
+			attr(button1, "class", "lang-swither-mobile svelte-1ctshzv");
+			attr(div2, "class", "mobile-actions-container svelte-1ctshzv");
+			attr(div3, "class", "mobile-nav svelte-1ctshzv");
+			attr(div4, "class", "section-container svelte-1ctshzv");
+			attr(h1, "class", "headline svelte-1ctshzv");
+			attr(div5, "class", "section-container svelte-1ctshzv");
+			set_style(header, "background-image", "url('" + /*background*/ ctx[3].url + "')");
+			attr(header, "role", "img");
+			attr(header, "aria-label", header_aria_label_value = /*background*/ ctx[3].alt);
+			attr(header, "class", "svelte-1ctshzv");
 		},
 		m(target, anchor) {
 			insert_hydration(target, header, anchor);
-			append_hydration(header, div1);
+			append_hydration(header, div4);
+			append_hydration(div4, div1);
 			append_hydration(div1, a0);
 			if (if_block0) if_block0.m(a0, null);
 			append_hydration(div1, t0);
@@ -4300,9 +4358,9 @@ function create_fragment(ctx) {
 			append_hydration(option0, t2);
 			append_hydration(select, option1);
 			append_hydration(option1, t3);
-			select_option(select, /*currentLang*/ ctx[2], true);
-			append_hydration(header, t4);
-			append_hydration(header, div3);
+			select_option(select, /*currentLang*/ ctx[4], true);
+			append_hydration(div4, t4);
+			append_hydration(div4, div3);
 			append_hydration(div3, a1);
 			if (if_block1) if_block1.m(a1, null);
 			append_hydration(div3, t5);
@@ -4314,15 +4372,19 @@ function create_fragment(ctx) {
 			append_hydration(button1, t7);
 			append_hydration(div3, t8);
 			if (if_block2) if_block2.m(div3, null);
+			append_hydration(header, t9);
+			append_hydration(header, div5);
+			append_hydration(div5, h1);
+			append_hydration(h1, t10);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
-					listen(window_1, "mousemove", /*handleMouseout*/ ctx[7]),
+					listen(window_1, "mousemove", /*handleMouseout*/ ctx[9]),
 					listen(select, "change", toggleLanguage),
-					listen(select, "change", /*select_change_handler*/ ctx[12]),
-					listen(button0, "click", /*click_handler*/ ctx[13]),
-					listen(button1, "click", /*toggleMobileLangChange*/ ctx[8])
+					listen(select, "change", /*select_change_handler*/ ctx[14]),
+					listen(button0, "click", /*click_handler*/ ctx[15]),
+					listen(button1, "click", /*toggleMobileLangChange*/ ctx[10])
 				];
 
 				mounted = true;
@@ -4341,8 +4403,8 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 26) {
-				each_value_2 = /*site_nav*/ ctx[1];
+			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 100) {
+				each_value_2 = /*site_nav*/ ctx[2];
 				let i;
 
 				for (i = 0; i < each_value_2.length; i += 1) {
@@ -4368,8 +4430,8 @@ function create_fragment(ctx) {
 				check_outros();
 			}
 
-			if (dirty & /*currentLang*/ 4) {
-				select_option(select, /*currentLang*/ ctx[2]);
+			if (dirty & /*currentLang*/ 16) {
+				select_option(select, /*currentLang*/ ctx[4]);
 			}
 
 			if (current_block_type_1 === (current_block_type_1 = select_block_type_2(ctx)) && if_block1) {
@@ -4384,13 +4446,13 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if ((!current || dirty & /*otherLang*/ 64) && t7_value !== (t7_value = /*otherLang*/ ctx[6].toUpperCase() + "")) set_data(t7, t7_value);
+			if ((!current || dirty & /*otherLang*/ 256) && t7_value !== (t7_value = /*otherLang*/ ctx[8].toUpperCase() + "")) set_data(t7, t7_value);
 
-			if (/*mobileNavOpen*/ ctx[5]) {
+			if (/*mobileNavOpen*/ ctx[7]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 
-					if (dirty & /*mobileNavOpen*/ 32) {
+					if (dirty & /*mobileNavOpen*/ 128) {
 						transition_in(if_block2, 1);
 					}
 				} else {
@@ -4407,6 +4469,16 @@ function create_fragment(ctx) {
 				});
 
 				check_outros();
+			}
+
+			if (!current || dirty & /*headline*/ 2) set_data(t10, /*headline*/ ctx[1]);
+
+			if (!current || dirty & /*background*/ 8) {
+				set_style(header, "background-image", "url('" + /*background*/ ctx[3].url + "')");
+			}
+
+			if (!current || dirty & /*background*/ 8 && header_aria_label_value !== (header_aria_label_value = /*background*/ ctx[3].alt)) {
+				attr(header, "aria-label", header_aria_label_value);
 			}
 		},
 		i(local) {
@@ -4480,7 +4552,9 @@ function instance($$self, $$props, $$invalidate) {
 	let otherLang;
 	let { props } = $$props;
 	let { logo } = $$props;
+	let { headline } = $$props;
 	let { site_nav } = $$props;
+	let { background } = $$props;
 	let hovered_link = null;
 	let hovered_link_container = null;
 	let mobileNavOpen = false;
@@ -4488,13 +4562,13 @@ function instance($$self, $$props, $$invalidate) {
 
 	function handleMouseout(e) {
 		if (!e.composedPath().includes(hovered_link_container)) {
-			$$invalidate(3, hovered_link = null);
+			$$invalidate(5, hovered_link = null);
 		}
 	}
 
 	onMount(() => {
 		const currentUrl = new URL(window.location.href);
-		$$invalidate(2, currentLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
+		$$invalidate(4, currentLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
 	});
 
 	function toggleMobileLangChange() {
@@ -4506,33 +4580,37 @@ function instance($$self, $$props, $$invalidate) {
 	}
 
 	const mouseover_handler = function (link, e) {
-		$$invalidate(3, hovered_link = link);
-		$$invalidate(4, hovered_link_container = e.currentTarget);
+		$$invalidate(5, hovered_link = link);
+		$$invalidate(6, hovered_link_container = e.currentTarget);
 	};
 
 	function select_change_handler() {
 		currentLang = select_value(this);
-		$$invalidate(2, currentLang);
+		$$invalidate(4, currentLang);
 	}
 
-	const click_handler = () => $$invalidate(5, mobileNavOpen = true);
-	const click_handler_1 = () => $$invalidate(5, mobileNavOpen = false);
+	const click_handler = () => $$invalidate(7, mobileNavOpen = true);
+	const click_handler_1 = () => $$invalidate(7, mobileNavOpen = false);
 
 	$$self.$$set = $$props => {
-		if ('props' in $$props) $$invalidate(9, props = $$props.props);
+		if ('props' in $$props) $$invalidate(11, props = $$props.props);
 		if ('logo' in $$props) $$invalidate(0, logo = $$props.logo);
-		if ('site_nav' in $$props) $$invalidate(1, site_nav = $$props.site_nav);
+		if ('headline' in $$props) $$invalidate(1, headline = $$props.headline);
+		if ('site_nav' in $$props) $$invalidate(2, site_nav = $$props.site_nav);
+		if ('background' in $$props) $$invalidate(3, background = $$props.background);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*currentLang*/ 4) {
-			$$invalidate(6, otherLang = currentLang == 'tr' ? 'en' : 'tr');
+		if ($$self.$$.dirty & /*currentLang*/ 16) {
+			$$invalidate(8, otherLang = currentLang == 'tr' ? 'en' : 'tr');
 		}
 	};
 
 	return [
 		logo,
+		headline,
 		site_nav,
+		background,
 		currentLang,
 		hovered_link,
 		hovered_link_container,
@@ -4552,7 +4630,14 @@ function instance($$self, $$props, $$invalidate) {
 class Component extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { props: 9, logo: 0, site_nav: 1 });
+
+		init(this, options, instance, create_fragment, safe_not_equal, {
+			props: 11,
+			logo: 0,
+			headline: 1,
+			site_nav: 2,
+			background: 3
+		});
 	}
 }
 
