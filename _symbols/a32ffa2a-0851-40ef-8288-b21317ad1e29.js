@@ -1,4 +1,4 @@
-// Mailjet Form - Updated July 30, 2024
+// Mailjet Form - Updated August 6, 2024
 function noop() { }
 function run(fn) {
     return fn();
