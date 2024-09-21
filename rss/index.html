@@ -2,7 +2,7 @@
   <html lang="en">
     <head>
       <meta name="generator" content="Primo" />
-      <!-- HEAD_svelte-hsuvjm_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
+      <!-- HEAD_svelte-7y11tr_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'G-Q9K3TS78QE');
@@ -31,9 +31,10 @@ html {
 
 @media (max-width: 600px) {
   html {
-    font-size: 13px; /* Güncellendi: Daha iyi uyum için */
+    font-size: 13px; /* Daha iyi uyum için */
   }
 }
+
 @media (max-width: 440px) {
   html {
     font-size: 12px;
@@ -47,14 +48,14 @@ html {
   line-height: 1.5;
   font-size: 1.125rem;
   background: var(--color-light);
-  max-width: 1200px;
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
   margin: auto;
-  padding: 1rem; /* Ekledim: Mobilde de boşluk sağlamak için */
+  padding: 1rem;
 }
 
 /* Elements */
 .section-container {
-  max-width: 1200px;
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
   margin: 0 auto;
   padding: 1rem;
 }
@@ -62,7 +63,7 @@ html {
 a.link {
   line-height: 1.3;
   border-bottom: 2px solid var(--color-accent);
-  transform: translateY(-2px); /* move link back into place */
+  transform: translateY(-2px);
   transition: border var(--transition);
 }
 
@@ -87,7 +88,7 @@ a.link:hover {
 /* reset */
 @media (max-width: 600px) {
 .button {
-    padding: 6px 18px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
+    padding: 6px 12px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
 }
   }
 .button:hover {
@@ -96,7 +97,7 @@ a.link:hover {
 .button.inverted {
     background: transparent;
     color: var(--color-accent);
-    border: 2px solid var(--color-accent); /* İnceltme: Arka planı daha belirgin yapar */
+    border: 2px solid var(--color-accent);
   }
 
 /* Headings */
@@ -128,7 +129,7 @@ h4 {
 
 /* Content Section */
 .content {
-  max-width: 900px;
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -146,7 +147,7 @@ h4 {
 .content a.link {
     font-weight: 500;
     border-bottom: 2px solid var(--color-accent);
-    transform: translateY(-2px); /* move link back into place */
+    transform: translateY(-2px);
     transition: border var(--transition);
   }
 .content a.link:hover {
@@ -192,9 +193,9 @@ h4 {
 /* Flex utility */
 .flex {
   display: flex;
-  flex-wrap: wrap; /* Ekledim: Mobil uyumlu olması için */
+  flex-wrap: wrap; /* Mobil uyumlu olması için */
 }
-</style><!-- HEAD_svelte-hsuvjm_END -->
+</style><!-- HEAD_svelte-7y11tr_END -->
       <style></style>
     </head>
     <body id="page">
