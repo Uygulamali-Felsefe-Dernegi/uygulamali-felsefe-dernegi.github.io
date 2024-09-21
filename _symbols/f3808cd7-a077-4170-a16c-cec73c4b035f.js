@@ -2824,7 +2824,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (120:6) {#each social as { link, icon }}
+// (96:6) {#each social as { link, icon }}
 function create_each_block_1(ctx) {
 	let a;
 	let span;
@@ -2861,9 +2861,9 @@ function create_each_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span, "class", "icon svelte-12qdhib");
+			attr(span, "class", "icon svelte-cdvhfw");
 			attr(a, "href", a_href_value = /*link*/ ctx[9].url);
-			attr(a, "class", "svelte-12qdhib");
+			attr(a, "class", "svelte-cdvhfw");
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
@@ -2900,7 +2900,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (139:6) {:else}
+// (115:6) {:else}
 function create_else_block(ctx) {
 	let label;
 	let span;
@@ -2959,10 +2959,10 @@ function create_else_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span, "class", "svelte-12qdhib");
+			attr(span, "class", "svelte-cdvhfw");
 			set_attributes(input, input_data);
-			toggle_class(input, "svelte-12qdhib", true);
-			attr(label, "class", "svelte-12qdhib");
+			toggle_class(input, "svelte-cdvhfw", true);
+			attr(label, "class", "svelte-cdvhfw");
 		},
 		m(target, anchor) {
 			insert_hydration(target, label, anchor);
@@ -2982,7 +2982,7 @@ function create_else_block(ctx) {
 				dirty & /*inputs*/ 1 && input_placeholder_value !== (input_placeholder_value = /*input*/ ctx[6].placeholder) && { placeholder: input_placeholder_value }
 			]));
 
-			toggle_class(input, "svelte-12qdhib", true);
+			toggle_class(input, "svelte-cdvhfw", true);
 		},
 		d(detaching) {
 			if (detaching) detach(label);
@@ -2990,7 +2990,7 @@ function create_else_block(ctx) {
 	};
 }
 
-// (134:6) {#if input.type === "textarea"}
+// (110:6) {#if input.type === "textarea"}
 function create_if_block(ctx) {
 	let label;
 	let span;
@@ -3030,11 +3030,11 @@ function create_if_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span, "class", "svelte-12qdhib");
+			attr(span, "class", "svelte-cdvhfw");
 			attr(textarea, "name", textarea_name_value = /*input*/ ctx[6].label);
 			attr(textarea, "placeholder", textarea_placeholder_value = /*input*/ ctx[6].placeholder);
-			attr(textarea, "class", "svelte-12qdhib");
-			attr(label, "class", "svelte-12qdhib");
+			attr(textarea, "class", "svelte-cdvhfw");
+			attr(label, "class", "svelte-cdvhfw");
 		},
 		m(target, anchor) {
 			insert_hydration(target, label, anchor);
@@ -3060,7 +3060,7 @@ function create_if_block(ctx) {
 	};
 }
 
-// (133:4) {#each inputs as input, i}
+// (109:4) {#each inputs as input, i}
 function create_each_block(ctx) {
 	let if_block_anchor;
 
@@ -3219,23 +3219,23 @@ function create_fragment(ctx) {
 		},
 		h() {
 			attr(h2, "class", "heading");
-			attr(div0, "class", "body svelte-12qdhib");
-			attr(div1, "class", "social-links svelte-12qdhib");
-			attr(div2, "class", "content svelte-12qdhib");
+			attr(div0, "class", "body svelte-cdvhfw");
+			attr(div1, "class", "social-links svelte-cdvhfw");
+			attr(div2, "class", "content svelte-cdvhfw");
 			attr(input0, "type", "hidden");
 			attr(input0, "name", "_subject");
 			input0.value = "New Contact Form Submission";
-			attr(input0, "class", "svelte-12qdhib");
+			attr(input0, "class", "svelte-cdvhfw");
 			attr(input1, "type", "hidden");
 			attr(input1, "name", "_next");
 			input1.value = "https://uygulamalifelsefedernegi.org/success";
-			attr(input1, "class", "svelte-12qdhib");
-			attr(button, "class", "button svelte-12qdhib");
+			attr(input1, "class", "svelte-cdvhfw");
+			attr(button, "class", "button svelte-cdvhfw");
 			attr(button, "type", "submit");
 			attr(form, "action", "https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5");
 			attr(form, "method", "POST");
-			attr(form, "class", "svelte-12qdhib");
-			attr(section, "class", "section-container svelte-12qdhib");
+			attr(form, "class", "svelte-cdvhfw");
+			attr(section, "class", "section-container svelte-cdvhfw");
 		},
 		m(target, anchor) {
 			insert_hydration(target, section, anchor);
