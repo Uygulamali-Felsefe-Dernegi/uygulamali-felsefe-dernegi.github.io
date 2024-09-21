@@ -1,4 +1,4 @@
-// Icon Cards - Updated August 6, 2024
+// Icon Cards - Updated September 21, 2024
 function noop() { }
 function assign(tar, src) {
     // @ts-ignore
@@ -2820,7 +2820,7 @@ function get_each_context_1(ctx, list, i) {
 	return child_ctx;
 }
 
-// (95:4) {#each icon_list as { icon, label }}
+// (96:4) {#each icon_list as { icon, label }}
 function create_each_block_1(ctx) {
 	let li;
 	let span0;
@@ -2861,8 +2861,8 @@ function create_each_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(span0, "class", "icon svelte-7sz6s1");
-			attr(li, "class", "svelte-7sz6s1");
+			attr(span0, "class", "icon svelte-1xgqwgo");
+			attr(li, "class", "svelte-1xgqwgo");
 		},
 		m(target, anchor) {
 			insert_hydration(target, li, anchor);
@@ -2896,7 +2896,7 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (105:4) {#each cards as card}
+// (106:4) {#each cards as card}
 function create_each_block(ctx) {
 	let li;
 	let div0;
@@ -2969,13 +2969,13 @@ function create_each_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(div0, "class", "icon svelte-7sz6s1");
-			attr(h3, "class", "title svelte-7sz6s1");
-			attr(div1, "class", "content svelte-7sz6s1");
+			attr(div0, "class", "icon svelte-1xgqwgo");
+			attr(h3, "class", "title svelte-1xgqwgo");
+			attr(div1, "class", "content svelte-1xgqwgo");
 			attr(a, "href", a_href_value = /*card*/ ctx[5].link.url);
-			attr(a, "class", "link svelte-7sz6s1");
-			attr(div2, "class", "body svelte-7sz6s1");
-			attr(li, "class", "svelte-7sz6s1");
+			attr(a, "class", "link svelte-1xgqwgo");
+			attr(div2, "class", "body svelte-1xgqwgo");
+			attr(li, "class", "svelte-1xgqwgo");
 		},
 		m(target, anchor) {
 			insert_hydration(target, li, anchor);
@@ -3116,12 +3116,12 @@ function create_fragment(ctx) {
 			this.h();
 		},
 		h() {
-			attr(h2, "class", "heading svelte-7sz6s1");
+			attr(h2, "class", "heading svelte-1xgqwgo");
 			attr(div, "class", "subheading");
-			attr(header, "class", "heading-group svelte-7sz6s1");
-			attr(ul0, "class", "icon-list svelte-7sz6s1");
-			attr(ul1, "class", "cards svelte-7sz6s1");
-			attr(section, "class", "section-container svelte-7sz6s1");
+			attr(header, "class", "heading-group svelte-1xgqwgo");
+			attr(ul0, "class", "icon-list svelte-1xgqwgo");
+			attr(ul1, "class", "cards svelte-1xgqwgo");
+			attr(section, "class", "section-container svelte-1xgqwgo");
 		},
 		m(target, anchor) {
 			insert_hydration(target, section, anchor);

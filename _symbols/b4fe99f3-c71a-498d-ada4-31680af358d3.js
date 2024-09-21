@@ -1,4 +1,4 @@
-// Site Navigation (copy) - Updated August 6, 2024
+// Site Navigation (copy) - Updated September 21, 2024
 function noop() { }
 const identity = x => x;
 function assign(tar, src) {
@@ -406,6 +406,9 @@ function set_data(text, data) {
         return;
     text.data = data;
 }
+function set_input_value(input, value) {
+    input.value = value == null ? '' : value;
+}
 function select_option(select, value, mounting) {
     for (let i = 0; i < select.options.length; i += 1) {
         const option = select.options[i];
@@ -727,6 +730,70 @@ function transition_out(block, local, detach, callback) {
     }
 }
 const null_transition = { duration: 0 };
+function create_in_transition(node, fn, params) {
+    const options = { direction: 'in' };
+    let config = fn(node, params, options);
+    let running = false;
+    let animation_name;
+    let task;
+    let uid = 0;
+    function cleanup() {
+        if (animation_name)
+            delete_rule(node, animation_name);
+    }
+    function go() {
+        const { delay = 0, duration = 300, easing = identity, tick = noop, css } = config || null_transition;
+        if (css)
+            animation_name = create_rule(node, 0, 1, duration, delay, easing, css, uid++);
+        tick(0, 1);
+        const start_time = now() + delay;
+        const end_time = start_time + duration;
+        if (task)
+            task.abort();
+        running = true;
+        add_render_callback(() => dispatch(node, true, 'start'));
+        task = loop(now => {
+            if (running) {
+                if (now >= end_time) {
+                    tick(1, 0);
+                    dispatch(node, true, 'end');
+                    cleanup();
+                    return running = false;
+                }
+                if (now >= start_time) {
+                    const t = easing((now - start_time) / duration);
+                    tick(t, 1 - t);
+                }
+            }
+            return running;
+        });
+    }
+    let started = false;
+    return {
+        start() {
+            if (started)
+                return;
+            started = true;
+            delete_rule(node);
+            if (is_function(config)) {
+                config = config(options);
+                wait().then(go);
+            }
+            else {
+                go();
+            }
+        },
+        invalidate() {
+            started = false;
+        },
+        end() {
+            if (running) {
+                cleanup();
+                running = false;
+            }
+        }
+    };
+}
 function create_bidirectional_transition(node, fn, params, intro) {
     const options = { direction: 'both' };
     let config = fn(node, params, options);
@@ -3138,38 +3205,1906 @@ let Component$1 = class Component extends SvelteComponent {
 	}
 };
 
+/**
+ * Fuse.js v7.0.0 - Lightweight fuzzy-search (http://fusejs.io)
+ *
+ * Copyright (c) 2023 Kiro Risk (http://kiro.me)
+ * All Rights Reserved. Apache Software License 2.0
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ */
+
+function isArray(value) {
+  return !Array.isArray
+    ? getTag(value) === '[object Array]'
+    : Array.isArray(value)
+}
+
+// Adapted from: https://github.com/lodash/lodash/blob/master/.internal/baseToString.js
+const INFINITY = 1 / 0;
+function baseToString(value) {
+  // Exit early for strings to avoid a performance hit in some environments.
+  if (typeof value == 'string') {
+    return value
+  }
+  let result = value + '';
+  return result == '0' && 1 / value == -INFINITY ? '-0' : result
+}
+
+function toString(value) {
+  return value == null ? '' : baseToString(value)
+}
+
+function isString(value) {
+  return typeof value === 'string'
+}
+
+function isNumber(value) {
+  return typeof value === 'number'
+}
+
+// Adapted from: https://github.com/lodash/lodash/blob/master/isBoolean.js
+function isBoolean(value) {
+  return (
+    value === true ||
+    value === false ||
+    (isObjectLike(value) && getTag(value) == '[object Boolean]')
+  )
+}
+
+function isObject(value) {
+  return typeof value === 'object'
+}
+
+// Checks if `value` is object-like.
+function isObjectLike(value) {
+  return isObject(value) && value !== null
+}
+
+function isDefined(value) {
+  return value !== undefined && value !== null
+}
+
+function isBlank(value) {
+  return !value.trim().length
+}
+
+// Gets the `toStringTag` of `value`.
+// Adapted from: https://github.com/lodash/lodash/blob/master/.internal/getTag.js
+function getTag(value) {
+  return value == null
+    ? value === undefined
+      ? '[object Undefined]'
+      : '[object Null]'
+    : Object.prototype.toString.call(value)
+}
+
+const EXTENDED_SEARCH_UNAVAILABLE = 'Extended search is not available';
+
+const INCORRECT_INDEX_TYPE = "Incorrect 'index' type";
+
+const LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY = (key) =>
+  `Invalid value for key ${key}`;
+
+const PATTERN_LENGTH_TOO_LARGE = (max) =>
+  `Pattern length exceeds max of ${max}.`;
+
+const MISSING_KEY_PROPERTY = (name) => `Missing ${name} property in key`;
+
+const INVALID_KEY_WEIGHT_VALUE = (key) =>
+  `Property 'weight' in key '${key}' must be a positive integer`;
+
+const hasOwn = Object.prototype.hasOwnProperty;
+
+class KeyStore {
+  constructor(keys) {
+    this._keys = [];
+    this._keyMap = {};
+
+    let totalWeight = 0;
+
+    keys.forEach((key) => {
+      let obj = createKey(key);
+
+      this._keys.push(obj);
+      this._keyMap[obj.id] = obj;
+
+      totalWeight += obj.weight;
+    });
+
+    // Normalize weights so that their sum is equal to 1
+    this._keys.forEach((key) => {
+      key.weight /= totalWeight;
+    });
+  }
+  get(keyId) {
+    return this._keyMap[keyId]
+  }
+  keys() {
+    return this._keys
+  }
+  toJSON() {
+    return JSON.stringify(this._keys)
+  }
+}
+
+function createKey(key) {
+  let path = null;
+  let id = null;
+  let src = null;
+  let weight = 1;
+  let getFn = null;
+
+  if (isString(key) || isArray(key)) {
+    src = key;
+    path = createKeyPath(key);
+    id = createKeyId(key);
+  } else {
+    if (!hasOwn.call(key, 'name')) {
+      throw new Error(MISSING_KEY_PROPERTY('name'))
+    }
+
+    const name = key.name;
+    src = name;
+
+    if (hasOwn.call(key, 'weight')) {
+      weight = key.weight;
+
+      if (weight <= 0) {
+        throw new Error(INVALID_KEY_WEIGHT_VALUE(name))
+      }
+    }
+
+    path = createKeyPath(name);
+    id = createKeyId(name);
+    getFn = key.getFn;
+  }
+
+  return { path, id, weight, src, getFn }
+}
+
+function createKeyPath(key) {
+  return isArray(key) ? key : key.split('.')
+}
+
+function createKeyId(key) {
+  return isArray(key) ? key.join('.') : key
+}
+
+function get(obj, path) {
+  let list = [];
+  let arr = false;
+
+  const deepGet = (obj, path, index) => {
+    if (!isDefined(obj)) {
+      return
+    }
+    if (!path[index]) {
+      // If there's no path left, we've arrived at the object we care about.
+      list.push(obj);
+    } else {
+      let key = path[index];
+
+      const value = obj[key];
+
+      if (!isDefined(value)) {
+        return
+      }
+
+      // If we're at the last value in the path, and if it's a string/number/bool,
+      // add it to the list
+      if (
+        index === path.length - 1 &&
+        (isString(value) || isNumber(value) || isBoolean(value))
+      ) {
+        list.push(toString(value));
+      } else if (isArray(value)) {
+        arr = true;
+        // Search each item in the array.
+        for (let i = 0, len = value.length; i < len; i += 1) {
+          deepGet(value[i], path, index + 1);
+        }
+      } else if (path.length) {
+        // An object. Recurse further.
+        deepGet(value, path, index + 1);
+      }
+    }
+  };
+
+  // Backwards compatibility (since path used to be a string)
+  deepGet(obj, isString(path) ? path.split('.') : path, 0);
+
+  return arr ? list : list[0]
+}
+
+const MatchOptions = {
+  // Whether the matches should be included in the result set. When `true`, each record in the result
+  // set will include the indices of the matched characters.
+  // These can consequently be used for highlighting purposes.
+  includeMatches: false,
+  // When `true`, the matching function will continue to the end of a search pattern even if
+  // a perfect match has already been located in the string.
+  findAllMatches: false,
+  // Minimum number of characters that must be matched before a result is considered a match
+  minMatchCharLength: 1
+};
+
+const BasicOptions = {
+  // When `true`, the algorithm continues searching to the end of the input even if a perfect
+  // match is found before the end of the same input.
+  isCaseSensitive: false,
+  // When true, the matching function will continue to the end of a search pattern even if
+  includeScore: false,
+  // List of properties that will be searched. This also supports nested properties.
+  keys: [],
+  // Whether to sort the result list, by score
+  shouldSort: true,
+  // Default sort function: sort by ascending score, ascending index
+  sortFn: (a, b) =>
+    a.score === b.score ? (a.idx < b.idx ? -1 : 1) : a.score < b.score ? -1 : 1
+};
+
+const FuzzyOptions = {
+  // Approximately where in the text is the pattern expected to be found?
+  location: 0,
+  // At what point does the match algorithm give up. A threshold of '0.0' requires a perfect match
+  // (of both letters and location), a threshold of '1.0' would match anything.
+  threshold: 0.6,
+  // Determines how close the match must be to the fuzzy location (specified above).
+  // An exact letter match which is 'distance' characters away from the fuzzy location
+  // would score as a complete mismatch. A distance of '0' requires the match be at
+  // the exact location specified, a threshold of '1000' would require a perfect match
+  // to be within 800 characters of the fuzzy location to be found using a 0.8 threshold.
+  distance: 100
+};
+
+const AdvancedOptions = {
+  // When `true`, it enables the use of unix-like search commands
+  useExtendedSearch: false,
+  // The get function to use when fetching an object's properties.
+  // The default will search nested paths *ie foo.bar.baz*
+  getFn: get,
+  // When `true`, search will ignore `location` and `distance`, so it won't matter
+  // where in the string the pattern appears.
+  // More info: https://fusejs.io/concepts/scoring-theory.html#fuzziness-score
+  ignoreLocation: false,
+  // When `true`, the calculation for the relevance score (used for sorting) will
+  // ignore the field-length norm.
+  // More info: https://fusejs.io/concepts/scoring-theory.html#field-length-norm
+  ignoreFieldNorm: false,
+  // The weight to determine how much field length norm effects scoring.
+  fieldNormWeight: 1
+};
+
+var Config = {
+  ...BasicOptions,
+  ...MatchOptions,
+  ...FuzzyOptions,
+  ...AdvancedOptions
+};
+
+const SPACE = /[^ ]+/g;
+
+// Field-length norm: the shorter the field, the higher the weight.
+// Set to 3 decimals to reduce index size.
+function norm(weight = 1, mantissa = 3) {
+  const cache = new Map();
+  const m = Math.pow(10, mantissa);
+
+  return {
+    get(value) {
+      const numTokens = value.match(SPACE).length;
+
+      if (cache.has(numTokens)) {
+        return cache.get(numTokens)
+      }
+
+      // Default function is 1/sqrt(x), weight makes that variable
+      const norm = 1 / Math.pow(numTokens, 0.5 * weight);
+
+      // In place of `toFixed(mantissa)`, for faster computation
+      const n = parseFloat(Math.round(norm * m) / m);
+
+      cache.set(numTokens, n);
+
+      return n
+    },
+    clear() {
+      cache.clear();
+    }
+  }
+}
+
+class FuseIndex {
+  constructor({
+    getFn = Config.getFn,
+    fieldNormWeight = Config.fieldNormWeight
+  } = {}) {
+    this.norm = norm(fieldNormWeight, 3);
+    this.getFn = getFn;
+    this.isCreated = false;
+
+    this.setIndexRecords();
+  }
+  setSources(docs = []) {
+    this.docs = docs;
+  }
+  setIndexRecords(records = []) {
+    this.records = records;
+  }
+  setKeys(keys = []) {
+    this.keys = keys;
+    this._keysMap = {};
+    keys.forEach((key, idx) => {
+      this._keysMap[key.id] = idx;
+    });
+  }
+  create() {
+    if (this.isCreated || !this.docs.length) {
+      return
+    }
+
+    this.isCreated = true;
+
+    // List is Array<String>
+    if (isString(this.docs[0])) {
+      this.docs.forEach((doc, docIndex) => {
+        this._addString(doc, docIndex);
+      });
+    } else {
+      // List is Array<Object>
+      this.docs.forEach((doc, docIndex) => {
+        this._addObject(doc, docIndex);
+      });
+    }
+
+    this.norm.clear();
+  }
+  // Adds a doc to the end of the index
+  add(doc) {
+    const idx = this.size();
+
+    if (isString(doc)) {
+      this._addString(doc, idx);
+    } else {
+      this._addObject(doc, idx);
+    }
+  }
+  // Removes the doc at the specified index of the index
+  removeAt(idx) {
+    this.records.splice(idx, 1);
+
+    // Change ref index of every subsquent doc
+    for (let i = idx, len = this.size(); i < len; i += 1) {
+      this.records[i].i -= 1;
+    }
+  }
+  getValueForItemAtKeyId(item, keyId) {
+    return item[this._keysMap[keyId]]
+  }
+  size() {
+    return this.records.length
+  }
+  _addString(doc, docIndex) {
+    if (!isDefined(doc) || isBlank(doc)) {
+      return
+    }
+
+    let record = {
+      v: doc,
+      i: docIndex,
+      n: this.norm.get(doc)
+    };
+
+    this.records.push(record);
+  }
+  _addObject(doc, docIndex) {
+    let record = { i: docIndex, $: {} };
+
+    // Iterate over every key (i.e, path), and fetch the value at that key
+    this.keys.forEach((key, keyIndex) => {
+      let value = key.getFn ? key.getFn(doc) : this.getFn(doc, key.path);
+
+      if (!isDefined(value)) {
+        return
+      }
+
+      if (isArray(value)) {
+        let subRecords = [];
+        const stack = [{ nestedArrIndex: -1, value }];
+
+        while (stack.length) {
+          const { nestedArrIndex, value } = stack.pop();
+
+          if (!isDefined(value)) {
+            continue
+          }
+
+          if (isString(value) && !isBlank(value)) {
+            let subRecord = {
+              v: value,
+              i: nestedArrIndex,
+              n: this.norm.get(value)
+            };
+
+            subRecords.push(subRecord);
+          } else if (isArray(value)) {
+            value.forEach((item, k) => {
+              stack.push({
+                nestedArrIndex: k,
+                value: item
+              });
+            });
+          } else ;
+        }
+        record.$[keyIndex] = subRecords;
+      } else if (isString(value) && !isBlank(value)) {
+        let subRecord = {
+          v: value,
+          n: this.norm.get(value)
+        };
+
+        record.$[keyIndex] = subRecord;
+      }
+    });
+
+    this.records.push(record);
+  }
+  toJSON() {
+    return {
+      keys: this.keys,
+      records: this.records
+    }
+  }
+}
+
+function createIndex(
+  keys,
+  docs,
+  { getFn = Config.getFn, fieldNormWeight = Config.fieldNormWeight } = {}
+) {
+  const myIndex = new FuseIndex({ getFn, fieldNormWeight });
+  myIndex.setKeys(keys.map(createKey));
+  myIndex.setSources(docs);
+  myIndex.create();
+  return myIndex
+}
+
+function parseIndex(
+  data,
+  { getFn = Config.getFn, fieldNormWeight = Config.fieldNormWeight } = {}
+) {
+  const { keys, records } = data;
+  const myIndex = new FuseIndex({ getFn, fieldNormWeight });
+  myIndex.setKeys(keys);
+  myIndex.setIndexRecords(records);
+  return myIndex
+}
+
+function computeScore$1(
+  pattern,
+  {
+    errors = 0,
+    currentLocation = 0,
+    expectedLocation = 0,
+    distance = Config.distance,
+    ignoreLocation = Config.ignoreLocation
+  } = {}
+) {
+  const accuracy = errors / pattern.length;
+
+  if (ignoreLocation) {
+    return accuracy
+  }
+
+  const proximity = Math.abs(expectedLocation - currentLocation);
+
+  if (!distance) {
+    // Dodge divide by zero error.
+    return proximity ? 1.0 : accuracy
+  }
+
+  return accuracy + proximity / distance
+}
+
+function convertMaskToIndices(
+  matchmask = [],
+  minMatchCharLength = Config.minMatchCharLength
+) {
+  let indices = [];
+  let start = -1;
+  let end = -1;
+  let i = 0;
+
+  for (let len = matchmask.length; i < len; i += 1) {
+    let match = matchmask[i];
+    if (match && start === -1) {
+      start = i;
+    } else if (!match && start !== -1) {
+      end = i - 1;
+      if (end - start + 1 >= minMatchCharLength) {
+        indices.push([start, end]);
+      }
+      start = -1;
+    }
+  }
+
+  // (i-1 - start) + 1 => i - start
+  if (matchmask[i - 1] && i - start >= minMatchCharLength) {
+    indices.push([start, i - 1]);
+  }
+
+  return indices
+}
+
+// Machine word size
+const MAX_BITS = 32;
+
+function search(
+  text,
+  pattern,
+  patternAlphabet,
+  {
+    location = Config.location,
+    distance = Config.distance,
+    threshold = Config.threshold,
+    findAllMatches = Config.findAllMatches,
+    minMatchCharLength = Config.minMatchCharLength,
+    includeMatches = Config.includeMatches,
+    ignoreLocation = Config.ignoreLocation
+  } = {}
+) {
+  if (pattern.length > MAX_BITS) {
+    throw new Error(PATTERN_LENGTH_TOO_LARGE(MAX_BITS))
+  }
+
+  const patternLen = pattern.length;
+  // Set starting location at beginning text and initialize the alphabet.
+  const textLen = text.length;
+  // Handle the case when location > text.length
+  const expectedLocation = Math.max(0, Math.min(location, textLen));
+  // Highest score beyond which we give up.
+  let currentThreshold = threshold;
+  // Is there a nearby exact match? (speedup)
+  let bestLocation = expectedLocation;
+
+  // Performance: only computer matches when the minMatchCharLength > 1
+  // OR if `includeMatches` is true.
+  const computeMatches = minMatchCharLength > 1 || includeMatches;
+  // A mask of the matches, used for building the indices
+  const matchMask = computeMatches ? Array(textLen) : [];
+
+  let index;
+
+  // Get all exact matches, here for speed up
+  while ((index = text.indexOf(pattern, bestLocation)) > -1) {
+    let score = computeScore$1(pattern, {
+      currentLocation: index,
+      expectedLocation,
+      distance,
+      ignoreLocation
+    });
+
+    currentThreshold = Math.min(score, currentThreshold);
+    bestLocation = index + patternLen;
+
+    if (computeMatches) {
+      let i = 0;
+      while (i < patternLen) {
+        matchMask[index + i] = 1;
+        i += 1;
+      }
+    }
+  }
+
+  // Reset the best location
+  bestLocation = -1;
+
+  let lastBitArr = [];
+  let finalScore = 1;
+  let binMax = patternLen + textLen;
+
+  const mask = 1 << (patternLen - 1);
+
+  for (let i = 0; i < patternLen; i += 1) {
+    // Scan for the best match; each iteration allows for one more error.
+    // Run a binary search to determine how far from the match location we can stray
+    // at this error level.
+    let binMin = 0;
+    let binMid = binMax;
+
+    while (binMin < binMid) {
+      const score = computeScore$1(pattern, {
+        errors: i,
+        currentLocation: expectedLocation + binMid,
+        expectedLocation,
+        distance,
+        ignoreLocation
+      });
+
+      if (score <= currentThreshold) {
+        binMin = binMid;
+      } else {
+        binMax = binMid;
+      }
+
+      binMid = Math.floor((binMax - binMin) / 2 + binMin);
+    }
+
+    // Use the result from this iteration as the maximum for the next.
+    binMax = binMid;
+
+    let start = Math.max(1, expectedLocation - binMid + 1);
+    let finish = findAllMatches
+      ? textLen
+      : Math.min(expectedLocation + binMid, textLen) + patternLen;
+
+    // Initialize the bit array
+    let bitArr = Array(finish + 2);
+
+    bitArr[finish + 1] = (1 << i) - 1;
+
+    for (let j = finish; j >= start; j -= 1) {
+      let currentLocation = j - 1;
+      let charMatch = patternAlphabet[text.charAt(currentLocation)];
+
+      if (computeMatches) {
+        // Speed up: quick bool to int conversion (i.e, `charMatch ? 1 : 0`)
+        matchMask[currentLocation] = +!!charMatch;
+      }
+
+      // First pass: exact match
+      bitArr[j] = ((bitArr[j + 1] << 1) | 1) & charMatch;
+
+      // Subsequent passes: fuzzy match
+      if (i) {
+        bitArr[j] |=
+          ((lastBitArr[j + 1] | lastBitArr[j]) << 1) | 1 | lastBitArr[j + 1];
+      }
+
+      if (bitArr[j] & mask) {
+        finalScore = computeScore$1(pattern, {
+          errors: i,
+          currentLocation,
+          expectedLocation,
+          distance,
+          ignoreLocation
+        });
+
+        // This match will almost certainly be better than any existing match.
+        // But check anyway.
+        if (finalScore <= currentThreshold) {
+          // Indeed it is
+          currentThreshold = finalScore;
+          bestLocation = currentLocation;
+
+          // Already passed `loc`, downhill from here on in.
+          if (bestLocation <= expectedLocation) {
+            break
+          }
+
+          // When passing `bestLocation`, don't exceed our current distance from `expectedLocation`.
+          start = Math.max(1, 2 * expectedLocation - bestLocation);
+        }
+      }
+    }
+
+    // No hope for a (better) match at greater error levels.
+    const score = computeScore$1(pattern, {
+      errors: i + 1,
+      currentLocation: expectedLocation,
+      expectedLocation,
+      distance,
+      ignoreLocation
+    });
+
+    if (score > currentThreshold) {
+      break
+    }
+
+    lastBitArr = bitArr;
+  }
+
+  const result = {
+    isMatch: bestLocation >= 0,
+    // Count exact matches (those with a score of 0) to be "almost" exact
+    score: Math.max(0.001, finalScore)
+  };
+
+  if (computeMatches) {
+    const indices = convertMaskToIndices(matchMask, minMatchCharLength);
+    if (!indices.length) {
+      result.isMatch = false;
+    } else if (includeMatches) {
+      result.indices = indices;
+    }
+  }
+
+  return result
+}
+
+function createPatternAlphabet(pattern) {
+  let mask = {};
+
+  for (let i = 0, len = pattern.length; i < len; i += 1) {
+    const char = pattern.charAt(i);
+    mask[char] = (mask[char] || 0) | (1 << (len - i - 1));
+  }
+
+  return mask
+}
+
+class BitapSearch {
+  constructor(
+    pattern,
+    {
+      location = Config.location,
+      threshold = Config.threshold,
+      distance = Config.distance,
+      includeMatches = Config.includeMatches,
+      findAllMatches = Config.findAllMatches,
+      minMatchCharLength = Config.minMatchCharLength,
+      isCaseSensitive = Config.isCaseSensitive,
+      ignoreLocation = Config.ignoreLocation
+    } = {}
+  ) {
+    this.options = {
+      location,
+      threshold,
+      distance,
+      includeMatches,
+      findAllMatches,
+      minMatchCharLength,
+      isCaseSensitive,
+      ignoreLocation
+    };
+
+    this.pattern = isCaseSensitive ? pattern : pattern.toLowerCase();
+
+    this.chunks = [];
+
+    if (!this.pattern.length) {
+      return
+    }
+
+    const addChunk = (pattern, startIndex) => {
+      this.chunks.push({
+        pattern,
+        alphabet: createPatternAlphabet(pattern),
+        startIndex
+      });
+    };
+
+    const len = this.pattern.length;
+
+    if (len > MAX_BITS) {
+      let i = 0;
+      const remainder = len % MAX_BITS;
+      const end = len - remainder;
+
+      while (i < end) {
+        addChunk(this.pattern.substr(i, MAX_BITS), i);
+        i += MAX_BITS;
+      }
+
+      if (remainder) {
+        const startIndex = len - MAX_BITS;
+        addChunk(this.pattern.substr(startIndex), startIndex);
+      }
+    } else {
+      addChunk(this.pattern, 0);
+    }
+  }
+
+  searchIn(text) {
+    const { isCaseSensitive, includeMatches } = this.options;
+
+    if (!isCaseSensitive) {
+      text = text.toLowerCase();
+    }
+
+    // Exact match
+    if (this.pattern === text) {
+      let result = {
+        isMatch: true,
+        score: 0
+      };
+
+      if (includeMatches) {
+        result.indices = [[0, text.length - 1]];
+      }
+
+      return result
+    }
+
+    // Otherwise, use Bitap algorithm
+    const {
+      location,
+      distance,
+      threshold,
+      findAllMatches,
+      minMatchCharLength,
+      ignoreLocation
+    } = this.options;
+
+    let allIndices = [];
+    let totalScore = 0;
+    let hasMatches = false;
+
+    this.chunks.forEach(({ pattern, alphabet, startIndex }) => {
+      const { isMatch, score, indices } = search(text, pattern, alphabet, {
+        location: location + startIndex,
+        distance,
+        threshold,
+        findAllMatches,
+        minMatchCharLength,
+        includeMatches,
+        ignoreLocation
+      });
+
+      if (isMatch) {
+        hasMatches = true;
+      }
+
+      totalScore += score;
+
+      if (isMatch && indices) {
+        allIndices = [...allIndices, ...indices];
+      }
+    });
+
+    let result = {
+      isMatch: hasMatches,
+      score: hasMatches ? totalScore / this.chunks.length : 1
+    };
+
+    if (hasMatches && includeMatches) {
+      result.indices = allIndices;
+    }
+
+    return result
+  }
+}
+
+class BaseMatch {
+  constructor(pattern) {
+    this.pattern = pattern;
+  }
+  static isMultiMatch(pattern) {
+    return getMatch(pattern, this.multiRegex)
+  }
+  static isSingleMatch(pattern) {
+    return getMatch(pattern, this.singleRegex)
+  }
+  search(/*text*/) {}
+}
+
+function getMatch(pattern, exp) {
+  const matches = pattern.match(exp);
+  return matches ? matches[1] : null
+}
+
+// Token: 'file
+
+class ExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'exact'
+  }
+  static get multiRegex() {
+    return /^="(.*)"$/
+  }
+  static get singleRegex() {
+    return /^=(.*)$/
+  }
+  search(text) {
+    const isMatch = text === this.pattern;
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [0, this.pattern.length - 1]
+    }
+  }
+}
+
+// Token: !fire
+
+class InverseExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'inverse-exact'
+  }
+  static get multiRegex() {
+    return /^!"(.*)"$/
+  }
+  static get singleRegex() {
+    return /^!(.*)$/
+  }
+  search(text) {
+    const index = text.indexOf(this.pattern);
+    const isMatch = index === -1;
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [0, text.length - 1]
+    }
+  }
+}
+
+// Token: ^file
+
+class PrefixExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'prefix-exact'
+  }
+  static get multiRegex() {
+    return /^\^"(.*)"$/
+  }
+  static get singleRegex() {
+    return /^\^(.*)$/
+  }
+  search(text) {
+    const isMatch = text.startsWith(this.pattern);
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [0, this.pattern.length - 1]
+    }
+  }
+}
+
+// Token: !^fire
+
+class InversePrefixExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'inverse-prefix-exact'
+  }
+  static get multiRegex() {
+    return /^!\^"(.*)"$/
+  }
+  static get singleRegex() {
+    return /^!\^(.*)$/
+  }
+  search(text) {
+    const isMatch = !text.startsWith(this.pattern);
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [0, text.length - 1]
+    }
+  }
+}
+
+// Token: .file$
+
+class SuffixExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'suffix-exact'
+  }
+  static get multiRegex() {
+    return /^"(.*)"\$$/
+  }
+  static get singleRegex() {
+    return /^(.*)\$$/
+  }
+  search(text) {
+    const isMatch = text.endsWith(this.pattern);
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [text.length - this.pattern.length, text.length - 1]
+    }
+  }
+}
+
+// Token: !.file$
+
+class InverseSuffixExactMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'inverse-suffix-exact'
+  }
+  static get multiRegex() {
+    return /^!"(.*)"\$$/
+  }
+  static get singleRegex() {
+    return /^!(.*)\$$/
+  }
+  search(text) {
+    const isMatch = !text.endsWith(this.pattern);
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices: [0, text.length - 1]
+    }
+  }
+}
+
+class FuzzyMatch extends BaseMatch {
+  constructor(
+    pattern,
+    {
+      location = Config.location,
+      threshold = Config.threshold,
+      distance = Config.distance,
+      includeMatches = Config.includeMatches,
+      findAllMatches = Config.findAllMatches,
+      minMatchCharLength = Config.minMatchCharLength,
+      isCaseSensitive = Config.isCaseSensitive,
+      ignoreLocation = Config.ignoreLocation
+    } = {}
+  ) {
+    super(pattern);
+    this._bitapSearch = new BitapSearch(pattern, {
+      location,
+      threshold,
+      distance,
+      includeMatches,
+      findAllMatches,
+      minMatchCharLength,
+      isCaseSensitive,
+      ignoreLocation
+    });
+  }
+  static get type() {
+    return 'fuzzy'
+  }
+  static get multiRegex() {
+    return /^"(.*)"$/
+  }
+  static get singleRegex() {
+    return /^(.*)$/
+  }
+  search(text) {
+    return this._bitapSearch.searchIn(text)
+  }
+}
+
+// Token: 'file
+
+class IncludeMatch extends BaseMatch {
+  constructor(pattern) {
+    super(pattern);
+  }
+  static get type() {
+    return 'include'
+  }
+  static get multiRegex() {
+    return /^'"(.*)"$/
+  }
+  static get singleRegex() {
+    return /^'(.*)$/
+  }
+  search(text) {
+    let location = 0;
+    let index;
+
+    const indices = [];
+    const patternLen = this.pattern.length;
+
+    // Get all exact matches
+    while ((index = text.indexOf(this.pattern, location)) > -1) {
+      location = index + patternLen;
+      indices.push([index, location - 1]);
+    }
+
+    const isMatch = !!indices.length;
+
+    return {
+      isMatch,
+      score: isMatch ? 0 : 1,
+      indices
+    }
+  }
+}
+
+// ❗Order is important. DO NOT CHANGE.
+const searchers = [
+  ExactMatch,
+  IncludeMatch,
+  PrefixExactMatch,
+  InversePrefixExactMatch,
+  InverseSuffixExactMatch,
+  SuffixExactMatch,
+  InverseExactMatch,
+  FuzzyMatch
+];
+
+const searchersLen = searchers.length;
+
+// Regex to split by spaces, but keep anything in quotes together
+const SPACE_RE = / +(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/;
+const OR_TOKEN = '|';
+
+// Return a 2D array representation of the query, for simpler parsing.
+// Example:
+// "^core go$ | rb$ | py$ xy$" => [["^core", "go$"], ["rb$"], ["py$", "xy$"]]
+function parseQuery(pattern, options = {}) {
+  return pattern.split(OR_TOKEN).map((item) => {
+    let query = item
+      .trim()
+      .split(SPACE_RE)
+      .filter((item) => item && !!item.trim());
+
+    let results = [];
+    for (let i = 0, len = query.length; i < len; i += 1) {
+      const queryItem = query[i];
+
+      // 1. Handle multiple query match (i.e, once that are quoted, like `"hello world"`)
+      let found = false;
+      let idx = -1;
+      while (!found && ++idx < searchersLen) {
+        const searcher = searchers[idx];
+        let token = searcher.isMultiMatch(queryItem);
+        if (token) {
+          results.push(new searcher(token, options));
+          found = true;
+        }
+      }
+
+      if (found) {
+        continue
+      }
+
+      // 2. Handle single query matches (i.e, once that are *not* quoted)
+      idx = -1;
+      while (++idx < searchersLen) {
+        const searcher = searchers[idx];
+        let token = searcher.isSingleMatch(queryItem);
+        if (token) {
+          results.push(new searcher(token, options));
+          break
+        }
+      }
+    }
+
+    return results
+  })
+}
+
+// These extended matchers can return an array of matches, as opposed
+// to a singl match
+const MultiMatchSet = new Set([FuzzyMatch.type, IncludeMatch.type]);
+
+/**
+ * Command-like searching
+ * ======================
+ *
+ * Given multiple search terms delimited by spaces.e.g. `^jscript .python$ ruby !java`,
+ * search in a given text.
+ *
+ * Search syntax:
+ *
+ * | Token       | Match type                 | Description                            |
+ * | ----------- | -------------------------- | -------------------------------------- |
+ * | `jscript`   | fuzzy-match                | Items that fuzzy match `jscript`       |
+ * | `=scheme`   | exact-match                | Items that are `scheme`                |
+ * | `'python`   | include-match              | Items that include `python`            |
+ * | `!ruby`     | inverse-exact-match        | Items that do not include `ruby`       |
+ * | `^java`     | prefix-exact-match         | Items that start with `java`           |
+ * | `!^earlang` | inverse-prefix-exact-match | Items that do not start with `earlang` |
+ * | `.js$`      | suffix-exact-match         | Items that end with `.js`              |
+ * | `!.go$`     | inverse-suffix-exact-match | Items that do not end with `.go`       |
+ *
+ * A single pipe character acts as an OR operator. For example, the following
+ * query matches entries that start with `core` and end with either`go`, `rb`,
+ * or`py`.
+ *
+ * ```
+ * ^core go$ | rb$ | py$
+ * ```
+ */
+class ExtendedSearch {
+  constructor(
+    pattern,
+    {
+      isCaseSensitive = Config.isCaseSensitive,
+      includeMatches = Config.includeMatches,
+      minMatchCharLength = Config.minMatchCharLength,
+      ignoreLocation = Config.ignoreLocation,
+      findAllMatches = Config.findAllMatches,
+      location = Config.location,
+      threshold = Config.threshold,
+      distance = Config.distance
+    } = {}
+  ) {
+    this.query = null;
+    this.options = {
+      isCaseSensitive,
+      includeMatches,
+      minMatchCharLength,
+      findAllMatches,
+      ignoreLocation,
+      location,
+      threshold,
+      distance
+    };
+
+    this.pattern = isCaseSensitive ? pattern : pattern.toLowerCase();
+    this.query = parseQuery(this.pattern, this.options);
+  }
+
+  static condition(_, options) {
+    return options.useExtendedSearch
+  }
+
+  searchIn(text) {
+    const query = this.query;
+
+    if (!query) {
+      return {
+        isMatch: false,
+        score: 1
+      }
+    }
+
+    const { includeMatches, isCaseSensitive } = this.options;
+
+    text = isCaseSensitive ? text : text.toLowerCase();
+
+    let numMatches = 0;
+    let allIndices = [];
+    let totalScore = 0;
+
+    // ORs
+    for (let i = 0, qLen = query.length; i < qLen; i += 1) {
+      const searchers = query[i];
+
+      // Reset indices
+      allIndices.length = 0;
+      numMatches = 0;
+
+      // ANDs
+      for (let j = 0, pLen = searchers.length; j < pLen; j += 1) {
+        const searcher = searchers[j];
+        const { isMatch, indices, score } = searcher.search(text);
+
+        if (isMatch) {
+          numMatches += 1;
+          totalScore += score;
+          if (includeMatches) {
+            const type = searcher.constructor.type;
+            if (MultiMatchSet.has(type)) {
+              allIndices = [...allIndices, ...indices];
+            } else {
+              allIndices.push(indices);
+            }
+          }
+        } else {
+          totalScore = 0;
+          numMatches = 0;
+          allIndices.length = 0;
+          break
+        }
+      }
+
+      // OR condition, so if TRUE, return
+      if (numMatches) {
+        let result = {
+          isMatch: true,
+          score: totalScore / numMatches
+        };
+
+        if (includeMatches) {
+          result.indices = allIndices;
+        }
+
+        return result
+      }
+    }
+
+    // Nothing was matched
+    return {
+      isMatch: false,
+      score: 1
+    }
+  }
+}
+
+const registeredSearchers = [];
+
+function register(...args) {
+  registeredSearchers.push(...args);
+}
+
+function createSearcher(pattern, options) {
+  for (let i = 0, len = registeredSearchers.length; i < len; i += 1) {
+    let searcherClass = registeredSearchers[i];
+    if (searcherClass.condition(pattern, options)) {
+      return new searcherClass(pattern, options)
+    }
+  }
+
+  return new BitapSearch(pattern, options)
+}
+
+const LogicalOperator = {
+  AND: '$and',
+  OR: '$or'
+};
+
+const KeyType = {
+  PATH: '$path',
+  PATTERN: '$val'
+};
+
+const isExpression = (query) =>
+  !!(query[LogicalOperator.AND] || query[LogicalOperator.OR]);
+
+const isPath = (query) => !!query[KeyType.PATH];
+
+const isLeaf = (query) =>
+  !isArray(query) && isObject(query) && !isExpression(query);
+
+const convertToExplicit = (query) => ({
+  [LogicalOperator.AND]: Object.keys(query).map((key) => ({
+    [key]: query[key]
+  }))
+});
+
+// When `auto` is `true`, the parse function will infer and initialize and add
+// the appropriate `Searcher` instance
+function parse(query, options, { auto = true } = {}) {
+  const next = (query) => {
+    let keys = Object.keys(query);
+
+    const isQueryPath = isPath(query);
+
+    if (!isQueryPath && keys.length > 1 && !isExpression(query)) {
+      return next(convertToExplicit(query))
+    }
+
+    if (isLeaf(query)) {
+      const key = isQueryPath ? query[KeyType.PATH] : keys[0];
+
+      const pattern = isQueryPath ? query[KeyType.PATTERN] : query[key];
+
+      if (!isString(pattern)) {
+        throw new Error(LOGICAL_SEARCH_INVALID_QUERY_FOR_KEY(key))
+      }
+
+      const obj = {
+        keyId: createKeyId(key),
+        pattern
+      };
+
+      if (auto) {
+        obj.searcher = createSearcher(pattern, options);
+      }
+
+      return obj
+    }
+
+    let node = {
+      children: [],
+      operator: keys[0]
+    };
+
+    keys.forEach((key) => {
+      const value = query[key];
+
+      if (isArray(value)) {
+        value.forEach((item) => {
+          node.children.push(next(item));
+        });
+      }
+    });
+
+    return node
+  };
+
+  if (!isExpression(query)) {
+    query = convertToExplicit(query);
+  }
+
+  return next(query)
+}
+
+// Practical scoring function
+function computeScore(
+  results,
+  { ignoreFieldNorm = Config.ignoreFieldNorm }
+) {
+  results.forEach((result) => {
+    let totalScore = 1;
+
+    result.matches.forEach(({ key, norm, score }) => {
+      const weight = key ? key.weight : null;
+
+      totalScore *= Math.pow(
+        score === 0 && weight ? Number.EPSILON : score,
+        (weight || 1) * (ignoreFieldNorm ? 1 : norm)
+      );
+    });
+
+    result.score = totalScore;
+  });
+}
+
+function transformMatches(result, data) {
+  const matches = result.matches;
+  data.matches = [];
+
+  if (!isDefined(matches)) {
+    return
+  }
+
+  matches.forEach((match) => {
+    if (!isDefined(match.indices) || !match.indices.length) {
+      return
+    }
+
+    const { indices, value } = match;
+
+    let obj = {
+      indices,
+      value
+    };
+
+    if (match.key) {
+      obj.key = match.key.src;
+    }
+
+    if (match.idx > -1) {
+      obj.refIndex = match.idx;
+    }
+
+    data.matches.push(obj);
+  });
+}
+
+function transformScore(result, data) {
+  data.score = result.score;
+}
+
+function format(
+  results,
+  docs,
+  {
+    includeMatches = Config.includeMatches,
+    includeScore = Config.includeScore
+  } = {}
+) {
+  const transformers = [];
+
+  if (includeMatches) transformers.push(transformMatches);
+  if (includeScore) transformers.push(transformScore);
+
+  return results.map((result) => {
+    const { idx } = result;
+
+    const data = {
+      item: docs[idx],
+      refIndex: idx
+    };
+
+    if (transformers.length) {
+      transformers.forEach((transformer) => {
+        transformer(result, data);
+      });
+    }
+
+    return data
+  })
+}
+
+class Fuse {
+  constructor(docs, options = {}, index) {
+    this.options = { ...Config, ...options };
+
+    if (
+      this.options.useExtendedSearch &&
+      !true
+    ) {
+      throw new Error(EXTENDED_SEARCH_UNAVAILABLE)
+    }
+
+    this._keyStore = new KeyStore(this.options.keys);
+
+    this.setCollection(docs, index);
+  }
+
+  setCollection(docs, index) {
+    this._docs = docs;
+
+    if (index && !(index instanceof FuseIndex)) {
+      throw new Error(INCORRECT_INDEX_TYPE)
+    }
+
+    this._myIndex =
+      index ||
+      createIndex(this.options.keys, this._docs, {
+        getFn: this.options.getFn,
+        fieldNormWeight: this.options.fieldNormWeight
+      });
+  }
+
+  add(doc) {
+    if (!isDefined(doc)) {
+      return
+    }
+
+    this._docs.push(doc);
+    this._myIndex.add(doc);
+  }
+
+  remove(predicate = (/* doc, idx */) => false) {
+    const results = [];
+
+    for (let i = 0, len = this._docs.length; i < len; i += 1) {
+      const doc = this._docs[i];
+      if (predicate(doc, i)) {
+        this.removeAt(i);
+        i -= 1;
+        len -= 1;
+
+        results.push(doc);
+      }
+    }
+
+    return results
+  }
+
+  removeAt(idx) {
+    this._docs.splice(idx, 1);
+    this._myIndex.removeAt(idx);
+  }
+
+  getIndex() {
+    return this._myIndex
+  }
+
+  search(query, { limit = -1 } = {}) {
+    const {
+      includeMatches,
+      includeScore,
+      shouldSort,
+      sortFn,
+      ignoreFieldNorm
+    } = this.options;
+
+    let results = isString(query)
+      ? isString(this._docs[0])
+        ? this._searchStringList(query)
+        : this._searchObjectList(query)
+      : this._searchLogical(query);
+
+    computeScore(results, { ignoreFieldNorm });
+
+    if (shouldSort) {
+      results.sort(sortFn);
+    }
+
+    if (isNumber(limit) && limit > -1) {
+      results = results.slice(0, limit);
+    }
+
+    return format(results, this._docs, {
+      includeMatches,
+      includeScore
+    })
+  }
+
+  _searchStringList(query) {
+    const searcher = createSearcher(query, this.options);
+    const { records } = this._myIndex;
+    const results = [];
+
+    // Iterate over every string in the index
+    records.forEach(({ v: text, i: idx, n: norm }) => {
+      if (!isDefined(text)) {
+        return
+      }
+
+      const { isMatch, score, indices } = searcher.searchIn(text);
+
+      if (isMatch) {
+        results.push({
+          item: text,
+          idx,
+          matches: [{ score, value: text, norm, indices }]
+        });
+      }
+    });
+
+    return results
+  }
+
+  _searchLogical(query) {
+
+    const expression = parse(query, this.options);
+
+    const evaluate = (node, item, idx) => {
+      if (!node.children) {
+        const { keyId, searcher } = node;
+
+        const matches = this._findMatches({
+          key: this._keyStore.get(keyId),
+          value: this._myIndex.getValueForItemAtKeyId(item, keyId),
+          searcher
+        });
+
+        if (matches && matches.length) {
+          return [
+            {
+              idx,
+              item,
+              matches
+            }
+          ]
+        }
+
+        return []
+      }
+
+      const res = [];
+      for (let i = 0, len = node.children.length; i < len; i += 1) {
+        const child = node.children[i];
+        const result = evaluate(child, item, idx);
+        if (result.length) {
+          res.push(...result);
+        } else if (node.operator === LogicalOperator.AND) {
+          return []
+        }
+      }
+      return res
+    };
+
+    const records = this._myIndex.records;
+    const resultMap = {};
+    const results = [];
+
+    records.forEach(({ $: item, i: idx }) => {
+      if (isDefined(item)) {
+        let expResults = evaluate(expression, item, idx);
+
+        if (expResults.length) {
+          // Dedupe when adding
+          if (!resultMap[idx]) {
+            resultMap[idx] = { idx, item, matches: [] };
+            results.push(resultMap[idx]);
+          }
+          expResults.forEach(({ matches }) => {
+            resultMap[idx].matches.push(...matches);
+          });
+        }
+      }
+    });
+
+    return results
+  }
+
+  _searchObjectList(query) {
+    const searcher = createSearcher(query, this.options);
+    const { keys, records } = this._myIndex;
+    const results = [];
+
+    // List is Array<Object>
+    records.forEach(({ $: item, i: idx }) => {
+      if (!isDefined(item)) {
+        return
+      }
+
+      let matches = [];
+
+      // Iterate over every key (i.e, path), and fetch the value at that key
+      keys.forEach((key, keyIndex) => {
+        matches.push(
+          ...this._findMatches({
+            key,
+            value: item[keyIndex],
+            searcher
+          })
+        );
+      });
+
+      if (matches.length) {
+        results.push({
+          idx,
+          item,
+          matches
+        });
+      }
+    });
+
+    return results
+  }
+  _findMatches({ key, value, searcher }) {
+    if (!isDefined(value)) {
+      return []
+    }
+
+    let matches = [];
+
+    if (isArray(value)) {
+      value.forEach(({ v: text, i: idx, n: norm }) => {
+        if (!isDefined(text)) {
+          return
+        }
+
+        const { isMatch, score, indices } = searcher.searchIn(text);
+
+        if (isMatch) {
+          matches.push({
+            score,
+            key,
+            value: text,
+            idx,
+            norm,
+            indices
+          });
+        }
+      });
+    } else {
+      const { v: text, n: norm } = value;
+
+      const { isMatch, score, indices } = searcher.searchIn(text);
+
+      if (isMatch) {
+        matches.push({ score, key, value: text, norm, indices });
+      }
+    }
+
+    return matches
+  }
+}
+
+Fuse.version = '7.0.0';
+Fuse.createIndex = createIndex;
+Fuse.parseIndex = parseIndex;
+Fuse.config = Config;
+
+{
+  Fuse.parseQuery = parse;
+}
+
+{
+  register(ExtendedSearch);
+}
+
 /* generated by Svelte v3.59.1 */
 
 const { window: window_1 } = globals;
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
-	child_ctx[17] = list[i].submenu;
+	child_ctx[26] = list[i];
 	return child_ctx;
 }
 
 function get_each_context_1(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
+	child_ctx[29] = list[i].link;
+	child_ctx[30] = list[i].submenu;
 	return child_ctx;
 }
 
 function get_each_context_2(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
-	child_ctx[17] = list[i].submenu;
+	child_ctx[29] = list[i].link;
 	return child_ctx;
 }
 
 function get_each_context_3(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[16] = list[i].link;
+	child_ctx[29] = list[i].link;
+	child_ctx[30] = list[i].submenu;
 	return child_ctx;
 }
 
-// (198:31) 
-function create_if_block_7(ctx) {
+function get_each_context_4(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[29] = list[i].link;
+	return child_ctx;
+}
+
+function get_each_context_5(ctx, list, i) {
+	const child_ctx = ctx.slice();
+	child_ctx[29] = list[i].link;
+	child_ctx[39] = list[i].icon;
+	return child_ctx;
+}
+
+// (372:4) {#each social as {link, icon}}
+function create_each_block_5(ctx) {
+	let li;
+	let a;
+	let icon;
+	let a_href_value;
+	let a_aria_label_value;
+	let t;
+	let current;
+	icon = new Component$1({ props: { icon: /*icon*/ ctx[39] } });
+
+	return {
+		c() {
+			li = element("li");
+			a = element("a");
+			create_component(icon.$$.fragment);
+			t = space();
+			this.h();
+		},
+		l(nodes) {
+			li = claim_element(nodes, "LI", { class: true });
+			var li_nodes = children(li);
+
+			a = claim_element(li_nodes, "A", {
+				href: true,
+				"aria-label": true,
+				class: true
+			});
+
+			var a_nodes = children(a);
+			claim_component(icon.$$.fragment, a_nodes);
+			a_nodes.forEach(detach);
+			t = claim_space(li_nodes);
+			li_nodes.forEach(detach);
+			this.h();
+		},
+		h() {
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
+			attr(a, "aria-label", a_aria_label_value = /*link*/ ctx[29].label);
+			attr(a, "class", "svelte-1pl0usf");
+			attr(li, "class", "svelte-1pl0usf");
+		},
+		m(target, anchor) {
+			insert_hydration(target, li, anchor);
+			append_hydration(li, a);
+			mount_component(icon, a, null);
+			append_hydration(li, t);
+			current = true;
+		},
+		p(ctx, dirty) {
+			const icon_changes = {};
+			if (dirty[0] & /*social*/ 2) icon_changes.icon = /*icon*/ ctx[39];
+			icon.$set(icon_changes);
+
+			if (!current || dirty[0] & /*social*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
+				attr(a, "href", a_href_value);
+			}
+
+			if (!current || dirty[0] & /*social*/ 2 && a_aria_label_value !== (a_aria_label_value = /*link*/ ctx[29].label)) {
+				attr(a, "aria-label", a_aria_label_value);
+			}
+		},
+		i(local) {
+			if (current) return;
+			transition_in(icon.$$.fragment, local);
+			current = true;
+		},
+		o(local) {
+			transition_out(icon.$$.fragment, local);
+			current = false;
+		},
+		d(detaching) {
+			if (detaching) detach(li);
+			destroy_component(icon);
+		}
+	};
+}
+
+// (385:31) 
+function create_if_block_8(ctx) {
 	let img;
 	let img_src_value;
 	let img_alt_value;
@@ -3180,22 +5115,23 @@ function create_if_block_7(ctx) {
 			this.h();
 		},
 		l(nodes) {
-			img = claim_element(nodes, "IMG", { src: true, alt: true });
+			img = claim_element(nodes, "IMG", { src: true, alt: true, class: true });
 			this.h();
 		},
 		h() {
 			if (!src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*logo*/ ctx[0].image.alt);
+			attr(img, "class", "svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, img, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*logo*/ 1 && !src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) {
+			if (dirty[0] & /*logo*/ 1 && !src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*logo*/ 1 && img_alt_value !== (img_alt_value = /*logo*/ ctx[0].image.alt)) {
+			if (dirty[0] & /*logo*/ 1 && img_alt_value !== (img_alt_value = /*logo*/ ctx[0].image.alt)) {
 				attr(img, "alt", img_alt_value);
 			}
 		},
@@ -3205,8 +5141,8 @@ function create_if_block_7(ctx) {
 	};
 }
 
-// (196:6) {#if logo.title}
-function create_if_block_6(ctx) {
+// (383:6) {#if logo.title}
+function create_if_block_7(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
 
@@ -3221,7 +5157,7 @@ function create_if_block_6(ctx) {
 			insert_hydration(target, t, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*logo*/ 1 && t_value !== (t_value = /*logo*/ ctx[0].title + "")) set_data(t, t_value);
+			if (dirty[0] & /*logo*/ 1 && t_value !== (t_value = /*logo*/ ctx[0].title + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(t);
@@ -3229,23 +5165,31 @@ function create_if_block_6(ctx) {
 	};
 }
 
-// (206:12) {:else}
+// (393:12) {:else}
 function create_else_block_1(ctx) {
 	let div;
 	let button;
-	let t0_value = /*link*/ ctx[16].label + "";
+	let t0_value = /*link*/ ctx[29].label + "";
 	let t0;
 	let t1;
-	let span;
-	let t2;
-	let t3;
+	let current_block_type_index;
+	let if_block;
 	let current;
 	let mounted;
 	let dispose;
-	let if_block = /*hovered_link*/ ctx[3] == /*link*/ ctx[16] && create_if_block_5(ctx);
+	const if_block_creators = [create_if_block_6, create_else_block_2];
+	const if_blocks = [];
+
+	function select_block_type_2(ctx, dirty) {
+		if (/*hovered_link*/ ctx[5] == /*link*/ ctx[29]) return 0;
+		return 1;
+	}
+
+	current_block_type_index = select_block_type_2(ctx);
+	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
 
 	function mouseover_handler(...args) {
-		return /*mouseover_handler*/ ctx[11](/*link*/ ctx[16], ...args);
+		return /*mouseover_handler*/ ctx[14](/*link*/ ctx[29], ...args);
 	}
 
 	return {
@@ -3254,10 +5198,7 @@ function create_else_block_1(ctx) {
 			button = element("button");
 			t0 = text(t0_value);
 			t1 = space();
-			span = element("span");
-			t2 = text(">");
-			t3 = space();
-			if (if_block) if_block.c();
+			if_block.c();
 			this.h();
 		},
 		l(nodes) {
@@ -3266,37 +5207,28 @@ function create_else_block_1(ctx) {
 			button = claim_element(div_nodes, "BUTTON", { type: true, class: true });
 			var button_nodes = children(button);
 			t0 = claim_text(button_nodes, t0_value);
-			t1 = claim_space(button_nodes);
-			span = claim_element(button_nodes, "SPAN", { class: true });
-			var span_nodes = children(span);
-			t2 = claim_text(span_nodes, ">");
-			span_nodes.forEach(detach);
 			button_nodes.forEach(detach);
-			t3 = claim_space(div_nodes);
-			if (if_block) if_block.l(div_nodes);
+			t1 = claim_space(div_nodes);
+			if_block.l(div_nodes);
 			div_nodes.forEach(detach);
 			this.h();
 		},
 		h() {
-			attr(span, "class", "down-arr svelte-19beq8g");
 			attr(button, "type", "button");
-			attr(button, "class", "svelte-19beq8g");
-			attr(div, "class", "subnav-container svelte-19beq8g");
+			attr(button, "class", "svelte-1pl0usf");
+			attr(div, "class", "subnav-container svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, div, anchor);
 			append_hydration(div, button);
 			append_hydration(button, t0);
-			append_hydration(button, t1);
-			append_hydration(button, span);
-			append_hydration(span, t2);
-			append_hydration(div, t3);
-			if (if_block) if_block.m(div, null);
+			append_hydration(div, t1);
+			if_blocks[current_block_type_index].m(div, null);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
-					listen(div, "focus", /*focus_handler*/ ctx[10]),
+					listen(div, "focus", /*focus_handler*/ ctx[13]),
 					listen(div, "mouseover", mouseover_handler)
 				];
 
@@ -3305,29 +5237,31 @@ function create_else_block_1(ctx) {
 		},
 		p(new_ctx, dirty) {
 			ctx = new_ctx;
-			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[16].label + "")) set_data(t0, t0_value);
+			if ((!current || dirty[0] & /*site_nav*/ 4) && t0_value !== (t0_value = /*link*/ ctx[29].label + "")) set_data(t0, t0_value);
+			let previous_block_index = current_block_type_index;
+			current_block_type_index = select_block_type_2(ctx);
 
-			if (/*hovered_link*/ ctx[3] == /*link*/ ctx[16]) {
-				if (if_block) {
-					if_block.p(ctx, dirty);
-
-					if (dirty & /*hovered_link, site_nav*/ 10) {
-						transition_in(if_block, 1);
-					}
-				} else {
-					if_block = create_if_block_5(ctx);
-					if_block.c();
-					transition_in(if_block, 1);
-					if_block.m(div, null);
-				}
-			} else if (if_block) {
+			if (current_block_type_index === previous_block_index) {
+				if_blocks[current_block_type_index].p(ctx, dirty);
+			} else {
 				group_outros();
 
-				transition_out(if_block, 1, 1, () => {
-					if_block = null;
+				transition_out(if_blocks[previous_block_index], 1, 1, () => {
+					if_blocks[previous_block_index] = null;
 				});
 
 				check_outros();
+				if_block = if_blocks[current_block_type_index];
+
+				if (!if_block) {
+					if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
+					if_block.c();
+				} else {
+					if_block.p(ctx, dirty);
+				}
+
+				transition_in(if_block, 1);
+				if_block.m(div, null);
 			}
 		},
 		i(local) {
@@ -3341,17 +5275,17 @@ function create_else_block_1(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(div);
-			if (if_block) if_block.d();
+			if_blocks[current_block_type_index].d();
 			mounted = false;
 			run_all(dispose);
 		}
 	};
 }
 
-// (204:12) {#if !submenu || !submenu.length}
-function create_if_block_4(ctx) {
+// (391:12) {#if !submenu || !submenu.length}
+function create_if_block_5(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[29].label + "";
 	let t;
 	let a_href_value;
 
@@ -3369,23 +5303,23 @@ function create_if_block_4(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-19beq8g");
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "class", "link svelte-1pl0usf");
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
+			toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty[0] & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[29].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty[0] & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty[0] & /*site_nav*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 			}
 		},
 		i: noop,
@@ -3396,16 +5330,64 @@ function create_if_block_4(ctx) {
 	};
 }
 
-// (209:16) {#if hovered_link == link}
-function create_if_block_5(ctx) {
+// (402:16) {:else}
+function create_else_block_2(ctx) {
+	let a;
+	let t_value = /*link*/ ctx[29].label + "";
+	let t;
+	let a_href_value;
+
+	return {
+		c() {
+			a = element("a");
+			t = text(t_value);
+			this.h();
+		},
+		l(nodes) {
+			a = claim_element(nodes, "A", { class: true, href: true });
+			var a_nodes = children(a);
+			t = claim_text(a_nodes, t_value);
+			a_nodes.forEach(detach);
+			this.h();
+		},
+		h() {
+			attr(a, "class", "hidden link svelte-1pl0usf");
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
+			toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
+		},
+		m(target, anchor) {
+			insert_hydration(target, a, anchor);
+			append_hydration(a, t);
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[29].label + "")) set_data(t, t_value);
+
+			if (dirty[0] & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
+				attr(a, "href", a_href_value);
+			}
+
+			if (dirty[0] & /*site_nav*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
+			}
+		},
+		i: noop,
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(a);
+		}
+	};
+}
+
+// (396:16) {#if hovered_link == link}
+function create_if_block_6(ctx) {
 	let nav;
 	let nav_transition;
 	let current;
-	let each_value_3 = /*submenu*/ ctx[17];
+	let each_value_4 = /*submenu*/ ctx[30];
 	let each_blocks = [];
 
-	for (let i = 0; i < each_value_3.length; i += 1) {
-		each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
+	for (let i = 0; i < each_value_4.length; i += 1) {
+		each_blocks[i] = create_each_block_4(get_each_context_4(ctx, each_value_4, i));
 	}
 
 	return {
@@ -3430,7 +5412,7 @@ function create_if_block_5(ctx) {
 			this.h();
 		},
 		h() {
-			attr(nav, "class", "subnav svelte-19beq8g");
+			attr(nav, "class", "subnav svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3444,17 +5426,17 @@ function create_if_block_5(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value_3 = /*submenu*/ ctx[17];
+			if (dirty[0] & /*site_nav*/ 4) {
+				each_value_4 = /*submenu*/ ctx[30];
 				let i;
 
-				for (i = 0; i < each_value_3.length; i += 1) {
-					const child_ctx = get_each_context_3(ctx, each_value_3, i);
+				for (i = 0; i < each_value_4.length; i += 1) {
+					const child_ctx = get_each_context_4(ctx, each_value_4, i);
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
 					} else {
-						each_blocks[i] = create_each_block_3(child_ctx);
+						each_blocks[i] = create_each_block_4(child_ctx);
 						each_blocks[i].c();
 						each_blocks[i].m(nav, null);
 					}
@@ -3464,7 +5446,7 @@ function create_if_block_5(ctx) {
 					each_blocks[i].d(1);
 				}
 
-				each_blocks.length = each_value_3.length;
+				each_blocks.length = each_value_4.length;
 			}
 		},
 		i(local) {
@@ -3491,10 +5473,10 @@ function create_if_block_5(ctx) {
 	};
 }
 
-// (211:18) {#each submenu as {link}}
-function create_each_block_3(ctx) {
+// (398:18) {#each submenu as {link}}
+function create_each_block_4(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[29].label + "";
 	let t;
 	let a_href_value;
 
@@ -3512,23 +5494,23 @@ function create_each_block_3(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "class", "link svelte-19beq8g");
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "class", "link svelte-1pl0usf");
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
+			toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty[0] & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[29].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty[0] & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty[0] & /*site_nav*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 			}
 		},
 		d(detaching) {
@@ -3537,17 +5519,17 @@ function create_each_block_3(ctx) {
 	};
 }
 
-// (203:8) {#each site_nav as { link, submenu }}
-function create_each_block_2(ctx) {
+// (390:8) {#each site_nav as { link, submenu }}
+function create_each_block_3(ctx) {
 	let current_block_type_index;
 	let if_block;
 	let if_block_anchor;
 	let current;
-	const if_block_creators = [create_if_block_4, create_else_block_1];
+	const if_block_creators = [create_if_block_5, create_else_block_1];
 	const if_blocks = [];
 
 	function select_block_type_1(ctx, dirty) {
-		if (!/*submenu*/ ctx[17] || !/*submenu*/ ctx[17].length) return 0;
+		if (!/*submenu*/ ctx[30] || !/*submenu*/ ctx[30].length) return 0;
 		return 1;
 	}
 
@@ -3611,8 +5593,8 @@ function create_each_block_2(ctx) {
 	};
 }
 
-// (231:31) 
-function create_if_block_3(ctx) {
+// (420:31) 
+function create_if_block_4(ctx) {
 	let img;
 	let img_src_value;
 	let img_alt_value;
@@ -3623,22 +5605,23 @@ function create_if_block_3(ctx) {
 			this.h();
 		},
 		l(nodes) {
-			img = claim_element(nodes, "IMG", { src: true, alt: true });
+			img = claim_element(nodes, "IMG", { src: true, alt: true, class: true });
 			this.h();
 		},
 		h() {
 			if (!src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) attr(img, "src", img_src_value);
 			attr(img, "alt", img_alt_value = /*logo*/ ctx[0].image.alt);
+			attr(img, "class", "svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, img, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*logo*/ 1 && !src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) {
+			if (dirty[0] & /*logo*/ 1 && !src_url_equal(img.src, img_src_value = /*logo*/ ctx[0].image.url)) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*logo*/ 1 && img_alt_value !== (img_alt_value = /*logo*/ ctx[0].image.alt)) {
+			if (dirty[0] & /*logo*/ 1 && img_alt_value !== (img_alt_value = /*logo*/ ctx[0].image.alt)) {
 				attr(img, "alt", img_alt_value);
 			}
 		},
@@ -3648,8 +5631,8 @@ function create_if_block_3(ctx) {
 	};
 }
 
-// (229:6) {#if logo.title}
-function create_if_block_2(ctx) {
+// (418:6) {#if logo.title}
+function create_if_block_3(ctx) {
 	let t_value = /*logo*/ ctx[0].title + "";
 	let t;
 
@@ -3664,7 +5647,7 @@ function create_if_block_2(ctx) {
 			insert_hydration(target, t, anchor);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*logo*/ 1 && t_value !== (t_value = /*logo*/ ctx[0].title + "")) set_data(t, t_value);
+			if (dirty[0] & /*logo*/ 1 && t_value !== (t_value = /*logo*/ ctx[0].title + "")) set_data(t, t_value);
 		},
 		d(detaching) {
 			if (detaching) detach(t);
@@ -3672,8 +5655,8 @@ function create_if_block_2(ctx) {
 	};
 }
 
-// (246:4) {#if mobileNavOpen}
-function create_if_block(ctx) {
+// (435:4) {#if mobileNavOpen}
+function create_if_block_1(ctx) {
 	let nav;
 	let t;
 	let button;
@@ -3682,11 +5665,11 @@ function create_if_block(ctx) {
 	let current;
 	let mounted;
 	let dispose;
-	let each_value = /*site_nav*/ ctx[1];
+	let each_value_1 = /*site_nav*/ ctx[2];
 	let each_blocks = [];
 
-	for (let i = 0; i < each_value.length; i += 1) {
-		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+	for (let i = 0; i < each_value_1.length; i += 1) {
+		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
 	}
 
 	const out = i => transition_out(each_blocks[i], 1, 1, () => {
@@ -3733,9 +5716,9 @@ function create_if_block(ctx) {
 		h() {
 			attr(button, "id", "close");
 			attr(button, "aria-label", "Close Navigation");
-			attr(button, "class", "svelte-19beq8g");
+			attr(button, "class", "svelte-1pl0usf");
 			attr(nav, "id", "popup");
-			attr(nav, "class", "svelte-19beq8g");
+			attr(nav, "class", "svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, nav, anchor);
@@ -3752,23 +5735,23 @@ function create_if_block(ctx) {
 			current = true;
 
 			if (!mounted) {
-				dispose = listen(button, "click", /*click_handler_1*/ ctx[14]);
+				dispose = listen(button, "click", /*click_handler_1*/ ctx[17]);
 				mounted = true;
 			}
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value = /*site_nav*/ ctx[1];
+			if (dirty[0] & /*site_nav*/ 4) {
+				each_value_1 = /*site_nav*/ ctx[2];
 				let i;
 
-				for (i = 0; i < each_value.length; i += 1) {
-					const child_ctx = get_each_context(ctx, each_value, i);
+				for (i = 0; i < each_value_1.length; i += 1) {
+					const child_ctx = get_each_context_1(ctx, each_value_1, i);
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
 						transition_in(each_blocks[i], 1);
 					} else {
-						each_blocks[i] = create_each_block(child_ctx);
+						each_blocks[i] = create_each_block_1(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
 						each_blocks[i].m(nav, t);
@@ -3777,7 +5760,7 @@ function create_if_block(ctx) {
 
 				group_outros();
 
-				for (i = each_value.length; i < each_blocks.length; i += 1) {
+				for (i = each_value_1.length; i < each_blocks.length; i += 1) {
 					out(i);
 				}
 
@@ -3787,7 +5770,7 @@ function create_if_block(ctx) {
 		i(local) {
 			if (current) return;
 
-			for (let i = 0; i < each_value.length; i += 1) {
+			for (let i = 0; i < each_value_1.length; i += 1) {
 				transition_in(each_blocks[i]);
 			}
 
@@ -3824,20 +5807,20 @@ function create_if_block(ctx) {
 	};
 }
 
-// (251:12) {:else}
+// (440:12) {:else}
 function create_else_block(ctx) {
 	let button;
-	let t0_value = /*link*/ ctx[16].label + "";
+	let t0_value = /*link*/ ctx[29].label + "";
 	let t0;
 	let t1;
 	let nav;
 	let nav_transition;
 	let current;
-	let each_value_1 = /*submenu*/ ctx[17];
+	let each_value_2 = /*submenu*/ ctx[30];
 	let each_blocks = [];
 
-	for (let i = 0; i < each_value_1.length; i += 1) {
-		each_blocks[i] = create_each_block_1(get_each_context_1(ctx, each_value_1, i));
+	for (let i = 0; i < each_value_2.length; i += 1) {
+		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
 	}
 
 	return {
@@ -3870,9 +5853,9 @@ function create_else_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(button, "class", "mobile-subnav-title svelte-19beq8g");
+			attr(button, "class", "mobile-subnav-title svelte-1pl0usf");
 			attr(button, "type", "button");
-			attr(nav, "class", "mobile-subnav svelte-19beq8g");
+			attr(nav, "class", "mobile-subnav svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, button, anchor);
@@ -3889,19 +5872,19 @@ function create_else_block(ctx) {
 			current = true;
 		},
 		p(ctx, dirty) {
-			if ((!current || dirty & /*site_nav*/ 2) && t0_value !== (t0_value = /*link*/ ctx[16].label + "")) set_data(t0, t0_value);
+			if ((!current || dirty[0] & /*site_nav*/ 4) && t0_value !== (t0_value = /*link*/ ctx[29].label + "")) set_data(t0, t0_value);
 
-			if (dirty & /*site_nav, window*/ 2) {
-				each_value_1 = /*submenu*/ ctx[17];
+			if (dirty[0] & /*site_nav*/ 4) {
+				each_value_2 = /*submenu*/ ctx[30];
 				let i;
 
-				for (i = 0; i < each_value_1.length; i += 1) {
-					const child_ctx = get_each_context_1(ctx, each_value_1, i);
+				for (i = 0; i < each_value_2.length; i += 1) {
+					const child_ctx = get_each_context_2(ctx, each_value_2, i);
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
 					} else {
-						each_blocks[i] = create_each_block_1(child_ctx);
+						each_blocks[i] = create_each_block_2(child_ctx);
 						each_blocks[i].c();
 						each_blocks[i].m(nav, null);
 					}
@@ -3911,7 +5894,7 @@ function create_else_block(ctx) {
 					each_blocks[i].d(1);
 				}
 
-				each_blocks.length = each_value_1.length;
+				each_blocks.length = each_value_2.length;
 			}
 		},
 		i(local) {
@@ -3940,10 +5923,10 @@ function create_else_block(ctx) {
 	};
 }
 
-// (249:12) {#if !submenu || !submenu.length}
-function create_if_block_1(ctx) {
+// (438:12) {#if !submenu || !submenu.length}
+function create_if_block_2(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[29].label + "";
 	let t;
 	let a_href_value;
 
@@ -3961,16 +5944,16 @@ function create_if_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty[0] & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[29].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty[0] & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
 				attr(a, "href", a_href_value);
 			}
 		},
@@ -3982,10 +5965,10 @@ function create_if_block_1(ctx) {
 	};
 }
 
-// (254:18) {#each submenu as {link}}
-function create_each_block_1(ctx) {
+// (443:18) {#each submenu as {link}}
+function create_each_block_2(ctx) {
 	let a;
-	let t_value = /*link*/ ctx[16].label + "";
+	let t_value = /*link*/ ctx[29].label + "";
 	let t;
 	let a_href_value;
 
@@ -4003,23 +5986,23 @@ function create_each_block_1(ctx) {
 			this.h();
 		},
 		h() {
-			attr(a, "href", a_href_value = /*link*/ ctx[16].url);
-			attr(a, "class", "svelte-19beq8g");
-			toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			attr(a, "href", a_href_value = /*link*/ ctx[29].url);
+			attr(a, "class", "svelte-1pl0usf");
+			toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
 			append_hydration(a, t);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*site_nav*/ 2 && t_value !== (t_value = /*link*/ ctx[16].label + "")) set_data(t, t_value);
+			if (dirty[0] & /*site_nav*/ 4 && t_value !== (t_value = /*link*/ ctx[29].label + "")) set_data(t, t_value);
 
-			if (dirty & /*site_nav*/ 2 && a_href_value !== (a_href_value = /*link*/ ctx[16].url)) {
+			if (dirty[0] & /*site_nav*/ 4 && a_href_value !== (a_href_value = /*link*/ ctx[29].url)) {
 				attr(a, "href", a_href_value);
 			}
 
-			if (dirty & /*site_nav, window*/ 2) {
-				toggle_class(a, "active", /*link*/ ctx[16].url === window.location.pathname);
+			if (dirty[0] & /*site_nav*/ 4) {
+				toggle_class(a, "active", /*link*/ ctx[29].url === window.location.pathname);
 			}
 		},
 		d(detaching) {
@@ -4028,21 +6011,21 @@ function create_each_block_1(ctx) {
 	};
 }
 
-// (248:8) {#each site_nav as { link, submenu }}
-function create_each_block(ctx) {
+// (437:8) {#each site_nav as { link, submenu }}
+function create_each_block_1(ctx) {
 	let current_block_type_index;
 	let if_block;
 	let if_block_anchor;
 	let current;
-	const if_block_creators = [create_if_block_1, create_else_block];
+	const if_block_creators = [create_if_block_2, create_else_block];
 	const if_blocks = [];
 
-	function select_block_type_3(ctx, dirty) {
-		if (!/*submenu*/ ctx[17] || !/*submenu*/ ctx[17].length) return 0;
+	function select_block_type_4(ctx, dirty) {
+		if (!/*submenu*/ ctx[30] || !/*submenu*/ ctx[30].length) return 0;
 		return 1;
 	}
 
-	current_block_type_index = select_block_type_3(ctx);
+	current_block_type_index = select_block_type_4(ctx);
 	if_block = if_blocks[current_block_type_index] = if_block_creators[current_block_type_index](ctx);
 
 	return {
@@ -4061,7 +6044,7 @@ function create_each_block(ctx) {
 		},
 		p(ctx, dirty) {
 			let previous_block_index = current_block_type_index;
-			current_block_type_index = select_block_type_3(ctx);
+			current_block_type_index = select_block_type_4(ctx);
 
 			if (current_block_type_index === previous_block_index) {
 				if_blocks[current_block_type_index].p(ctx, dirty);
@@ -4102,190 +6085,419 @@ function create_each_block(ctx) {
 	};
 }
 
+// (464:4) {#if searchResults.length}
+function create_if_block(ctx) {
+	let div;
+	let ul;
+	let div_intro;
+	let each_value = /*searchResults*/ ctx[8];
+	let each_blocks = [];
+
+	for (let i = 0; i < each_value.length; i += 1) {
+		each_blocks[i] = create_each_block(get_each_context(ctx, each_value, i));
+	}
+
+	return {
+		c() {
+			div = element("div");
+			ul = element("ul");
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].c();
+			}
+
+			this.h();
+		},
+		l(nodes) {
+			div = claim_element(nodes, "DIV", { class: true });
+			var div_nodes = children(div);
+			ul = claim_element(div_nodes, "UL", {});
+			var ul_nodes = children(ul);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				each_blocks[i].l(ul_nodes);
+			}
+
+			ul_nodes.forEach(detach);
+			div_nodes.forEach(detach);
+			this.h();
+		},
+		h() {
+			attr(div, "class", "searchResults svelte-1pl0usf");
+		},
+		m(target, anchor) {
+			insert_hydration(target, div, anchor);
+			append_hydration(div, ul);
+
+			for (let i = 0; i < each_blocks.length; i += 1) {
+				if (each_blocks[i]) {
+					each_blocks[i].m(ul, null);
+				}
+			}
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*currentLang, searchResults*/ 264) {
+				each_value = /*searchResults*/ ctx[8];
+				let i;
+
+				for (i = 0; i < each_value.length; i += 1) {
+					const child_ctx = get_each_context(ctx, each_value, i);
+
+					if (each_blocks[i]) {
+						each_blocks[i].p(child_ctx, dirty);
+					} else {
+						each_blocks[i] = create_each_block(child_ctx);
+						each_blocks[i].c();
+						each_blocks[i].m(ul, null);
+					}
+				}
+
+				for (; i < each_blocks.length; i += 1) {
+					each_blocks[i].d(1);
+				}
+
+				each_blocks.length = each_value.length;
+			}
+		},
+		i(local) {
+			if (!div_intro) {
+				add_render_callback(() => {
+					div_intro = create_in_transition(div, slide, {});
+					div_intro.start();
+				});
+			}
+		},
+		o: noop,
+		d(detaching) {
+			if (detaching) detach(div);
+			destroy_each(each_blocks, detaching);
+		}
+	};
+}
+
+// (467:10) {#each searchResults as result}
+function create_each_block(ctx) {
+	let li;
+	let a;
+	let t0_value = /*result*/ ctx[26].item.title + "";
+	let t0;
+	let a_href_value;
+	let t1;
+
+	return {
+		c() {
+			li = element("li");
+			a = element("a");
+			t0 = text(t0_value);
+			t1 = space();
+			this.h();
+		},
+		l(nodes) {
+			li = claim_element(nodes, "LI", { class: true });
+			var li_nodes = children(li);
+			a = claim_element(li_nodes, "A", { href: true, class: true });
+			var a_nodes = children(a);
+			t0 = claim_text(a_nodes, t0_value);
+			a_nodes.forEach(detach);
+			t1 = claim_space(li_nodes);
+			li_nodes.forEach(detach);
+			this.h();
+		},
+		h() {
+			attr(a, "href", a_href_value = "" + ((/*currentLang*/ ctx[3] == 'en' ? '/en' : '') + "/" + /*result*/ ctx[26].item.url));
+			attr(a, "class", "svelte-1pl0usf");
+			attr(li, "class", "svelte-1pl0usf");
+		},
+		m(target, anchor) {
+			insert_hydration(target, li, anchor);
+			append_hydration(li, a);
+			append_hydration(a, t0);
+			append_hydration(li, t1);
+		},
+		p(ctx, dirty) {
+			if (dirty[0] & /*searchResults*/ 256 && t0_value !== (t0_value = /*result*/ ctx[26].item.title + "")) set_data(t0, t0_value);
+
+			if (dirty[0] & /*currentLang, searchResults*/ 264 && a_href_value !== (a_href_value = "" + ((/*currentLang*/ ctx[3] == 'en' ? '/en' : '') + "/" + /*result*/ ctx[26].item.url))) {
+				attr(a, "href", a_href_value);
+			}
+		},
+		d(detaching) {
+			if (detaching) detach(li);
+		}
+	};
+}
+
 function create_fragment(ctx) {
 	let header;
-	let div1;
-	let a0;
-	let t0;
-	let nav;
-	let t1;
 	let div0;
+	let ul;
+	let t0;
+	let div2;
+	let a0;
+	let t1;
+	let nav;
+	let t2;
+	let div1;
 	let select;
 	let option0;
-	let t2;
-	let option1;
 	let t3;
+	let option1;
 	let t4;
-	let div3;
-	let a1;
 	let t5;
-	let div2;
-	let button0;
-	let icon;
+	let div4;
+	let a1;
 	let t6;
-	let button1;
-	let t7_value = /*otherLang*/ ctx[6].toUpperCase() + "";
+	let div3;
+	let button0;
+	let icon0;
 	let t7;
+	let button1;
+	let t8_value = /*otherLang*/ ctx[9].toUpperCase() + "";
 	let t8;
+	let t9;
+	let t10;
+	let div5;
+	let input;
+	let t11;
+	let icon1;
+	let t12;
 	let current;
 	let mounted;
 	let dispose;
+	let each_value_5 = /*social*/ ctx[1];
+	let each_blocks_1 = [];
+
+	for (let i = 0; i < each_value_5.length; i += 1) {
+		each_blocks_1[i] = create_each_block_5(get_each_context_5(ctx, each_value_5, i));
+	}
+
+	const out = i => transition_out(each_blocks_1[i], 1, 1, () => {
+		each_blocks_1[i] = null;
+	});
 
 	function select_block_type(ctx, dirty) {
-		if (/*logo*/ ctx[0].title) return create_if_block_6;
-		if (/*logo*/ ctx[0].image.url) return create_if_block_7;
+		if (/*logo*/ ctx[0].title) return create_if_block_7;
+		if (/*logo*/ ctx[0].image.url) return create_if_block_8;
 	}
 
 	let current_block_type = select_block_type(ctx);
 	let if_block0 = current_block_type && current_block_type(ctx);
-	let each_value_2 = /*site_nav*/ ctx[1];
+	let each_value_3 = /*site_nav*/ ctx[2];
 	let each_blocks = [];
 
-	for (let i = 0; i < each_value_2.length; i += 1) {
-		each_blocks[i] = create_each_block_2(get_each_context_2(ctx, each_value_2, i));
+	for (let i = 0; i < each_value_3.length; i += 1) {
+		each_blocks[i] = create_each_block_3(get_each_context_3(ctx, each_value_3, i));
 	}
 
-	const out = i => transition_out(each_blocks[i], 1, 1, () => {
+	const out_1 = i => transition_out(each_blocks[i], 1, 1, () => {
 		each_blocks[i] = null;
 	});
 
-	function select_block_type_2(ctx, dirty) {
-		if (/*logo*/ ctx[0].title) return create_if_block_2;
-		if (/*logo*/ ctx[0].image.url) return create_if_block_3;
+	function select_block_type_3(ctx, dirty) {
+		if (/*logo*/ ctx[0].title) return create_if_block_3;
+		if (/*logo*/ ctx[0].image.url) return create_if_block_4;
 	}
 
-	let current_block_type_1 = select_block_type_2(ctx);
+	let current_block_type_1 = select_block_type_3(ctx);
 	let if_block1 = current_block_type_1 && current_block_type_1(ctx);
 
-	icon = new Component$1({
+	icon0 = new Component$1({
 			props: { height: "30", icon: "eva:menu-outline" }
 		});
 
-	let if_block2 = /*mobileNavOpen*/ ctx[5] && create_if_block(ctx);
+	let if_block2 = /*mobileNavOpen*/ ctx[7] && create_if_block_1(ctx);
+
+	icon1 = new Component$1({
+			props: {
+				icon: "mdi:search",
+				color: "#999",
+				style: "font-size: 2rem"
+			}
+		});
+
+	let if_block3 = /*searchResults*/ ctx[8].length && create_if_block(ctx);
 
 	return {
 		c() {
 			header = element("header");
-			div1 = element("div");
+			div0 = element("div");
+			ul = element("ul");
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].c();
+			}
+
+			t0 = space();
+			div2 = element("div");
 			a0 = element("a");
 			if (if_block0) if_block0.c();
-			t0 = space();
+			t1 = space();
 			nav = element("nav");
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].c();
 			}
 
-			t1 = space();
-			div0 = element("div");
+			t2 = space();
+			div1 = element("div");
 			select = element("select");
 			option0 = element("option");
-			t2 = text("TR ");
+			t3 = text("TR ");
 			option1 = element("option");
-			t3 = text("EN");
-			t4 = space();
-			div3 = element("div");
+			t4 = text("EN");
+			t5 = space();
+			div4 = element("div");
 			a1 = element("a");
 			if (if_block1) if_block1.c();
-			t5 = space();
-			div2 = element("div");
-			button0 = element("button");
-			create_component(icon.$$.fragment);
 			t6 = space();
+			div3 = element("div");
+			button0 = element("button");
+			create_component(icon0.$$.fragment);
+			t7 = space();
 			button1 = element("button");
-			t7 = text(t7_value);
-			t8 = space();
+			t8 = text(t8_value);
+			t9 = space();
 			if (if_block2) if_block2.c();
+			t10 = space();
+			div5 = element("div");
+			input = element("input");
+			t11 = space();
+			create_component(icon1.$$.fragment);
+			t12 = space();
+			if (if_block3) if_block3.c();
 			this.h();
 		},
 		l(nodes) {
 			header = claim_element(nodes, "HEADER", { class: true });
 			var header_nodes = children(header);
-			div1 = claim_element(header_nodes, "DIV", { class: true });
-			var div1_nodes = children(div1);
-			a0 = claim_element(div1_nodes, "A", { href: true, class: true });
+			div0 = claim_element(header_nodes, "DIV", { class: true });
+			var div0_nodes = children(div0);
+			ul = claim_element(div0_nodes, "UL", { class: true });
+			var ul_nodes = children(ul);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				each_blocks_1[i].l(ul_nodes);
+			}
+
+			ul_nodes.forEach(detach);
+			div0_nodes.forEach(detach);
+			t0 = claim_space(header_nodes);
+			div2 = claim_element(header_nodes, "DIV", { class: true });
+			var div2_nodes = children(div2);
+			a0 = claim_element(div2_nodes, "A", { href: true, class: true });
 			var a0_nodes = children(a0);
 			if (if_block0) if_block0.l(a0_nodes);
 			a0_nodes.forEach(detach);
-			t0 = claim_space(div1_nodes);
-			nav = claim_element(div1_nodes, "NAV", { class: true });
+			t1 = claim_space(div2_nodes);
+			nav = claim_element(div2_nodes, "NAV", { class: true });
 			var nav_nodes = children(nav);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				each_blocks[i].l(nav_nodes);
 			}
 
-			t1 = claim_space(nav_nodes);
-			div0 = claim_element(nav_nodes, "DIV", { class: true });
-			var div0_nodes = children(div0);
-			select = claim_element(div0_nodes, "SELECT", { class: true });
+			t2 = claim_space(nav_nodes);
+			div1 = claim_element(nav_nodes, "DIV", { class: true });
+			var div1_nodes = children(div1);
+			select = claim_element(div1_nodes, "SELECT", { class: true });
 			var select_nodes = children(select);
 			option0 = claim_element(select_nodes, "OPTION", {});
 			var option0_nodes = children(option0);
-			t2 = claim_text(option0_nodes, "TR ");
+			t3 = claim_text(option0_nodes, "TR ");
 			option0_nodes.forEach(detach);
 			option1 = claim_element(select_nodes, "OPTION", {});
 			var option1_nodes = children(option1);
-			t3 = claim_text(option1_nodes, "EN");
+			t4 = claim_text(option1_nodes, "EN");
 			option1_nodes.forEach(detach);
 			select_nodes.forEach(detach);
-			div0_nodes.forEach(detach);
-			nav_nodes.forEach(detach);
 			div1_nodes.forEach(detach);
-			t4 = claim_space(header_nodes);
-			div3 = claim_element(header_nodes, "DIV", { class: true });
-			var div3_nodes = children(div3);
-			a1 = claim_element(div3_nodes, "A", { href: true, class: true });
+			nav_nodes.forEach(detach);
+			div2_nodes.forEach(detach);
+			t5 = claim_space(header_nodes);
+			div4 = claim_element(header_nodes, "DIV", { class: true });
+			var div4_nodes = children(div4);
+			a1 = claim_element(div4_nodes, "A", { href: true, class: true });
 			var a1_nodes = children(a1);
 			if (if_block1) if_block1.l(a1_nodes);
 			a1_nodes.forEach(detach);
-			t5 = claim_space(div3_nodes);
-			div2 = claim_element(div3_nodes, "DIV", { class: true });
-			var div2_nodes = children(div2);
-			button0 = claim_element(div2_nodes, "BUTTON", { id: true, "aria-label": true });
+			t6 = claim_space(div4_nodes);
+			div3 = claim_element(div4_nodes, "DIV", { class: true });
+			var div3_nodes = children(div3);
+			button0 = claim_element(div3_nodes, "BUTTON", { id: true, "aria-label": true });
 			var button0_nodes = children(button0);
-			claim_component(icon.$$.fragment, button0_nodes);
+			claim_component(icon0.$$.fragment, button0_nodes);
 			button0_nodes.forEach(detach);
-			t6 = claim_space(div2_nodes);
-			button1 = claim_element(div2_nodes, "BUTTON", { class: true });
+			t7 = claim_space(div3_nodes);
+			button1 = claim_element(div3_nodes, "BUTTON", { class: true });
 			var button1_nodes = children(button1);
-			t7 = claim_text(button1_nodes, t7_value);
+			t8 = claim_text(button1_nodes, t8_value);
 			button1_nodes.forEach(detach);
-			div2_nodes.forEach(detach);
-			t8 = claim_space(div3_nodes);
-			if (if_block2) if_block2.l(div3_nodes);
 			div3_nodes.forEach(detach);
+			t9 = claim_space(div4_nodes);
+			if (if_block2) if_block2.l(div4_nodes);
+			div4_nodes.forEach(detach);
+			t10 = claim_space(header_nodes);
+			div5 = claim_element(header_nodes, "DIV", { class: true });
+			var div5_nodes = children(div5);
+
+			input = claim_element(div5_nodes, "INPUT", {
+				class: true,
+				type: true,
+				placeholder: true
+			});
+
+			t11 = claim_space(div5_nodes);
+			claim_component(icon1.$$.fragment, div5_nodes);
+			div5_nodes.forEach(detach);
+			t12 = claim_space(header_nodes);
+			if (if_block3) if_block3.l(header_nodes);
 			header_nodes.forEach(detach);
 			this.h();
 		},
 		h() {
+			attr(ul, "class", "socials svelte-1pl0usf");
+			attr(div0, "class", "top-bar svelte-1pl0usf");
 			attr(a0, "href", "/");
-			attr(a0, "class", "logo svelte-19beq8g");
+			attr(a0, "class", "logo svelte-1pl0usf");
 			option0.__value = "tr";
 			option0.value = option0.__value;
 			option1.__value = "en";
 			option1.value = option1.__value;
-			attr(select, "class", "svelte-19beq8g");
-			if (/*currentLang*/ ctx[2] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[12].call(select));
-			attr(div0, "class", "language-picker svelte-19beq8g");
-			attr(nav, "class", "svelte-19beq8g");
-			attr(div1, "class", "desktop-nav svelte-19beq8g");
+			attr(select, "class", "svelte-1pl0usf");
+			if (/*currentLang*/ ctx[3] === void 0) add_render_callback(() => /*select_change_handler*/ ctx[15].call(select));
+			attr(div1, "class", "language-picker svelte-1pl0usf");
+			attr(nav, "class", "svelte-1pl0usf");
+			attr(div2, "class", "desktop-nav svelte-1pl0usf");
 			attr(a1, "href", "/");
-			attr(a1, "class", "logo svelte-19beq8g");
+			attr(a1, "class", "logo svelte-1pl0usf");
 			attr(button0, "id", "open");
 			attr(button0, "aria-label", "Open mobile navigation");
-			attr(button1, "class", "lang-swither-mobile svelte-19beq8g");
-			attr(div2, "class", "mobile-actions-container svelte-19beq8g");
-			attr(div3, "class", "mobile-nav svelte-19beq8g");
-			attr(header, "class", "section-container svelte-19beq8g");
+			attr(button1, "class", "lang-swither-mobile svelte-1pl0usf");
+			attr(div3, "class", "mobile-actions-container svelte-1pl0usf");
+			attr(div4, "class", "mobile-nav svelte-1pl0usf");
+			attr(input, "class", "search svelte-1pl0usf");
+			attr(input, "type", "text");
+			attr(input, "placeholder", "search");
+			attr(div5, "class", "flex search-container svelte-1pl0usf");
+			attr(header, "class", " svelte-1pl0usf");
 		},
 		m(target, anchor) {
 			insert_hydration(target, header, anchor);
-			append_hydration(header, div1);
-			append_hydration(div1, a0);
+			append_hydration(header, div0);
+			append_hydration(div0, ul);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				if (each_blocks_1[i]) {
+					each_blocks_1[i].m(ul, null);
+				}
+			}
+
+			append_hydration(header, t0);
+			append_hydration(header, div2);
+			append_hydration(div2, a0);
 			if (if_block0) if_block0.m(a0, null);
-			append_hydration(div1, t0);
-			append_hydration(div1, nav);
+			append_hydration(div2, t1);
+			append_hydration(div2, nav);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				if (each_blocks[i]) {
@@ -4293,42 +6505,78 @@ function create_fragment(ctx) {
 				}
 			}
 
-			append_hydration(nav, t1);
-			append_hydration(nav, div0);
-			append_hydration(div0, select);
+			append_hydration(nav, t2);
+			append_hydration(nav, div1);
+			append_hydration(div1, select);
 			append_hydration(select, option0);
-			append_hydration(option0, t2);
+			append_hydration(option0, t3);
 			append_hydration(select, option1);
-			append_hydration(option1, t3);
-			select_option(select, /*currentLang*/ ctx[2], true);
-			append_hydration(header, t4);
-			append_hydration(header, div3);
-			append_hydration(div3, a1);
+			append_hydration(option1, t4);
+			select_option(select, /*currentLang*/ ctx[3], true);
+			append_hydration(header, t5);
+			append_hydration(header, div4);
+			append_hydration(div4, a1);
 			if (if_block1) if_block1.m(a1, null);
-			append_hydration(div3, t5);
-			append_hydration(div3, div2);
-			append_hydration(div2, button0);
-			mount_component(icon, button0, null);
-			append_hydration(div2, t6);
-			append_hydration(div2, button1);
-			append_hydration(button1, t7);
-			append_hydration(div3, t8);
-			if (if_block2) if_block2.m(div3, null);
+			append_hydration(div4, t6);
+			append_hydration(div4, div3);
+			append_hydration(div3, button0);
+			mount_component(icon0, button0, null);
+			append_hydration(div3, t7);
+			append_hydration(div3, button1);
+			append_hydration(button1, t8);
+			append_hydration(div4, t9);
+			if (if_block2) if_block2.m(div4, null);
+			append_hydration(header, t10);
+			append_hydration(header, div5);
+			append_hydration(div5, input);
+			set_input_value(input, /*searchQuery*/ ctx[4]);
+			append_hydration(div5, t11);
+			mount_component(icon1, div5, null);
+			append_hydration(header, t12);
+			if (if_block3) if_block3.m(header, null);
 			current = true;
 
 			if (!mounted) {
 				dispose = [
-					listen(window_1, "mousemove", /*handleMouseout*/ ctx[7]),
+					listen(window_1, "mousemove", /*handleMouseout*/ ctx[10]),
 					listen(select, "change", toggleLanguage),
-					listen(select, "change", /*select_change_handler*/ ctx[12]),
-					listen(button0, "click", /*click_handler*/ ctx[13]),
-					listen(button1, "click", /*toggleMobileLangChange*/ ctx[8])
+					listen(select, "change", /*select_change_handler*/ ctx[15]),
+					listen(button0, "click", /*click_handler*/ ctx[16]),
+					listen(button1, "click", /*toggleMobileLangChange*/ ctx[11]),
+					listen(input, "input", /*input_input_handler*/ ctx[18])
 				];
 
 				mounted = true;
 			}
 		},
-		p(ctx, [dirty]) {
+		p(ctx, dirty) {
+			if (dirty[0] & /*social*/ 2) {
+				each_value_5 = /*social*/ ctx[1];
+				let i;
+
+				for (i = 0; i < each_value_5.length; i += 1) {
+					const child_ctx = get_each_context_5(ctx, each_value_5, i);
+
+					if (each_blocks_1[i]) {
+						each_blocks_1[i].p(child_ctx, dirty);
+						transition_in(each_blocks_1[i], 1);
+					} else {
+						each_blocks_1[i] = create_each_block_5(child_ctx);
+						each_blocks_1[i].c();
+						transition_in(each_blocks_1[i], 1);
+						each_blocks_1[i].m(ul, null);
+					}
+				}
+
+				group_outros();
+
+				for (i = each_value_5.length; i < each_blocks_1.length; i += 1) {
+					out(i);
+				}
+
+				check_outros();
+			}
+
 			if (current_block_type === (current_block_type = select_block_type(ctx)) && if_block0) {
 				if_block0.p(ctx, dirty);
 			} else {
@@ -4341,38 +6589,38 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if (dirty & /*site_nav, window, hovered_link, hovered_link_container*/ 26) {
-				each_value_2 = /*site_nav*/ ctx[1];
+			if (dirty[0] & /*site_nav, hovered_link, hovered_link_container*/ 100) {
+				each_value_3 = /*site_nav*/ ctx[2];
 				let i;
 
-				for (i = 0; i < each_value_2.length; i += 1) {
-					const child_ctx = get_each_context_2(ctx, each_value_2, i);
+				for (i = 0; i < each_value_3.length; i += 1) {
+					const child_ctx = get_each_context_3(ctx, each_value_3, i);
 
 					if (each_blocks[i]) {
 						each_blocks[i].p(child_ctx, dirty);
 						transition_in(each_blocks[i], 1);
 					} else {
-						each_blocks[i] = create_each_block_2(child_ctx);
+						each_blocks[i] = create_each_block_3(child_ctx);
 						each_blocks[i].c();
 						transition_in(each_blocks[i], 1);
-						each_blocks[i].m(nav, t1);
+						each_blocks[i].m(nav, t2);
 					}
 				}
 
 				group_outros();
 
-				for (i = each_value_2.length; i < each_blocks.length; i += 1) {
-					out(i);
+				for (i = each_value_3.length; i < each_blocks.length; i += 1) {
+					out_1(i);
 				}
 
 				check_outros();
 			}
 
-			if (dirty & /*currentLang*/ 4) {
-				select_option(select, /*currentLang*/ ctx[2]);
+			if (dirty[0] & /*currentLang*/ 8) {
+				select_option(select, /*currentLang*/ ctx[3]);
 			}
 
-			if (current_block_type_1 === (current_block_type_1 = select_block_type_2(ctx)) && if_block1) {
+			if (current_block_type_1 === (current_block_type_1 = select_block_type_3(ctx)) && if_block1) {
 				if_block1.p(ctx, dirty);
 			} else {
 				if (if_block1) if_block1.d(1);
@@ -4384,20 +6632,20 @@ function create_fragment(ctx) {
 				}
 			}
 
-			if ((!current || dirty & /*otherLang*/ 64) && t7_value !== (t7_value = /*otherLang*/ ctx[6].toUpperCase() + "")) set_data(t7, t7_value);
+			if ((!current || dirty[0] & /*otherLang*/ 512) && t8_value !== (t8_value = /*otherLang*/ ctx[9].toUpperCase() + "")) set_data(t8, t8_value);
 
-			if (/*mobileNavOpen*/ ctx[5]) {
+			if (/*mobileNavOpen*/ ctx[7]) {
 				if (if_block2) {
 					if_block2.p(ctx, dirty);
 
-					if (dirty & /*mobileNavOpen*/ 32) {
+					if (dirty[0] & /*mobileNavOpen*/ 128) {
 						transition_in(if_block2, 1);
 					}
 				} else {
-					if_block2 = create_if_block(ctx);
+					if_block2 = create_if_block_1(ctx);
 					if_block2.c();
 					transition_in(if_block2, 1);
-					if_block2.m(div3, null);
+					if_block2.m(div4, null);
 				}
 			} else if (if_block2) {
 				group_outros();
@@ -4408,31 +6656,67 @@ function create_fragment(ctx) {
 
 				check_outros();
 			}
+
+			if (dirty[0] & /*searchQuery*/ 16 && input.value !== /*searchQuery*/ ctx[4]) {
+				set_input_value(input, /*searchQuery*/ ctx[4]);
+			}
+
+			if (/*searchResults*/ ctx[8].length) {
+				if (if_block3) {
+					if_block3.p(ctx, dirty);
+
+					if (dirty[0] & /*searchResults*/ 256) {
+						transition_in(if_block3, 1);
+					}
+				} else {
+					if_block3 = create_if_block(ctx);
+					if_block3.c();
+					transition_in(if_block3, 1);
+					if_block3.m(header, null);
+				}
+			} else if (if_block3) {
+				if_block3.d(1);
+				if_block3 = null;
+			}
 		},
 		i(local) {
 			if (current) return;
 
-			for (let i = 0; i < each_value_2.length; i += 1) {
+			for (let i = 0; i < each_value_5.length; i += 1) {
+				transition_in(each_blocks_1[i]);
+			}
+
+			for (let i = 0; i < each_value_3.length; i += 1) {
 				transition_in(each_blocks[i]);
 			}
 
-			transition_in(icon.$$.fragment, local);
+			transition_in(icon0.$$.fragment, local);
 			transition_in(if_block2);
+			transition_in(icon1.$$.fragment, local);
+			transition_in(if_block3);
 			current = true;
 		},
 		o(local) {
+			each_blocks_1 = each_blocks_1.filter(Boolean);
+
+			for (let i = 0; i < each_blocks_1.length; i += 1) {
+				transition_out(each_blocks_1[i]);
+			}
+
 			each_blocks = each_blocks.filter(Boolean);
 
 			for (let i = 0; i < each_blocks.length; i += 1) {
 				transition_out(each_blocks[i]);
 			}
 
-			transition_out(icon.$$.fragment, local);
+			transition_out(icon0.$$.fragment, local);
 			transition_out(if_block2);
+			transition_out(icon1.$$.fragment, local);
 			current = false;
 		},
 		d(detaching) {
 			if (detaching) detach(header);
+			destroy_each(each_blocks_1, detaching);
 
 			if (if_block0) {
 				if_block0.d();
@@ -4444,8 +6728,10 @@ function create_fragment(ctx) {
 				if_block1.d();
 			}
 
-			destroy_component(icon);
+			destroy_component(icon0);
 			if (if_block2) if_block2.d();
+			destroy_component(icon1);
+			if (if_block3) if_block3.d();
 			mounted = false;
 			run_all(dispose);
 		}
@@ -4480,63 +6766,179 @@ function instance($$self, $$props, $$invalidate) {
 	let otherLang;
 	let { props } = $$props;
 	let { logo } = $$props;
+	let { social } = $$props;
 	let { site_nav } = $$props;
 	let hovered_link = null;
 	let hovered_link_container = null;
 	let mobileNavOpen = false;
 	let currentLang = 'tr';
 
+	const sitemap_en = [
+		{ "title": "Seminar", "url": "seminar" },
+		{ "title": "Symposium", "url": "symposium" },
+		{ "title": "Archive", "url": "archive" },
+		{
+			"title": "Announcements",
+			"url": "announcements"
+		},
+		{ "title": "About Us", "url": "about-us" },
+		{ "title": "Home Page", "url": "index" },
+		{
+			"title": "Charter",
+			"url": "articles-of-association"
+		},
+		{
+			"title": "Our Representative Offices",
+			"url": "our-representations"
+		},
+		{ "title": "success", "url": "success" },
+		{ "title": "Workshop", "url": "workshop" },
+		{ "title": "Interview", "url": "interview" },
+		{ "title": "Contact", "url": "contact" },
+		{
+			"title": "Board of Directors",
+			"url": "executive-board"
+		}
+	];
+
+	const sitemap = [
+		{ "title": "Bağış", "url": "donate" },
+		{ "title": "Ana Sayfa", "url": "index" },
+		{ "title": "Seminer", "url": "seminar" },
+		{ "title": "Sempozyum", "url": "symposium" },
+		{
+			"title": "Duyurular",
+			"url": "announcements"
+		},
+		{ "title": "Hakkımızda", "url": "about-us" },
+		{ "title": "Üyelik", "url": "membership" },
+		{ "title": "Blog", "url": "blog" },
+		{
+			"title": "Uygulamalı Felsefe Nedir",
+			"url": "uygulamali-felsefe-nedir"
+		},
+		{
+			"title": "Temsilciliklerimiz",
+			"url": "our-representations"
+		},
+		{ "title": "Arşiv", "url": "archive" },
+		{
+			"title": "Atölye Çalışması",
+			"url": "workshop"
+		},
+		{ "title": "Röportaj", "url": "interview" },
+		{ "title": "İletişim", "url": "contact" },
+		{
+			"title": "Yönetim Kurulu",
+			"url": "executive-board"
+		},
+		{
+			"title": "Tüzük",
+			"url": "articles-of-association"
+		},
+		{ "title": "Başarı", "url": "success" }
+	];
+
+	let searchResults = [];
+
 	function handleMouseout(e) {
 		if (!e.composedPath().includes(hovered_link_container)) {
-			$$invalidate(3, hovered_link = null);
+			$$invalidate(5, hovered_link = null);
 		}
 	}
 
 	onMount(() => {
 		const currentUrl = new URL(window.location.href);
-		$$invalidate(2, currentLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
-	});
+		$$invalidate(3, currentLang = currentUrl.pathname.split('/')[1] == 'en' ? 'en' : 'tr');
+	}); /* 
+  fetch('/sitemap.xml').then(res => res.text()).then(xml => {
+    
+  });
+*/
 
 	function toggleMobileLangChange() {
 		langChangeHandler(otherLang);
 	}
+
+	const debounce = function (func, wait, immediate) {
+		var timeout;
+
+		return function () {
+			var context = this, args = arguments;
+
+			var later = function () {
+				timeout = null;
+				if (!immediate) func.apply(context, args);
+			};
+
+			if (immediate && !timeout) func.apply(context, args);
+			clearTimeout(timeout);
+			timeout = setTimeout(later, wait);
+		};
+	};
+
+	let searchQuery = '';
+	const fuse = new Fuse(currentLang == 'en' ? sitemap_en : sitemap, { keys: ['title'] });
+
+	function _search() {
+		$$invalidate(8, searchResults = fuse.search(searchQuery));
+	}
+
+	const search = debounce(_search, 500);
 
 	function focus_handler(event) {
 		bubble.call(this, $$self, event);
 	}
 
 	const mouseover_handler = function (link, e) {
-		$$invalidate(3, hovered_link = link);
-		$$invalidate(4, hovered_link_container = e.currentTarget);
+		$$invalidate(5, hovered_link = link);
+		$$invalidate(6, hovered_link_container = e.currentTarget);
 	};
 
 	function select_change_handler() {
 		currentLang = select_value(this);
-		$$invalidate(2, currentLang);
+		$$invalidate(3, currentLang);
 	}
 
-	const click_handler = () => $$invalidate(5, mobileNavOpen = true);
-	const click_handler_1 = () => $$invalidate(5, mobileNavOpen = false);
+	const click_handler = () => $$invalidate(7, mobileNavOpen = true);
+	const click_handler_1 = () => $$invalidate(7, mobileNavOpen = false);
+
+	function input_input_handler() {
+		searchQuery = this.value;
+		$$invalidate(4, searchQuery);
+	}
 
 	$$self.$$set = $$props => {
-		if ('props' in $$props) $$invalidate(9, props = $$props.props);
+		if ('props' in $$props) $$invalidate(12, props = $$props.props);
 		if ('logo' in $$props) $$invalidate(0, logo = $$props.logo);
-		if ('site_nav' in $$props) $$invalidate(1, site_nav = $$props.site_nav);
+		if ('social' in $$props) $$invalidate(1, social = $$props.social);
+		if ('site_nav' in $$props) $$invalidate(2, site_nav = $$props.site_nav);
 	};
 
 	$$self.$$.update = () => {
-		if ($$self.$$.dirty & /*currentLang*/ 4) {
-			$$invalidate(6, otherLang = currentLang == 'tr' ? 'en' : 'tr');
+		if ($$self.$$.dirty[0] & /*currentLang*/ 8) {
+			$$invalidate(9, otherLang = currentLang == 'tr' ? 'en' : 'tr');
+		}
+
+		if ($$self.$$.dirty[0] & /*searchQuery*/ 16) {
+			if (searchQuery) {
+				search();
+			} else {
+				$$invalidate(8, searchResults = []);
+			}
 		}
 	};
 
 	return [
 		logo,
+		social,
 		site_nav,
 		currentLang,
+		searchQuery,
 		hovered_link,
 		hovered_link_container,
 		mobileNavOpen,
+		searchResults,
 		otherLang,
 		handleMouseout,
 		toggleMobileLangChange,
@@ -4545,14 +6947,30 @@ function instance($$self, $$props, $$invalidate) {
 		mouseover_handler,
 		select_change_handler,
 		click_handler,
-		click_handler_1
+		click_handler_1,
+		input_input_handler
 	];
 }
 
 class Component extends SvelteComponent {
 	constructor(options) {
 		super();
-		init(this, options, instance, create_fragment, safe_not_equal, { props: 9, logo: 0, site_nav: 1 });
+
+		init(
+			this,
+			options,
+			instance,
+			create_fragment,
+			safe_not_equal,
+			{
+				props: 12,
+				logo: 0,
+				social: 1,
+				site_nav: 2
+			},
+			null,
+			[-1, -1]
+		);
 	}
 }
 
