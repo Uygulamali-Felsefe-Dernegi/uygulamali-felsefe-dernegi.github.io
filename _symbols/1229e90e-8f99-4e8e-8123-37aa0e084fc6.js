@@ -8046,15 +8046,15 @@ let Component$1 = class Component extends SvelteComponent {
 
 function get_each_context(ctx, list, i) {
 	const child_ctx = ctx.slice();
-	child_ctx[3] = list[i];
+	child_ctx[2] = list[i];
 	return child_ctx;
 }
 
-// (93:4) {#each slides as slide}
+// (19:4) {#each slides as slide}
 function create_each_block(ctx) {
 	let a;
 	let div;
-	let raw_value = /*slide*/ ctx[3].content.html + "";
+	let raw_value = /*slide*/ ctx[2].content.html + "";
 	let t0;
 	let img;
 	let img_src_value;
@@ -8077,17 +8077,18 @@ function create_each_block(ctx) {
 			var div_nodes = children(div);
 			div_nodes.forEach(detach);
 			t0 = claim_space(a_nodes);
-			img = claim_element(a_nodes, "IMG", { src: true });
+			img = claim_element(a_nodes, "IMG", { class: true, src: true });
 			t1 = claim_space(a_nodes);
 			a_nodes.forEach(detach);
 			this.h();
 		},
 		h() {
-			attr(div, "class", "content");
-			if (!src_url_equal(img.src, img_src_value = /*slide*/ ctx[3].image.url)) attr(img, "src", img_src_value);
-			attr(a, "href", a_href_value = /*slide*/ ctx[3].url);
-			attr(a, "class", "container svelte-5kxr5y");
-			set_style(a, "--extra_height_mobile", /*slide*/ ctx[3].extra_height);
+			attr(div, "class", "slider__content");
+			attr(img, "class", "slider__img");
+			if (!src_url_equal(img.src, img_src_value = /*slide*/ ctx[2].image.url)) attr(img, "src", img_src_value);
+			attr(a, "href", a_href_value = /*slide*/ ctx[2].url);
+			attr(a, "class", "slider__container");
+			set_style(a, "--extra_height_mobile", /*slide*/ ctx[2].extra_height);
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
@@ -8098,17 +8099,17 @@ function create_each_block(ctx) {
 			append_hydration(a, t1);
 		},
 		p(ctx, dirty) {
-			if (dirty & /*slides*/ 1 && raw_value !== (raw_value = /*slide*/ ctx[3].content.html + "")) div.innerHTML = raw_value;
-			if (dirty & /*slides*/ 1 && !src_url_equal(img.src, img_src_value = /*slide*/ ctx[3].image.url)) {
+			if (dirty & /*slides*/ 1 && raw_value !== (raw_value = /*slide*/ ctx[2].content.html + "")) div.innerHTML = raw_value;
+			if (dirty & /*slides*/ 1 && !src_url_equal(img.src, img_src_value = /*slide*/ ctx[2].image.url)) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*slides*/ 1 && a_href_value !== (a_href_value = /*slide*/ ctx[3].url)) {
+			if (dirty & /*slides*/ 1 && a_href_value !== (a_href_value = /*slide*/ ctx[2].url)) {
 				attr(a, "href", a_href_value);
 			}
 
 			if (dirty & /*slides*/ 1) {
-				set_style(a, "--extra_height_mobile", /*slide*/ ctx[3].extra_height);
+				set_style(a, "--extra_height_mobile", /*slide*/ ctx[2].extra_height);
 			}
 		},
 		d(detaching) {
@@ -8117,7 +8118,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (92:2) <AutoHeightCarousel >
+// (18:12) <AutoHeightCarousel >
 function create_default_slot(ctx) {
 	let each_1_anchor;
 	let each_value = /*slides*/ ctx[0];
@@ -8183,7 +8184,6 @@ function create_default_slot(ctx) {
 }
 
 function create_fragment(ctx) {
-	let div;
 	let autoheightcarousel;
 	let current;
 
@@ -8196,30 +8196,19 @@ function create_fragment(ctx) {
 
 	return {
 		c() {
-			div = element("div");
 			create_component(autoheightcarousel.$$.fragment);
-			this.h();
 		},
 		l(nodes) {
-			div = claim_element(nodes, "DIV", { class: true, style: true });
-			var div_nodes = children(div);
-			claim_component(autoheightcarousel.$$.fragment, div_nodes);
-			div_nodes.forEach(detach);
-			this.h();
-		},
-		h() {
-			attr(div, "class", "swiper-container svelte-5kxr5y");
-			set_style(div, "--swiper-navigation-color", "#cccccc88");
+			claim_component(autoheightcarousel.$$.fragment, nodes);
 		},
 		m(target, anchor) {
-			insert_hydration(target, div, anchor);
-			mount_component(autoheightcarousel, div, null);
+			mount_component(autoheightcarousel, target, anchor);
 			current = true;
 		},
 		p(ctx, [dirty]) {
 			const autoheightcarousel_changes = {};
 
-			if (dirty & /*$$scope, slides*/ 65) {
+			if (dirty & /*$$scope, slides*/ 33) {
 				autoheightcarousel_changes.$$scope = { dirty, ctx };
 			}
 
@@ -8235,8 +8224,7 @@ function create_fragment(ctx) {
 			current = false;
 		},
 		d(detaching) {
-			if (detaching) detach(div);
-			destroy_component(autoheightcarousel);
+			destroy_component(autoheightcarousel, detaching);
 		}
 	};
 }
@@ -8244,14 +8232,6 @@ function create_fragment(ctx) {
 function instance($$self, $$props, $$invalidate) {
 	let { props } = $$props;
 	let { slides } = $$props;
-	let carouselEl;
-
-	onMount(() => {
-		const trackContainer = carouselEl.querySelector('.sc-carousel__pages-window');
-		const currentSlide = trackContainer.firstElementChild.firstElementChild;
-		const height = currentSlide.getBoundingClientRect().height;
-		trackContainer.style.maxHeight = height + 'px';
-	});
 
 	$$self.$$set = $$props => {
 		if ('props' in $$props) $$invalidate(1, props = $$props.props);
