@@ -8032,6 +8032,12 @@ function instance$1($$self, $$props, $$invalidate) {
 	$$self.$$.update = () => {
 		if ($$self.$$.dirty & /*carouselEl, resizedOnce*/ 18) {
 			if (carouselEl && !resizedOnce) {
+				const images = [...carouselEl.querySelectorAll('img')];
+
+				if (images.length) {
+					images.forEach(image => image.onload = () => resize(0));
+				}
+
 				$$invalidate(4, resizedOnce = true);
 				resize(0);
 			}
