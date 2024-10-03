@@ -7991,6 +7991,22 @@ function create_fragment$1(ctx) {
 	};
 }
 
+function getVisibleChildren(container) {
+	const scrollLeft = container.scrollLeft;
+	const clientWidth = container.clientWidth;
+
+	return Array.from(container.children).filter((child, index) => {
+		const left = child.offsetLeft;
+		const right = left + child.offsetWidth;
+
+		if (left < scrollLeft + clientWidth && right > scrollLeft) {
+			return true;
+		}
+
+		return false;
+	});
+}
+
 function instance$1($$self, $$props, $$invalidate) {
 	let { $$slots: slots = {}, $$scope } = $$props;
 	let carouselEl;
@@ -7998,7 +8014,8 @@ function instance$1($$self, $$props, $$invalidate) {
 	function resize(index) {
 		const trackContainer = carouselEl.querySelector('.sc-carousel__pages-window');
 		const slides = [...trackContainer.firstElementChild.children];
-		const currentSlide = slides[index];
+		const visibleSlides = getVisibleChildren(trackContainer);
+		const currentSlide = index !== undefined ? slides[index] : visibleSlides[0];
 		const height = currentSlide.scrollHeight;
 		trackContainer.style.maxHeight = height + 'px';
 	}
@@ -8035,12 +8052,11 @@ function instance$1($$self, $$props, $$invalidate) {
 				const images = [...carouselEl.querySelectorAll('img')];
 
 				if (images.length) {
-					images.forEach(image => image.onload = () => resize(0));
+					images.forEach(image => image.onload = () => resize());
 				}
 
 				$$invalidate(4, resizedOnce = true);
-				resize(0);
-				document.addEventListener('DOMContentLoaded', () => resize(0));
+				resize();
 			}
 		}
 	};
