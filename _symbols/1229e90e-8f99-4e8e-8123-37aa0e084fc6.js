@@ -8040,6 +8040,7 @@ function instance$1($$self, $$props, $$invalidate) {
 
 				$$invalidate(4, resizedOnce = true);
 				resize(0);
+				document.addEventListener('DOMContentLoaded', () => resize(0));
 			}
 		}
 	};
