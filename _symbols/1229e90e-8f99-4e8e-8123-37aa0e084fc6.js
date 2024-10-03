@@ -8014,7 +8014,7 @@ function instance$1($$self, $$props, $$invalidate) {
 	function resize(index) {
 		const trackContainer = carouselEl.querySelector('.sc-carousel__pages-window');
 		const slides = [...trackContainer.firstElementChild.children];
-		const visibleSlides = getVisibleChildren(trackContainer);
+		const visibleSlides = getVisibleChildren(trackContainer.firstElementChild);
 		const currentSlide = index !== undefined ? slides[index] : visibleSlides[0];
 		const height = currentSlide.scrollHeight;
 		trackContainer.style.maxHeight = height + 'px';
