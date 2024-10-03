@@ -8013,7 +8013,7 @@ function instance$1($$self, $$props, $$invalidate) {
 			console.error(err);
 		}
 
-		resize(e.detail);
+		resize(e.detail + 1);
 	};
 
 	function div_binding($$value) {
