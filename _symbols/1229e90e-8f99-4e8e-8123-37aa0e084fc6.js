@@ -7871,8 +7871,8 @@ let Component$2 = class Component extends SvelteComponent {
 
 function create_default_slot$1(ctx) {
 	let current;
-	const default_slot_template = /*#slots*/ ctx[3].default;
-	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[6], null);
+	const default_slot_template = /*#slots*/ ctx[5].default;
+	const default_slot = create_slot(default_slot_template, ctx, /*$$scope*/ ctx[8], null);
 
 	return {
 		c() {
@@ -7890,15 +7890,15 @@ function create_default_slot$1(ctx) {
 		},
 		p(ctx, dirty) {
 			if (default_slot) {
-				if (default_slot.p && (!current || dirty & /*$$scope*/ 64)) {
+				if (default_slot.p && (!current || dirty & /*$$scope*/ 256)) {
 					update_slot_base(
 						default_slot,
 						default_slot_template,
 						ctx,
-						/*$$scope*/ ctx[6],
+						/*$$scope*/ ctx[8],
 						!current
-						? get_all_dirty_from_scope(/*$$scope*/ ctx[6])
-						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[6], dirty, null),
+						? get_all_dirty_from_scope(/*$$scope*/ ctx[8])
+						: get_slot_changes(default_slot_template, /*$$scope*/ ctx[8], dirty, null),
 						null
 					);
 				}
@@ -7923,7 +7923,7 @@ function create_fragment$1(ctx) {
 	let div;
 	let carousel;
 	let current;
-	const carousel_spread_levels = [/*$$props*/ ctx[2]];
+	const carousel_spread_levels = [/*$$props*/ ctx[3]];
 
 	let carousel_props = {
 		$$slots: { default: [create_default_slot$1] },
@@ -7935,7 +7935,7 @@ function create_fragment$1(ctx) {
 	}
 
 	carousel = new Component$2({ props: carousel_props });
-	carousel.$on("pageChange", /*pageChange_handler*/ ctx[4]);
+	carousel.$on("pageChange", /*pageChange_handler*/ ctx[6]);
 
 	return {
 		c() {
@@ -7956,15 +7956,15 @@ function create_fragment$1(ctx) {
 		m(target, anchor) {
 			insert_hydration(target, div, anchor);
 			mount_component(carousel, div, null);
-			/*div_binding*/ ctx[5](div);
+			/*div_binding*/ ctx[7](div);
 			current = true;
 		},
 		p(ctx, [dirty]) {
-			const carousel_changes = (dirty & /*$$props*/ 4)
-			? get_spread_update(carousel_spread_levels, [get_spread_object(/*$$props*/ ctx[2])])
+			const carousel_changes = (dirty & /*$$props*/ 8)
+			? get_spread_update(carousel_spread_levels, [get_spread_object(/*$$props*/ ctx[3])])
 			: {};
 
-			if (dirty & /*$$scope*/ 64) {
+			if (dirty & /*$$scope*/ 256) {
 				carousel_changes.$$scope = { dirty, ctx };
 			}
 
@@ -7986,7 +7986,7 @@ function create_fragment$1(ctx) {
 		d(detaching) {
 			if (detaching) detach(div);
 			destroy_component(carousel);
-			/*div_binding*/ ctx[5](null);
+			/*div_binding*/ ctx[7](null);
 		}
 	};
 }
@@ -7995,13 +7995,15 @@ function instance$1($$self, $$props, $$invalidate) {
 	let { $$slots: slots = {}, $$scope } = $$props;
 	let carouselEl;
 
-	onMount(() => {
+	function resize(index) {
 		const trackContainer = carouselEl.querySelector('.sc-carousel__pages-window');
-		const currentSlide = trackContainer.firstElementChild.firstElementChild;
-		const height = currentSlide.getBoundingClientRect().height;
+		const slides = [...trackContainer.firstElementChild.children];
+		const currentSlide = slides[index];
+		const height = currentSlide.scrollHeight;
 		trackContainer.style.maxHeight = height + 'px';
-	});
+	}
 
+	let resizedOnce = false;
 	let { class: cls = '' } = $$props;
 
 	const pageChange_handler = e => {
@@ -8011,11 +8013,7 @@ function instance$1($$self, $$props, $$invalidate) {
 			console.error(err);
 		}
 
-		const trackContainer = carouselEl.querySelector('.sc-carousel__pages-window');
-		const slides = [...trackContainer.firstElementChild.children];
-		const currentSlide = slides[e.detail + 1];
-		const height = currentSlide.getBoundingClientRect().height;
-		trackContainer.style.maxHeight = height + 'px';
+		resize(e.detail);
 	};
 
 	function div_binding($$value) {
@@ -8026,13 +8024,33 @@ function instance$1($$self, $$props, $$invalidate) {
 	}
 
 	$$self.$$set = $$new_props => {
-		$$invalidate(2, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
+		$$invalidate(3, $$props = assign(assign({}, $$props), exclude_internal_props($$new_props)));
 		if ('class' in $$new_props) $$invalidate(0, cls = $$new_props.class);
-		if ('$$scope' in $$new_props) $$invalidate(6, $$scope = $$new_props.$$scope);
+		if ('$$scope' in $$new_props) $$invalidate(8, $$scope = $$new_props.$$scope);
+	};
+
+	$$self.$$.update = () => {
+		if ($$self.$$.dirty & /*carouselEl, resizedOnce*/ 18) {
+			if (carouselEl && !resizedOnce) {
+				$$invalidate(4, resizedOnce = true);
+				resize(0);
+			}
+		}
 	};
 
 	$$props = exclude_internal_props($$props);
-	return [cls, carouselEl, $$props, slots, pageChange_handler, div_binding, $$scope];
+
+	return [
+		cls,
+		carouselEl,
+		resize,
+		$$props,
+		resizedOnce,
+		slots,
+		pageChange_handler,
+		div_binding,
+		$$scope
+	];
 }
 
 let Component$1 = class Component extends SvelteComponent {
@@ -8050,7 +8068,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (19:4) {#each slides as slide}
+// (20:4) {#each slides as slide}
 function create_each_block(ctx) {
 	let a;
 	let div;
@@ -8086,7 +8104,7 @@ function create_each_block(ctx) {
 			attr(div, "class", "slider__content");
 			attr(img, "class", "slider__img");
 			if (!src_url_equal(img.src, img_src_value = /*slide*/ ctx[2].image.url)) attr(img, "src", img_src_value);
-			attr(a, "href", a_href_value = /*slide*/ ctx[2].url);
+			attr(a, "href", a_href_value = /*slide*/ ctx[2].url.url);
 			attr(a, "class", "slider__container");
 			set_style(a, "--extra_height_mobile", /*slide*/ ctx[2].extra_height);
 		},
@@ -8104,7 +8122,7 @@ function create_each_block(ctx) {
 				attr(img, "src", img_src_value);
 			}
 
-			if (dirty & /*slides*/ 1 && a_href_value !== (a_href_value = /*slide*/ ctx[2].url)) {
+			if (dirty & /*slides*/ 1 && a_href_value !== (a_href_value = /*slide*/ ctx[2].url.url)) {
 				attr(a, "href", a_href_value);
 			}
 
@@ -8118,7 +8136,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (18:12) <AutoHeightCarousel >
+// (19:12) <AutoHeightCarousel >
 function create_default_slot(ctx) {
 	let each_1_anchor;
 	let each_value = /*slides*/ ctx[0];
