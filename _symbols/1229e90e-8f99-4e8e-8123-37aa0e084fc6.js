@@ -1,4 +1,4 @@
-// Slider - Updated October 3, 2024
+// Slider - Updated October 4, 2024
 function noop() { }
 function assign(tar, src) {
     // @ts-ignore
@@ -8093,7 +8093,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (20:4) {#each slides as slide}
+// (32:4) {#each slides as slide}
 function create_each_block(ctx) {
 	let a;
 	let div;
@@ -8126,12 +8126,13 @@ function create_each_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(div, "class", "slider__content");
-			attr(img, "class", "slider__img");
+			attr(div, "class", "slider__content svelte-1dtka8d");
+			attr(img, "class", "slider__img svelte-1dtka8d");
 			if (!src_url_equal(img.src, img_src_value = /*slide*/ ctx[2].image.url)) attr(img, "src", img_src_value);
 			attr(a, "href", a_href_value = /*slide*/ ctx[2].url.url);
 			attr(a, "class", "slider__container");
 			set_style(a, "--extra_height_mobile", /*slide*/ ctx[2].extra_height);
+			set_style(a, "position", "relative");
 		},
 		m(target, anchor) {
 			insert_hydration(target, a, anchor);
@@ -8161,7 +8162,7 @@ function create_each_block(ctx) {
 	};
 }
 
-// (19:12) <AutoHeightCarousel >
+// (31:12) <AutoHeightCarousel >
 function create_default_slot(ctx) {
 	let each_1_anchor;
 	let each_value = /*slides*/ ctx[0];
