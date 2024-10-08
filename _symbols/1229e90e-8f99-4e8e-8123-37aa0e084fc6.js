@@ -1,4 +1,4 @@
-// Slider - Updated October 4, 2024
+// Slider - Updated October 8, 2024
 function noop() { }
 function assign(tar, src) {
     // @ts-ignore
@@ -8093,7 +8093,7 @@ function get_each_context(ctx, list, i) {
 	return child_ctx;
 }
 
-// (32:4) {#each slides as slide}
+// (48:4) {#each slides as slide}
 function create_each_block(ctx) {
 	let a;
 	let div;
@@ -8103,6 +8103,8 @@ function create_each_block(ctx) {
 	let img_src_value;
 	let t1;
 	let a_href_value;
+	let mounted;
+	let dispose;
 
 	return {
 		c() {
@@ -8126,8 +8128,8 @@ function create_each_block(ctx) {
 			this.h();
 		},
 		h() {
-			attr(div, "class", "slider__content svelte-1dtka8d");
-			attr(img, "class", "slider__img svelte-1dtka8d");
+			attr(div, "class", "slider__content svelte-gw5g8r");
+			attr(img, "class", "slider__img");
 			if (!src_url_equal(img.src, img_src_value = /*slide*/ ctx[2].image.url)) attr(img, "src", img_src_value);
 			attr(a, "href", a_href_value = /*slide*/ ctx[2].url.url);
 			attr(a, "class", "slider__container");
@@ -8141,6 +8143,11 @@ function create_each_block(ctx) {
 			append_hydration(a, t0);
 			append_hydration(a, img);
 			append_hydration(a, t1);
+
+			if (!mounted) {
+				dispose = action_destroyer(preventDragging.call(null, a));
+				mounted = true;
+			}
 		},
 		p(ctx, dirty) {
 			if (dirty & /*slides*/ 1 && raw_value !== (raw_value = /*slide*/ ctx[2].content.html + "")) div.innerHTML = raw_value;
@@ -8158,11 +8165,13 @@ function create_each_block(ctx) {
 		},
 		d(detaching) {
 			if (detaching) detach(a);
+			mounted = false;
+			dispose();
 		}
 	};
 }
 
-// (31:12) <AutoHeightCarousel >
+// (47:12) <AutoHeightCarousel >
 function create_default_slot(ctx) {
 	let each_1_anchor;
 	let each_value = /*slides*/ ctx[0];
@@ -8271,6 +8280,18 @@ function create_fragment(ctx) {
 			destroy_component(autoheightcarousel, detaching);
 		}
 	};
+}
+
+function preventDragging(element) {
+	element.setAttribute('draggable', 'false');
+
+	element.addEventListener('mousedown', event => {
+		event.preventDefault();
+	});
+
+	element.addEventListener('dragstart', event => {
+		event.preventDefault();
+	});
 }
 
 function instance($$self, $$props, $$invalidate) {
