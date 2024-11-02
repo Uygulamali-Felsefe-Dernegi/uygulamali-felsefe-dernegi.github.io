@@ -1,0 +1,440 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta name="generator" content="Primo" />
+      <title>Uygulamalı Felsefe Derneği</title><!-- HEAD_svelte-1jqlmi7_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q9K3TS78QE');
+</script><script type="module" src="https://www.unpkg.com/@daviddarnes/share-button@1.1.3/share-button.js"></script><meta name="description" content="Uygulamalı Felsefe Derneği, 2024 yılında Türkiye'de kurulmuş bir felsefe derneğidir."><style>/* Reset & standardize default styles */
+@import url("https://unpkg.com/@primo-app/primo@1.3.64/reset.css") layer;
+
+/* Design tokens (apply to components) */
+:root {
+  --color-primary: #9b8580;
+  --color-primary-light: #e9e2e2;
+  --color-accent: #6371a2;
+  --color-dark: #6c6e83;
+  --color-light: linear-gradient(to bottom, #76a6b5 0%, #ffffff 60%, #cccccc 85%, rgba(0, 0, 0, 0.5) 100%);
+  
+  /* Base values */
+  --box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 0;
+  --border-color: #e0e1e1;
+  --transition: 0.1s ease-in-out;
+}
+
+html {
+  font-size: 14px;
+  background: var(--color-light);
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 13px; /* Daha iyi uyum için */
+  }
+}
+
+@media (max-width: 440px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* Root element (use instead of body) */
+#page {
+  font-family: 'Merriweather', serif;
+  color: #111;
+  line-height: 1.5;
+  font-size: 1.125rem;
+  background: var(--color-light);
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Elements */
+.section-container {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+a.link {
+  line-height: 1.3;
+  border-bottom: 2px solid var(--color-accent);
+  transform: translateY(-2px);
+  transition: border var(--transition);
+}
+
+a.link:hover {
+    border-color: transparent;
+  }
+
+.heading {
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+/* Buttons */
+.button {
+  color: white;
+  background: var(--color-dark);
+  border-radius: 8px;
+  padding: 9px 16px;
+  transition: box-shadow var(--transition);
+  border: 0;
+}
+/* reset */
+@media (max-width: 600px) {
+.button {
+    padding: 6px 12px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
+}
+  }
+.button:hover {
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+.button.inverted {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Content Section */
+.content {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.content p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+.content img {
+    width: 100%;
+    margin: 2rem 0;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+  }
+.content a.link {
+    font-weight: 500;
+    border-bottom: 2px solid var(--color-accent);
+    transform: translateY(-2px);
+    transition: border var(--transition);
+  }
+.content a.link:hover {
+      border-color: transparent;
+    }
+.content h1 {
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+.content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content ul {
+    list-style: disc;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content ol {
+    list-style: decimal;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content blockquote {
+    padding: 2rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid var(--color-accent);
+  }
+
+/* Flex utility */
+.flex {
+  display: flex;
+  flex-wrap: wrap; /* Mobil uyumlu olması için */
+}
+</style><!-- HEAD_svelte-1jqlmi7_END -->
+      <style>header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding-block:2rem;padding:1rem;margin:1rem;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%);border-radius:8px;position:relative;box-shadow:0 4px 8px rgba(0, 0, 0, 0.5);z-index:10}@media(max-width: 800px){header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{padding:0 1rem 1rem;margin:0.3rem
+}}.logo.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:2.25rem;font-weight:600;line-height:1.2;width:12rem}.logo.svelte-l8sb3e img.svelte-l8sb3e.svelte-l8sb3e{filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7))}.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none;align-items:center;justify-content:space-between;width:100%}.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e.svelte-l8sb3e{display:flex;gap:2rem}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e{border-color:transparent;transition:border-color 0.1s;font-size:0.95rem;font-weight:300}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e:hover,.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e a.link .active.svelte-l8sb3e{border-color:initial}@media(min-width: 800px){.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex
+}}.subnav-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:relative}.subnav-container.svelte-l8sb3e button.svelte-l8sb3e.svelte-l8sb3e{white-space:nowrap;font-weight:600}.subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex !important;flex-direction:column;position:absolute;z-index:20;top:100%;background-color:#fff;padding:1em}.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:500}@media(min-width: 800px){.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none
+}}.mobile-subnav-title.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{text-align:left;background-color:rgba(0, 0, 0, 0.1);padding:3px 10px}.mobile-subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-direction:column;align-items:flex-start;gap:1em;margin-bottom:1em}.mobile-subnav.svelte-l8sb3e a.svelte-l8sb3e.svelte-l8sb3e{font-size:0.8em}#popup.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:1.25rem;display:grid;gap:1rem;position:absolute;text-align:center;background-color:var(--background-color, white);box-shadow:var(--box-shadow, 0px 4px 30px rgba(0, 0, 0, 0.1));border-radius:var(--border-radius);inset:0.5rem;bottom:initial;padding:2rem;z-index:1}#popup.svelte-l8sb3e button#close.svelte-l8sb3e.svelte-l8sb3e{position:absolute;right:1rem;top:1rem}.language-picker.svelte-l8sb3e select.svelte-l8sb3e.svelte-l8sb3e{background-color:transparent}.mobile-actions-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:flex-end;-moz-column-gap:0.5em;column-gap:0.5em;row-gap:0.5em}.lang-swither-mobile.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{vertical-align:top;padding:4px}.top-bar.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{width:100%}ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;justify-content:flex-end;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{gap:0.3rem
+}}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:0.1s transform}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{transform:scale(1.1)}ul.socials.svelte-l8sb3e li.svelte-l8sb3e a.svelte-l8sb3e{font-size:1.5rem;padding:0.75rem}.search-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{margin-left:auto;background-color:#fff;display:flex;align-items:center;border-radius:8px;overflow:hidden;position:relative}.search-container.svelte-l8sb3e .search.svelte-l8sb3e.svelte-l8sb3e{padding:0.4rem 1rem}.hidden.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none!important}.searchResults.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:absolute;background-color:#fff;top:100%;left:0;width:100%}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{cursor:pointer;padding:1rem}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{background-color:#ddd}
+@media(min-width: 900px){}section.svelte-envz82.svelte-envz82{margin:1rem;display:flex;justify-content:var(--align);gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden;border-radius:12px;box-shadow:1px 8px 15px rgba(0, 0, 0, 0.2);background:linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(235, 245, 255, 0.9), rgba(220, 230, 240, 0.9), rgba(255, 228, 196, 0.9))}section.svelte-envz82 .banner.svelte-envz82{z-index:auto;height:200px;width:100%;position:absolute}section.svelte-envz82 .banner img.svelte-envz82{position:absolute;-o-object-fit:cover;object-fit:cover;width:100%;height:100%;opacity:0.6}section.svelte-envz82 div.svelte-envz82{z-index:5}section.svelte-envz82 div a.svelte-envz82{margin:0.5em 0}section.svelte-envz82 .heading.svelte-envz82{line-height:1.1;margin-left:0}.content.svelte-envz82.svelte-envz82{padding:0;line-height:1.75}.button.alternate.svelte-envz82.svelte-envz82{display:block;flex:0 0 auto;font-weight:bold;white-space:nowrap;background-color:#6371a2;border-radius:8px;box-shadow:1px 1px 4px rgba(0, 0, 0, 0.2)}.container.svelte-envz82.svelte-envz82{padding:2rem}
+.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:2rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:2rem}.teaser.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:1rem}.teaser.text_under_image.svelte-1bbd13f.svelte-1bbd13f{display:flex;flex-direction:column;align-items:center;width:100%}.teaser.text_under_image.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;max-width:900px;min-width:300px;-o-object-fit:contain;object-fit:contain;margin-bottom:1rem;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.text_image_right.svelte-1bbd13f.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f.svelte-1bbd13f{display:flex;align-items:center;justify-content:space-between;width:100%}.teaser.text_image_right.svelte-1bbd13f .image-right.svelte-1bbd13f{order:1;margin-left:1rem;width:50%}.teaser.text_image_left.svelte-1bbd13f .image-left.svelte-1bbd13f{order:0;margin-right:1rem;width:50%}.teaser.text_image_right.svelte-1bbd13f img.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;-o-object-fit:cover;object-fit:cover;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:50%;min-height:300px;text-align:justify;padding:1rem;box-sizing:border-box}.teaser.only_text.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:2rem;font-weight:600;text-align:center}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{line-height:1.5;text-align:justify}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{display:inline-block;padding:10px 20px;background-color:#6371a2;color:white;text-decoration:none;border-radius:5px;font-size:16px;font-weight:600;text-align:center;transition:background-color 0.3s ease;margin-top:1rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f:hover{background-color:#45a049}@media(max-width: 768px){.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:1rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{grid-template-columns:1fr}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:1.5rem}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{font-size:0.9rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{padding:8px 16px;font-size:14px}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:90%}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{min-height:auto}}
+.section-container.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:2rem;transform:scale(0.9);border-radius:20px;box-shadow:0px 8px 20px;width:auto}@media(min-width: 800px){.section-container.svelte-cdvhfw.svelte-cdvhfw{grid-template-columns:3fr 2fr;gap:14rem
+}}.content.svelte-cdvhfw.svelte-cdvhfw{display:grid;place-content:flex-start;gap:1rem}.content.svelte-cdvhfw .body.svelte-cdvhfw{margin-bottom:.5rem}.content.svelte-cdvhfw .social-links.svelte-cdvhfw{display:grid;gap:0.75rem}.content.svelte-cdvhfw .social-links a.svelte-cdvhfw{display:flex;align-items:center;gap:0.75rem}.content.svelte-cdvhfw .social-links a .icon.svelte-cdvhfw{font-size:1.75rem;color:var(--color-accent, rebeccapurple);transition:var(--transition, 0.1s transform)}.content.svelte-cdvhfw .social-links a:hover .icon.svelte-cdvhfw{transform:scale(1.1)}form.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:1rem;padding:2rem;border:1px solid var(--border-color, #eee);border-radius:var(--border-radius)}form.svelte-cdvhfw label.svelte-cdvhfw{display:grid;gap:0.25rem}form.svelte-cdvhfw label span.svelte-cdvhfw{font-size:1rem;font-weight:500}form.svelte-cdvhfw label input.svelte-cdvhfw,form.svelte-cdvhfw label textarea.svelte-cdvhfw{font-size:1rem;padding:0.5rem;outline-color:transparent;transition:var(--transition, 0.1s outline-color);border:1.5px solid var(--border-color, #eee);border-radius:4px}form.svelte-cdvhfw label input.svelte-cdvhfw:focus,form.svelte-cdvhfw label textarea.svelte-cdvhfw:focus{outline-color:var(--color-accent, rebeccapurple)}form.svelte-cdvhfw .button.svelte-cdvhfw{margin-top:1rem}
+.share-container.svelte-1isqcnz.svelte-1isqcnz{width:100%;display:flex;justify-content:space-between}button.svelte-1isqcnz.svelte-1isqcnz{background-color:var(--color-dark)}footer.svelte-1isqcnz.svelte-1isqcnz{padding-top:2em;color:black;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%)}.section-container.svelte-1isqcnz.svelte-1isqcnz{display:flex;justify-content:space-between;gap:4rem}@media(max-width: 500px){.section-container.svelte-1isqcnz.svelte-1isqcnz{flex-wrap:wrap}}share-button.svelte-1isqcnz.svelte-1isqcnz{display:inline-block;margin-top:1rem;margin-right:1rem;margin-bottom:1rem}share-button.svelte-1isqcnz button.svelte-1isqcnz{align-items:center;gap:0.2rem;width:auto}.nav-items.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;gap:4rem}.nav-items.svelte-1isqcnz ul.svelte-1isqcnz{display:grid;gap:0.5rem}.nav-items.svelte-1isqcnz h3.svelte-1isqcnz{font-weight:500;font-size:1.5rem;margin-bottom:1rem}ul.socials.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0.2rem;justify-content:flex-start;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-1isqcnz.svelte-1isqcnz{gap:0.3rem
+  }}ul.socials.svelte-1isqcnz li.svelte-1isqcnz{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:flex-start;border-radius:50%;transition:0.1s transform}ul.socials.svelte-1isqcnz li.svelte-1isqcnz:hover{transform:scale(1.1)}ul.socials.svelte-1isqcnz li a.svelte-1isqcnz{font-size:1.5rem;padding:0 0.75rem 0 0}.mailjet_f{height:220px!important;margin:auto;flex:0 0 310px;width:310px}.rights.svelte-1isqcnz.svelte-1isqcnz{text-align:center;padding-bottom:1rem}</style>
+    </head>
+    <body id="page">
+       
+<div class="section" id="section-799ce9e7"><header class=" svelte-l8sb3e"><div class="top-bar svelte-l8sb3e"><ul class="socials svelte-l8sb3e"><li class="svelte-l8sb3e"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi" aria-label="Linkedin" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://x.com/Ufelsefeder" aria-label="X" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.2 4.2 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.52 8.52 0 0 1-5.33 1.84q-.51 0-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"/><!-- HTML_TAG_END --></svg></a>
+    </li></ul></div>
+  <div class="desktop-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <nav class="svelte-l8sb3e"><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Bilgi</button>
+                <a class="hidden link svelte-l8sb3e" href="">Bilgi</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Blog</button>
+                <a class="hidden link svelte-l8sb3e" href="">Blog</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Etkinlikler</button>
+                <a class="hidden link svelte-l8sb3e" href="/announcements">Etkinlikler</a>
+              </div>
+        <div class="language-picker svelte-l8sb3e"><select class="svelte-l8sb3e"><option value="tr">TR </option><option value="en">EN </option><option value="it">IT </option></select></div></nav></div>
+  <div class="mobile-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <div class="mobile-actions-container svelte-l8sb3e"><button id="open" aria-label="Open mobile navigation"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="30" height="30" viewBox="0 0 24 24" class="iconify iconify--eva"><!-- HTML_TAG_START --><rect width="18" height="2" x="3" y="11" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="16" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="6" fill="currentColor" rx=".95" ry=".95"/><!-- HTML_TAG_END --></svg></button>
+        <button class="lang-swither-mobile svelte-l8sb3e">EN</button></div>
+    </div>
+
+  <div class="flex search-container svelte-l8sb3e"><input class="search svelte-l8sb3e" type="text" placeholder="search" value="">
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" style="font-size: 2rem;color: #999; " class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16A6.5 6.5 0 0 1 3 9.5A6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5"/><!-- HTML_TAG_END --></svg></div>
+    </header>
+
+ 
+          </div> 
+<div class="section" id="section-23e67126"><section style="--align: flex-end" class="svelte-envz82"><div class="banner svelte-envz82"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1726483782061shutterstock_86973980.jpg" class="svelte-envz82"></div>
+    <div class="container svelte-envz82">
+      <div class="svelte-envz82"><a href="/contact" class="button alternate svelte-envz82">İletişim</a>
+        
+        <a href="/membership" class="button alternate svelte-envz82">Üyelik</a></div></div></section>
+  </div> 
+<div class="section" id="section-277e867b"><section class="section-container svelte-1bbd13f"><div class="teasers svelte-1bbd13f">
+      <div class="teaser text_under_image svelte-1bbd13f"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1730568767193Resim3.jpg" alt="" class="svelte-1bbd13f">
+
+        
+
+        <div class="body svelte-1bbd13f"><h2 class="title svelte-1bbd13f">FELSEFİ DANIŞMANLIK NEDİR?</h2> 
+          <div class="description svelte-1bbd13f"><!-- HTML_TAG_START --><p>Felsefi danışmanlıkta, danışmanlık sürecinde anlamın yorumlanmasında önemli rol oynayan birçok kavram vardır. Bu makalede, bu kavramlardan bazılarına odaklanacağız: “eleştirel düşünme”, “dünya görüşü”, “Sokratik bakış açısı”, “bilgelik”, “iyi yaşam” ve “erdemler”.
+<br> <br>
+<strong>“Eleştirel Düşünme”</strong>
+<br>
+Tüm felsefi danışmanlar, felsefi danışmanlığın felsefi düşünmeyi içerdiği ve danışanlarıyla birlikte bu süreci yürüttükleri konusunda hemfikirdir. Ancak, kritik mesele, bu felsefi düşünmenin nasıl ve hangi amaçla danışmanlık oturumunda gerçekleştirildiğidir. İşte, bu soruya verilen cevaplar farklı yaklaşımların ortaya çıkmasına neden olur. Bazen verilen bir cevap, danışmanın felsefi düşünmeyi öncelikle danışanın durumuna dair inançlarını ya da tutumlarını analiz ederek kişisel sorunlarını aşmalarına yardımcı olmak için kullanmasıdır (Cohen, 1995). Bu yaklaşım, felsefeyi başka bir şeye, yani danışanı mutlu etmeye yönelik bir araç olarak değerlendirir. Bu durumda felsefi düşünme, danışanın kendini daha iyi hissetmesini sağlayacak şekilde kullanılır; bu sürecin ne kadar doğru, entelektüel açıdan zengin, kavramsal olarak temellendirilmiş ya da manevi açıdan derin olup olmadığı önemli değildir. Danışmanlık derin ya da yüzeysel, tutarlı ya da bağımsız klişelerden oluşan bir düşünme süreci olabilir; önemli olan kişisel sorunun çözülmesi ve danışanın mutlu olmasıdır. “Bu tür bir yaklaşım, başka amaçlar için yararlı olsa da, felsefenin kendine özgü doğasını, bilgeliği sırf bilgelik adına arama sürecini ihmal eder. Aslında, buna felsefi danışmanlık demek yerine ‘felsefe-terapi’ demeyi tercih ederim” (Lahav, 2001, s. 8).
+<br>
+Elliot D. Cohen’in mantık temelli terapisi dört varsayıma dayanır:<br />
+1- İnsanlar, duygularının bilişsel-davranışsal bileşenlerini mantıksal olarak öncüllerden çıkarır.<br />
+2- İnsanlar doğası gereği hata yapmaya meyillidir ve davranışlarının ve duygusal akıl yürütmelerinin öncülleri genellikle safsatalar içerir.<br />
+3- Davranışsal ve duygusal sorunlar, gerçekliğin mutlakçı ve mükemmeliyetçi tasarımlarından kaynaklanma eğilimindedir.<br />
+4- İnsanlar, yanlış davranışsal ve duygusal akıl yürütmeyi aşmak için kullanılabilecek doğuştan gelen bir iradeye sahiptir. Dolayısıyla, danışanın terapisi eleştirel düşünmeye dayalıdır ve bu, birçok felsefi danışmanlık yaklaşımında da olduğu gibi geçerlidir.</p>
+<p>Eleştirel düşünmenin savunucularından biri de Tim LeBon’dur—kendisi hem bilişsel terapist hem de felsefi danışman olup, Wise Therapy (2007) kitabının yazarıdır. LeBon, felsefi danışmanlığı, insanların hayatlarındaki önemli meseleleri daha akıllıca düşünmelerine yardımcı olmak amacıyla felsefi içgörülerin ve yöntemlerin kullanıldığı bir danışmanlık türü olarak tanımlar. LeBon, bunu bilişsel terapiyle (CBT) bütünleştirir, çünkü bazen rasyonel süreçler psikolojik süreçler (örneğin karar felci [*]) nedeniyle tıkanabilir ve işte bu noktada psikolojik terapiler devreye girer. LeBon, danışmanlıkta en çok kullanılan yöntemleri ele almıştır: eleştirel düşünme, kavramsal analiz, fenomenoloji, düşünce deneyleri ve yaratıcı düşünme. Şöyle yazar:
+<br>
+<br></p>
+<blockquote>
+<i>Eleştirel düşünme, argümanların eleştirel incelemeye dayanıp dayanmadığını test etmeyi ve bunları kabul etmek için iyi bir nedenimiz olup olmadığını görmeyi içerir. Eleştirel düşünmeyi felsefi teorileri değerlendirmek ve ayrıca eleştirel düşünmenin danışanlara duygusal bilgelik, iyi kararlar ve aydınlanmış değerler yönünde ne ölçüde yardımcı olabileceğini araştırmak için kullanacağız. (Le Bon, 2007, s. 4). 
+</i>
+</blockquote>
+<p><br>
+Kritik düşünme, danışmanın en faydalı felsefi yöntemidir. Değeri, danışanların karar verme, inançlar, değerler ve duygularında daha rasyonel ve makul olmalarını sağlamasıdır.
+<br>
+<br>
+<strong>“Sokratik Perspektif”</strong></p>
+<p>Birçok felsefe uygulayıcısı/pratisyeni(<em>practitioner</em>), özellikle felsefi yapma biçimleri Sokrates’e dönük olanlar, eleştirel düşünmeyi kullanır ve aslında bunun felsefi uygulamadan anlaşılması gerekenin bu olduğunu düşünür. Buradaki temel fikir, Sokrates’in, görüşlerimizin netleştirilmesini ve gerekçelendirilmesini talep etmesidir. Böylece eleştirel inceleme testini geçebilirler. Bu görüşe göre, Sokrates, kullandığımız kavramları netleştirmemiz, gizli varsayımlarımızı ortaya çıkarmamız ve görüşlerimizi veya teorilerimizi desteklemek için ikna edici nedenler sunmamız gerektiğini söyler. Bu eleştirel akıl yürütme görüşü, felsefi pratiğin rolünün danışanların dünya görüşlerini eleştirel bir şekilde incelemelerine yardımcı olmak, varsayımlarını ortaya çıkarmak, iç mantığı analiz etmek ve onu daha kabul edilebilir hale getirmek olduğunu ima eder. İdeal olarak, geliştirilen dünya görüşü, sağlam bir iyi akıl yürütme ve kabul edilebilir aksiyomatik varsayımlar üzerine oturan tutarlı bir fikirler bütünü olmalıdır. 
+<br>
+Birincil hedef, danışanın kendini anlamasını teşvik etmektir (Lahav, 2006, s. 4). Sokratik bir bakış açısından, felsefi danışmanlık, kişinin hayatını yaşarken normalde ortaya çıkan endişeler ve sorunlar üzerine ve ayrıca kişinin hayatının bir bütün olarak anlamlılığı üzerine düşünmeyi amaçlayan diyalektik akıl yürütmeyle yönlendirilen bir konuşma süreci olarak görülebilir.. Bu yöntem, bireyin başkalarıyla dostane ve destekleyici bir şekilde diyalog kurarak, gerçeği, bilgiyi, içgörü, bilgelik, erdem ve mutluluğu aradığı soru-cevap tarzında bir yansıma içerir—bunların ne olacağı önemli değildir. Bu şekilde, felsefi araştırma bir kişinin daha tatmin edici, üretken, anlamlı ve mutlu bir yaşam sürmesine yardımcı olabilir. Nihayetinde, Sokratik gelenekte felsefi araştırma, kişinin değerleri, inançları, fikirleri, yargıları, arzuları, duyguları, sezgileri, hisleri, hedefleri, taahhütleri, ilişkileri ve genel olarak bir kişinin yaşamını oluşturan tüm eylem ve deneyimleri üzerinde düşünme, netleştirme, görme ve anlamlandırma alışkanlığı ve günlük pratiğidir (Walsh, 2005). Sokrates’in çalışmaları, Pierre Grimes’in “Felsefi Ebelik” adını verdiği danışmanlık teorisini geliştirmesi için de bir temel olmuştur. Bu, Platon’un <em>Theaetetus</em> diyaloğundaki Sokratik doğum yöntemine dayanmaktadır (Grimes, 1997; Stecker &amp; Grimes, 1999, s. 233-240). P. Grimes (1999), felsefi danışmanlığı, Sokratik diyalektikte kullanılan ebelik yönteminin bir uyarlaması olarak, bir tür psikoterapi ve felsefi danışmanlık yöntemi olarak tanımlar. 
+<br>
+Diyalektik, tartışmanın biçimsel gelişimine şekil verir; sorular, danışanın kendisi hakkındaki yüzeysel, yanlış kavramlarının altına bakacak şekilde oluşturulur ve bu da danışanın en derin ve en anlamlı hedeflerine ulaşmasını imkânsız hale getirir. Bu yanlış kavramlar, danışanın hayatının başında, danışanın çevresinde (örneğin, ebeveynler veya kurumlar tarafından) kritik anlarda yapılan eleştirel ifadelerden oluşan, dile getirilmeyen sonuçlardır. Grimes, bu yanlış inançlara “<em>pathologos</em>”[**] adını verir. Bazı pathologoslar birbirleriyle bağlantılı olabilir ve bir kişinin kendisi hakkında sahip olduğu imajın temelini oluşturabilir ve nesilden nesile aktarılabilir. Bu fikirleri ortaya çıkarma, nedenlerinin ne olduğunu belirleme, mevcut sorunlar üzerindeki etkilerini gözlemleme ve çözme sanatı, felsefi danışmanlık olarak adlandırılır. Grimes, soru sormanın kişinin “duygusal davranışların” yüzeyinin altına inmesini sağladığını ve pathologos’u daha fazla analiz için serbest bıraktığını savunur. Bu yöntemle pathologos etkili bir şekilde ele alınabilir. Bu, danışana kendisi hakkında yeni bir anlayış kazandırma sürecidir. Bu tür bir kendini keşfetme, genellikle danışanların en temel inançlarını sorgulamalarına ve yaşam hedeflerini yeniden değerlendirmelerine bir yol açar. [1]
+<br><br></p>
+<p><strong>“Dünya Görüşü”</strong></p>
+<p>Ran Lahav (1995), kitabının ilk bölümünde felsefi danışmanlığı tanımladığı kısımda, felsefi danışmanlığa özgü bir çerçeve olan “dünya görüşü yorumlama ilkesi”nden bahseder (Lahav, 1995, s. 4). Bu ilke, felsefi danışmanlığın temelini oluşturur ve felsefi danışmanın yaklaşımının gerçekten felsefi olarak değerlendirilip değerlendirilemeyeceğini belirler. Danışmanlık, danışanların kendi dünya görüşlerini oluşturmalarına yardımcı olmakla ilgilidir; bu, onların günlük yaşamlarını etkiler ve sorunlu yönleri eleştirel bir şekilde keşfetmelerini, gerekirse dünya görüşlerini zenginleştirmelerini veya geliştirmelerini sağlar. Danışman, danışana örtük varsayımları tespit etmesine yardımcı olmalı ve sonuçları netleştirerek, kavramları analiz ederek, gizli kalıpları ve yapıları açığa çıkararak alternatifler sunmalıdır. Danışman ayrıca, danışanı insan hayatı, özgürlük, yaşamın anlamı, iyi ve kötü yargıları gibi kavramlarla ilgili literatürle tanıştırmalı ve danışana çeşitli alternatif düşünce akımlarını tanıtmalıdır. Danışmanın fenomenoloji konusunda eğitimli olması ve sıradan bir kişi tarafından genellikle göz ardı edilen öznel deneyimlerin yönlerini tanımlama yeteneğine sahip olması gerekir (a.g.e., s. 10). </p>
+<p>Eckart Ruschmann (2006, s. 149-156), danışmanlığın dünya görüşlerini yorumlamaya dayandığına dair Ran Lahav’ın orijinal fikrini geliştirir. Bu, şu adımların izlenmesiyle gerçekleştirilmelidir: 
+<br>
+<br>
+1- Danışanın sahip olduğu kişisel kavramların ve varsayımların yeniden inşasını sağlamaya yönelik, danışmanın yaklaşımının (felsefi teori, yöntemler ve yaklaşımlar) danışanın dünya görüşleri, kavramlar ve varsayımlar üzerine “teorileri” ile bağlantılı olmasıdır. Bu süreçte, danışanın dünya görüşlerinin (içsel) tutarlılığı incelenmeli ve tutarsızlıklar çözülmelidir. Danışman, danışanın dünya görüşünün tutarlılığını ve bütünlüğünü geliştirmeye çalışabilir. 
+<br>
+<br>
+2- Danışanın felsefesi, kişisel deneyimleri ile ilişkilendirilmelidir; zira kişisel kavramlar ve deneyimler (kararlar ve eylemler) bütünlükle bağlantılıdır. Bu nedenle tutarlılık ve uyumluluk aramak (veya “kontrol etmek”) gereklidir; yani, dünya görüşü teorileri ile pratik yaşam arasındaki tutarlılık. Ruschmann’a göre, bu süreç, danışanın kendi teorik bağlamları çerçevesinde ve kendi yaşamında pratikte tutarlılık üzerine ilk bakış açısını işlevsel hale getirebilir. Kişisel felsefenin “çerçeveleri” yaşamın anlamı ve yaşam hedefleri ile bağlantılıdır. Tüm bu unsurlar—tutarlılık, uyumluluk ve anlam/hedef arayışı—”iyi bir yaşam” sağlamada temel öneme sahiptir. Danışmanlık, danışanın teorilerini kontrol etmesine ve gerçek deneyimlerine uyum sağlamayanları değiştirmesine yardımcı olabilir; böylece bu alanda daha büyük bir tutarlılık elde etmesine yardımcı olur. Bu, danışanın “epistemolojisini” geliştirmesine ve kullanmasına yardımcı olur.
+<br>
+<br>
+<strong>Bilgelik</strong> [2]
+<br>
+Ran Lahav’a göre, felsefi danışmanlık, psikolojik terapilerdeki amaçlardan ve konulardan temelde farklı, benzersiz konu ve hedefler üzerine kuruludur. Bu, kelimenin eski Yunan anlamına, yani ‘<em>philo-sophia</em>’ya, “bilgelik sevgisi”ne işaret eder. Bilgelik arayışı, teknolojik, konfor odaklı ve bencil bir çağda neredeyse unutulmuş olan bu kadim hedef, felsefi danışmanlığın kişisel bir yolculuk olarak, “fikirler dünyasında bilgelik arayışıdır” (Lahav, 2001, s. 7).</p>
+<p>Lahav başlangıçta (1995), felsefi danışmanlığın amacının, danışanların yaşamlarının ilgili yönlerini temel alan kavramlar ve fikirler ağını açığa çıkarmak ve netleştirmek olduğunu düşünmüştür: Danışanlarının çeşitli tutumlarını karakterize eden temel kavramları analiz etmek ve onların yaşam biçimlerindeki gizli varsayımları ortaya çıkarmak, kavramsal bağlantıları keşfetmek veya kısacası kişinin yaşadığı yaşamın felsefesini araştırmaktır. Bu netleştirme, kişinin kendisi ve dünya hakkında daha zengin bir felsefi anlayış geliştirmesine yardımcı olmak amacıyla yapılır. Bu, belirli kişisel problemlerle başa çıkma yeteneklerini geliştirme konusunda ikincil bir fayda sağlama potansiyeline de sahiptir. Ancak Lahav daha sonra (2001) bu felsefi danışmanlık anlayışının, felsefenin yaşamlarımızda başarabileceği çok daha büyük potansiyel etkilerinden yoksun olduğunu belirtmiştir. Bu yaklaşım, kişinin içinde zaten var olan felsefeyi keşfetmekle sınırlıdır ve sadece bireyin belirli tutumlarında zaten yer alan şeylere odaklandığı için, kişinin gerçek yaşamının çok ötesine uzanan bilgelik alanlarını keşfetmekte başarısız olur. Böylece yeni fikirler, kavramlar ve anlamlar ufkunu açma konusunda başarısız olur ve danışanın mevcut varoluş biçiminin ötesine geçmez (Lahav, 2001, s. 8). Bilgelik arayışında felsefe, yaşamı genişletmeyi ve derinleştirmeyi amaçlar. Rolü, danışanların daha mutlu olmasına yardımcı olmak değil, daha bilge olmalarını sağlamaktır. Yani, danışmanlık iş sorunlarını veya evlilik problemlerini aşmak amacına indirgenemez. Bilakis fikir alanlarını keşfetmek ve bilgelik yolunda büyümek amaçlarını taşır.. Yine de, bilgelik arayışının bir kişinin kişisel problemleri aşmasına güç vermesi muhtemel olsa da, bu birincil amacı değildir. </p>
+<p>Felsefenin felsefi danışmanlık içindeki rolü, danışanı, gerçekteki anlamların tüm kapsayıcı ufuklarına, bilgelik olarak açmaktır. Kısacası, Platon’un karanlık bir mağarada yaşayan ve yalnızca gölgeleri görebilen insanlar hakkında yaptığı ünlü mağara metaforu açısından bakıldığında, felsefenin danışmanlıkta amacı, o mağara sakinlerine yaşadıkları gölgeleri keşfetmelerine yardım etmek değil, mağaradan çıkmalarına ve dış dünyadaki daha büyük ışığa [?] ulaşmalarına yardımcı olmaktır (Lahav, 2001, s. 10).</p>
+<p>Lahav, felsefi danışmanlığı, kişinin kendine odaklanmış kaygılarının ve belirli ilgi alanlarının ötesine geçerek, varoluşumuzun doğasının potansiyel anlayışının sonsuz ufuklarına açılma süreci olarak tanımlar. Bu, yaşamla iç içe geçmiş sonsuz bir fikir ağıyla yapılan bir diyaloğa benzer ve bu ağ bize yaşamın temel gerçekliğinin dokusunu tanıtır. İşte burada, bilgelik arayışında felsefi danışmanlığın rolünü görebiliriz.</p>
+<p>Felsefenin amacı dünyamızın fikirsel temellerini açığa çıkarmaktır: özgürlük veya benlik kavramları, suçluluğun ahlaki sonuçları, başarının değerliliği veya değersizliği ve hatta hakikat ve bilgeliğin anlamı ile ilgili çeşitli anlamlar, çıkarımlar ve bağlantılar (Lahav, 2001, s.12). Lahav sonunda, eleştirel düşüncenin değil, meditasyon tekniklerinin merkezi olduğu tefekküre dayalı bir felsefi danışmanlık modeline yöneldi. Bunu “felsefi pratiğin bilgelikten ilham alan bir vizyonuna doğru ilerlemek” olarak adlandırdı.</p>
+<p>Bilgelik, o halde, bireyin dar benliğinin ötesinde daha geniş bir dünyaya açık olmayı ifade eder. Bu, sıradan ben-merkezli dünya görüşümüzün ötesindeki gerçeklere açılmamızı sağlayan bir anlama yoludur. Bilgelik, sorunları analiz etmek, basitleştirmek ve çözmek için bir araç değildir; aksine, insan gerçekliğinin karmaşıklığına, daha zengin anlam ufuklarına, çeşitli yönlere ve bakış açılarına açılmayı gerektirir. İşte bu, bilgelik arzusunun kaynağıdır, ancak aynı zamanda bu yolda yürümeyi zorlaştıran unsurlardan biridir (Lahav, 2006, s. 4).</p>
+<p>Lahav, kendini dönüştürmenin ve yeni bir kendilik anlayışına ulaşmak için yalnızca eleştirel analizden fazlasını gerektirdiğine inanmaktadır. Felsefeyi ele almanın amacı, içimizde bilgelik özlemini uyandırmak, sınırlı ve yüzeysel kendilik anlayışımızdan – dolayısıyla ihtiyaçlarımızdan ve kaygılarımızdan – çıkmamıza yardımcı olmak ve bize daha büyük bir yaşam vizyonu sunmaktır. Gerald Rochelle (2008) ise bilgelik ile ilgili olarak, bilgelik sürecin kendisi olduğunu, edinim değil, bir işlem olduğunu belirtmektedir; bilgelik edinilen bir şey değil, artan bir açıklık için çabalamamızdır. Bilgelik, bilinmese veya tanınmasa bile içimizde olduğu için bizi çeken nesne değildir. Bilgelik arayışında, odak noktamız ona doğru götüren süreç olmalı, onun elde edilmesi veya belirli doğası değil. Bilgelik bir görevdir -belki de bitmeyen bir Sisifos görevi- ancak odak noktamız, görevin ortaya çıkarabileceği ürün değil, göreve dahil olmanın ürünüdür. “Açılma” durumu ise değişime hazır olma, yenilik ve yaratıcılık karşısında özgür olma durumudur; yalnızca daha iyi bir yargının, bilgelik veya netliğin çekimine yöneliktir.
+<br>
+<br></p>
+<blockquote>
+<i>
+... bilgelik her birimizin içindedir - bir ömür boyu ulaşılabilir ve gerçekleştirilebilir. Bilgimizin ötesindeki ‘nesnelere’ odaklanarak değil - çünkü bilgimizin ötesindeki her şey her zaman öyle kalabilir - ama şu anki farkındalığımızın ötesinde olsa da içimizde yaşayan şeye odaklanarak açığa çıkarılabilir. Bu tür bir farkındalık günlük yaşamla - başkalarıyla, dünyayla ve dünya görüşümüzü oluşturan her şeyle - bağlantılıdır. Bilgelik, dünyaya daha ‘ulaşılabilir’ olma, önyargı ve dogma engellerini bırakma ve bunun yerine yaratma, özgürlük, eylem ve değişimin yeniliğine açılma sürecidir. Açıklık, bilgelik arayışı süreci için olmazsa olmazdır, çünkü onsuz keşif olamaz. Genel ‘bilgelik süreci’ içinde herhangi bir ilerleme kaydetmek istiyorsak, yaratıcı yeniliğe açık olmalı ve bunun üzerinde özgürce ve anlamlı bir şekilde hareket etmeye hazır olmalıyız. ‘Bilgelik süreci’nden iyi yargılar gelir ve bunlar, iyi bir hayat sürmenin bizim için ne anlama geldiğiyle birlikte tepki verir. Bu tür yargılarda bulunmak, şu anda ‘ötesinde’ olanı keşfetmemizi engellemez, aslında izlememiz gereken yönü daha da netleştirir, çünkü yargılar olmadan hiçbir rota izlenemez. Bilgelik, bireyin kendi potansiyeline açık olma temelinde arttıkça, hem bilgelik hem de iyi yargı niteliklerini üretir ve onlardan istifade eder, iyi yaşayan bireyin unsurları olarak gördüğümüz şeyin nitelikleri -dikkat, alçakgönüllülük, denge ve emin olma... Bilgelik için olasılıkları açmak aktif, risk alan bir süreçtir... (Rochelle, 2008, s. 45).
+</i>
+</blockquote>
+<p><br>
+Pratik felsefe, bir kelime alışverişi olarak, birey içinde büyüyen bir netliğin parçası olarak bilgeliği açığa çıkarabilir. Bu süreç, bireyin azaltılmış kaygısı ve artan açıklığı ile desteklenir; bu da felsefeden ve neoliberal dünyada mevcut olan yararcı kazançlardan bir adım geri atarak gerçekleşir.
+<br>
+<br>
+<strong>“Erdemler”</strong></p>
+<p>Arto Tukiainen ayrıca bilgelik kavramının felsefi danışmanlığın özel doğasını anlamak için anahtar olduğunu ileri sürer. Bilgeliği, iyi yaşamanın nasıl yapılacağına dair bir farkındalıkla ilişkili olarak görür; bilge bir kişi birçok şeyi anlamalıdır: bunların en önemlileri arasında yaşamın hedefleri ve değerleri ve kişinin hayatındaki önemli hedeflere ne zaman ve nasıl tatmin edici bir şekilde ulaşılacağı yer alır (2010, s.1). Bilgeliğe iyi yaşamanın nasıl yapılacağı bilgisiyle yaklaşıldığı iddiası, iyi yaşama girişimlerinin öncelikle erdeme bağlı olduğu inancıyla bağlantılıdır. Çünkü: “erdemler bilgeliğin özüdür” (ibid.). Bu nedenle felsefi danışmanlık “erdemleri besleme sürecidir” (ibid.). Erdemler öz-anlamayla ilişkilidir ve Tukiainen bilişsel ve pratik erdemler arasında ayrım yapar, ancak ayrım net değildir. Bilişsel erdemler, çok önemli olan ve bir kişinin kendi hedeflerini takip etmesini ve kendi korkularını ve duygularını anlamasını sağlayan öz-bilgiyi (kendilik bilgisi) içerir. Tatmin edici ve ahlaki olarak kabul edilebilir hayatlar sürmemizi sağlayan dış dünya hakkındaki bilgimiz de bir erdem olarak görülebilir. Bu bilgi çok önemlidir. Çünkü eylemlerimizin başarısı buna bağlıdır ve yargımızı oluşturmamıza yol açan çeşitli eylemlerin değeri, uygulanabilirliği ve uygunluğuna ilişkin farkındalığımıza dayalı kararlar alma yeteneğimizi etkiler. “Kendimizi ve dünyamızı anlamanın yeni yollarına açık olmak bilişsel bir erdemdir” (2010, s. 2), çünkü bazen şu ana kadarki fikirlerimizden türetilemeyen radikal olarak yeni bakış açıları ve kavramları benimsememiz gerekir. Bu tür değişiklikler durumumuzun değiştirilmiş bir değerlendirmesine yol açabilir ve duygularımızı ve davranışlarımızı etkileyebilir. </p>
+<p>Bilgi, iyi muhakeme ve yeni kavramlara açıklık gibi bilişsel erdemler bilgeliğin yalnızca bir kısmını oluşturur. Bilgelik ayrıca dürüstlük, sabır, iyi kalplilik ve adalet gibi erdemleri gerektirir ve zulmü, acımasızlığı, düşüncesizliği, manipülatifliği, ihaneti, ihmali, inatçılığı, nankörlüğü, acımasızlığı, sahtekârlığı, öfkeyi, açgözlülüğü, açgözlülüğü ve kibri dışlar. Ahlaki ve varoluşsal erdemler arasında, kişinin kendisini anlık korkulardan uzaklaştırması ve bunlara insan hayatıyla ve çevreleyen ve daha geniş dünya perspektifinden, hatta kozmik bir bakış açısından bakması anlamına gelen nesnelliğin pratik erdemini de ekleyebiliriz. Felsefi bir yaklaşım, tarafsız yaşam ve kozmosa ilişkin algıları içerir. Tukiainen, erdemlerin mutluluk arayışında yeterli olduğunu iddia etmez, ancak kabul edilebilir ve hatta belki de tatmin edici bir hayata ulaşma olasılığını artırdığını iddia eder. Felsefi danışmanlığın, erdeme kaçınılmaz vurgu yapan felsefi bir yaşam biçimine bir davet olduğuna inanır. Danışman tarafsız bir pozisyon alması gerekse de, “bilgelik” bakış açısından tavsiyede bulunabilmelidir. Danışanın hangi erdemleri keşfetmesi ve geliştirmeye teşvik edilmesi gerektiğini not edebilir. Kişinin net erdemleri yoksa, bu onların önemini anlayamadığı anlamına gelmez. Danışan bu erdemlerin kendisine huzur bulmasında yardımcı olacağını ummaya başlarsa, onlara hayatta daha büyük bir rol vermek isteyebilir. Felsefi danışmanlığı erdemleri teşvik etmenin bir yolu olarak görmek, Tukiainen’i erdemlerin hayattaki mevcut ve gelecekteki sorunlarla başa çıkmamızı sağladığı sonucuna götürmüştür. Lydia B. Amir (2006) da felsefi danışmanlığa yaklaşımında erdemleri vurgular ve danışmanlığın misyonunun üç bölümden oluştuğunu görür: </p>
+<p>1- Soyuttan somuta ve geriye doğru hareket ederek soyut düşünceyi geliştirmek. 
+<br>
+<br>
+2- Felsefenin özü entelektüel erdemlerde bulunduğundan, entelektüel cesareti ve özerkliği derinleştirme nihai hedefi ile entelektüel erdemleri teşvik etmek. Farklı bakış açılarını ve tarafsızlık, başkalarının düşüncelerine açıklık, farklı görüşleri eleştirel bir şekilde değerlendirme, manevi ayıklık ve kanıtlara dayalı dikkatli yargılarda bulunma gibi diğer bilişsel erdemleri kabul etmek ve bununla birlikte gelen dayanıklılık ve kararlılık da dahil olmak üzere entelektüel cesareti geliştirmek. 
+<br>
+<br>
+3- Çoğulculuğu, hoşgörüyü ve diğer insanlara karşı dayanışmayı teşvik eden bilgeliği edinmek için gereken gelişen düşünce ve duyguları teşvik etme nihai hedefi ile ahlaki erdemleri beslemek.
+<br>
+<br>
+L. B. Amir'e göre felsefi danışmanlığın önemli hedeflerinden biri danışanın özerkliğini güçlendirmektir; özerklik, kişinin kendi gücüne güvenerek seçim yapması ve fikir oluşturması olarak tanımlanır. Özerklik kavramı cesaretle ve ayrıca alçakgönüllülükle yakından bağlantılıdır. Bilişsel ve istemli süreçler arasındaki bağlantıyı vurgular. Bu süreçler, birinin bizden daha iyi kararlar verip veremeyeceğini yargılamak için ruhsal bir yeteneği ve bu becerilerin uygulanmasını engelleyen duyguları kontrol etme yeteneğini varsayar. Daha fazla özerklik kazanmak, danışanın özgürlük ve eşitlik arasındaki gerilimi en aza indirmesine yardımcı olur; bu da demokratik felsefi uygulamanın nihai hedefidir.</p>
+<p>Jess Fleming, danışman ve/veya danışan için yararlı veya gerekli olabilecek erdemlerin kendi listesini formüle ediyor: “cesaret, ahlaki ve psikolojik istikrar (veya denge), dinleme, sabır, alçakgönüllülük, zamanlama, ironi ve mizah (özellikle kendine gülme ve kendini fazla ciddiye almama yeteneği), sıcaklık ve dostluk, dürüstlük, samimiyet, empati, yargısız kabul, özgünlük, epoke (yani yargıyı askıya alma), ılımlılık (sophrosyne), sükunet (ataraksi), yüzleşme (agon), özgüven, yaratıcılık, kendiliğindenlik ve bilgelik” (Fleming, 2000, s. 14).
+<br>
+<br>
+<strong>Sonuç</strong></p>
+<p>LeBon'un belirttiği gibi eleştirel düşünme danışman için en yararlı felsefi yöntemdir. Değeri, danışanların karar alma, inanç, değer ve duygularında daha rasyonel ve makul olmalarını sağlamasında yatar. Eleştirel düşünme, felsefe yapmak için bir paradigma olarak Sokrates'i kullanan veya felsefi uygulamanın tümüyle bununla ilgili olduğunu düşünen birçok felsefi uygulayıcı için uygundur. Buradaki temel fikir, Sokrates'in görüşlerimizin eleştirel inceleme testinden geçmeleri için akıl tarafından açıklığa kavuşturulmasını ve desteklenmesini talep etmesidir. Bu görüşe göre Sokrates bize kullandığımız kavramları açıklığa kavuşturmamız, gizli varsayımlarımızı açığa çıkarmamız ve görüşlerimizi veya teorilerimizi destekleyen ikna edici nedenler sunmamız gerektiğini söyler. Dünya görüşü yorumunun arkasındaki ilke, danışanın günlük hayatını etkileyen dünya hakkındaki kendi görüşlerini formüle etmesine, sorunlu yönlerini eleştirel bir şekilde incelemesine ve gerektiği gibi dünya hakkındaki görüşleri yumuşatmasına, zenginleştirmesine veya geliştirmesine yardımcı olmayı amaçlamasıdır. Danışman, danışanın örtük varsayımları çözmesine ve sonuçları belirleyerek, kavramları analiz ederek ve gizli kalıpları ve yapıları ortaya çıkararak alternatifler sunmasına yardımcı olmalıdır. Bazı yazarlar felsefi danışmanlığın bir bilgelik arayışı olduğunu vurgular. Bu, hayatı genişletmenin ve derinleştirmenin bir yolunu aramaktır. Rolü, danışanların daha mutlu olmalarına yardımcı olmak değil, daha bilge olmalarıdır; rolü, iş yerinde veya evlilikte sorunların üstesinden gelmek değil, fikir alanını keşfetmek ve bilgeliğe doğru büyümektir. Yine, bilgelik arayışının bir kişiyi kişisel sorunların üstesinden gelebilecek şekilde güçlendirmesi muhtemel olsa da; bu onun birincil amacı değildir. Erdemler, bilgeliğin edinilmesinde önemli bir rol oynar ve hayatın sorunlarıyla yüzleşme sürecinde büyük ölçüde yardımcı olur.
+<br>
+<br>
+<strong>Kaynakça</strong></p>
+<p>Achenbach,  G.  (1995).  Philosophy,  philosophical  practice  and  psychotherapy.  In  R.  Lahav  &amp;  M.  Tillmans  (Eds.),  Essays  on  philosophical  counseling  (pp.  61-74).  New  York:  University  Press  of  America.</p>
+<p>Achenbach,  G.  (1997).  On  wisdom  in  philosophical  practice.  Inquiry:  Critical  thinking  across  the  disciplines, 17 (3), 5-20.</p>
+<p>Achenbach,  G.  (1998).  On  wisdom  in  philosophical  practice.  Inquiry:  Critical  thinking  across  the  disciplines, 17(3).</p>
+<p>Cohen, D. E. (2009). Critical thinking unleashed. Lanham: Rowman and Littlefield publishers.</p>
+<p>Cohen, D. E. (2007). The new rational therapy. Lanham: Rowman and Littlefield publishers.</p>
+<p>Cohen, D. E. (2003). Philosophical principles of logic-based therapy. Practical Philosophy, 27-35.</p>
+<p>Cohen,  D.  E.  (2000).  Philosophers  at  work.  Issues  and  practice  of  philosophy.  Wadsworth:  Cengage  Learning.</p>
+<p>Curnow, T. Philosophy for everyday life. London: Icon Books, 2012.</p>
+<p>Curnow, T. (2000). Wisdom and philosophy. Practical Philosophy, 10-13.
+Fleming, J. (2000). Wisdom and virtue in philosophical counselling. Practical Philosophy, 14-20.</p>
+<p>Grimes, P., (1997). A study of philosophical midwifery. Available at: http://noeticsociety.org/a-study-of-philosophical-midwifery-presented-at-3rd-intl-conference-on-pc-nyc-1997/</p>
+<p>Howard, A. (2011). Socrates as a role model for counsellors. Practical Philosophy, 2.1, 15-17.</p>
+<p>Howard, A. (2005). Counselling and identity. New York: Palgrave Macmillan.</p>
+<p>Howard, A. (2000). Philosophy for counselling and psychotherapy. New York: Palgrave Macmillan.</p>
+<p>Lahav,  R.  (1995).  A  conceptual  framework  for  philosophical  counseling:  Worldview  interpretation.  In  R.  Lahav  &amp;  M.  Tillmanns  (Eds.),  Essays  on  philosophical  counseling  (pp.  3-24).  Lanham:  University Press of America.</p>
+<p>Lahav, R. (2001). Philosophical counseling as a quest for wisdom. Practical Philosophy, 7-19.</p>
+<p>Lahav,  R.  (2006).  Philosophical  practice  as  contemplative  philo-sophia.  Practical  Philosophy,8(1). Available at: http://www.practical-philosophy.org.uk. contemplative-philosophy</p>
+<p>LeBon,  T.,  &amp;  Arnaud,  D.  (2001).  Toward  wise  decision-making  III:  Critical  and  creative  thinking.  Practical Philosophy, 24-32.</p>
+<p>LeBon, T. (2007). Wise therapy. Philosophy for counsellors. London: Sage. 
+Rochelle, G. (2008). Dare to be wise: Exchanging the word – A new philosophical practice. Practical Philosophy, 9(2), 21-44.</p>
+<p>Rochelle, G. (2012). Doing philosophy. Edinburgh: Dunedin. </p>
+<p>Ruschmann, E.  (1999).  Transpersonal  philosophies  in  philosophical  counseling.  Fifth  International  Conference on Philosophy in Practice (pp. 226-230). Oxford: Wadham College.</p>
+<p>Ruschmann,  E.  (2006).World-view-coherence  .In  R.  J.  Barrientos  (Ed.),  Philosophical  practice.  From  theory  to  practice  (pp.  149-156).  Seville:  Humanistic  Studies  and  Philosophical  Practice  Association.</p>
+<p>Tukiainen, A. (2011). Philosophical counselling as a process of fostering wisdom in the form of virtues. Practical Philosophy, 10, 47-55. </p>
+<p>Van Hooft, S. (2011). Socratic dialogue as collegial reasoning. Practical Philosophy 2, 18-24.</p>
+<p>Walsh, R. D. (2005). Philosophical counselling practice. Janus Head, 8 (2), 497-508. 
+<br>
+<br>
+<strong>Dipnot:</strong>
+Bu yazı, Blanka Šulavíková’nın “Key concepts in philosophical counselling” adlı makalesinden çevrilmiştir. Makaleye <a href="https://www.degruyter.com/document/doi/10.2478/s13374-014-0250-9/html">buradan</a> ulaşabilirsiniz.</p>
+<p>[*] <strong>“Karar felci (decision paralyse)</strong> paradoksal bir insan davranışıdır (Aguilar veKreimovich, 2022) ve çeşitli yönleri vurgulanarak farklı biçimlerde tanımlanmıştır. Büyük ölçüde seçenekler arasında seçim yapamamanın getirdiği karar felci, tipik olarak bilişsel aşırı yük ve yorgunluğun bir sonucudur. İnsan beyni, aşırı miktarda bilgiyi işlemek ve karşılaştırmak için tasarlanmamıştır. Bireyler seçeneklere sahip olmak istediklerini söylerken sayısız seçenek arasından seçim yapma ihtiyacı bilişsel bir yük haline gelebilmektedir. Bu bilişsel yük sebebiyle de insanlar karar verememekte ve donup kalmakta veya zorlanabilmektedir (Schmidt, 2016). Schwartz (2000, s. 87) bu durumu ‘seçim özgürlüğü iki ucu keskin bir kılıçtır. Çünkü özgürlüğün diğer tarafında kaos ve felç vardır’ diye özetlemektedir.” Ayrıntılı bilgi için Elif Türkan Arslan’ın “Karar Felci” adlı çalışmasına <a href="https://www.researchgate.net/publication/369978633_Karar_felci">buradan</a> ulaşabilirsiniz.
+<br></p>
+<p>[**] Pathologos: “Hastalıkların bilimi,” 1610’larda Fransızca “pathologie” (16. yüzyıl) kelimesinden gelmektedir; bu da tıbbi Latince “pathologia”dan “hastalık çalışması” anlamındadır. Bu terim, Yunanca “pathos” kelimesinden türetilmiştir; “acı” anlamına gelir (PIE kökü *kwent(h)- “acı çekmek”) + “-logia” “çalışma” (bakınız -logy). 1842’den itibaren anormal zihinsel durumların incelenmesi bağlamında kullanılmıştır. Eski Yunanca “pathologia” ise “tutkuların incelenmesi” anlamına geliyordu; “hastalıkların bilimi” için kullanılan Yunanca kelime ise “pathologike” (“patolojik”) idi. Orijinal tanıma <a href="https://www.etymonline.com/word/pathology">buradan</a> ulaşabilirsiniz.
+<br></p>
+<p>[1] Grimes, bu tür bir diyalogda her iki tarafın da yaşamlarında böyle bir değişim potansiyelinin, Platoncu bir bağlamda anlam arayışının daha büyük bir araştırmasını içerdiğinin farkında olduğunu savunur. Bu nedenle, felsefi danışmanlık herkes için değil, yaşam görüşlerini Platon felsefesini inceleyerek ve keşfederek geliştirebilecek kişiler içindir. Felsefi danışmanlık, Platon felsefesinin geleneksel biçiminde öğrenmekle kalmayıp, bu felsefeyi kendi deneyimlerinde ve derin düşüncelerinde tasdik etmeyi hedefleyenler içindir. Bu, yalnızca diyalektik ve diyalektik araştırma hakkında bilgi edinme yetenekleri olduğu anlamına gelmez; aynı zamanda, düşünsel bir yola çıkma, mağaraya yapılan hac yolculuğundan kurtulma yeteneklerini de içerir. Çünkü Platoncu felsefe, güzellik ve iyilik vizyonlarını düşünme pratiğini teşvik eder ve aynı zamanda yolda ortaya çıkan engelleri anlama ve aşma aracıdır (Grimes, 1997).
+<br></p>
+<p>[2] Nitekim modern felsefi danışmanlığın kurucusu Gerda Achenbach, felsefi uygulamanın amacının “bilgelik” olduğuna inanmaktadır (Achenbach, 1998).</p>
+<p><strong>Çeviren:</strong>  Ahmet Er</p><!-- HTML_TAG_END --></div>
+          </div>
+
+        
+      </div></div></section></div> 
+<div class="section" id="section-4accd2ee"><section class="section-container svelte-cdvhfw"><div class="content svelte-cdvhfw"><h2 class="heading">Bize ulaşın</h2>
+    <div class="body svelte-cdvhfw"><!-- HTML_TAG_START -->Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.<!-- HTML_TAG_END --></div>
+    <div class="social-links svelte-cdvhfw"></div></div>
+  <form action="https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5" method="POST" class="svelte-cdvhfw"><input type="hidden" name="_subject" value="New Contact Form Submission" class="svelte-cdvhfw">
+    <input type="hidden" name="_next" value="https://uygulamalifelsefedernegi.org/success" class="svelte-cdvhfw">
+    <label class="svelte-cdvhfw"><span class="svelte-cdvhfw">İsim</span>
+          <input name="İsim" type="Metin" placeholder="" class="svelte-cdvhfw">
+        </label><label class="svelte-cdvhfw"><span class="svelte-cdvhfw">E-posta</span>
+          <input name="E-posta" type="e-posta" placeholder="isim@email.com" class="svelte-cdvhfw">
+        </label>
+    <button class="button svelte-cdvhfw" type="submit">Gönder</button></form></section></div> 
+<div class="section" id="section-fcb954ce"><footer class="svelte-1isqcnz"><div class="share-container svelte-1isqcnz"></div>
+  <div class="section-container svelte-1isqcnz"><div class="nav-items svelte-1isqcnz"><nav><h3 class="svelte-1isqcnz"></h3>
+           <ul class="socials svelte-1isqcnz"><li class="svelte-1isqcnz"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees" aria-label="Linkedin" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://twitter.com/Ufelsefeder" aria-label="Twitter" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.2 4.2 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.52 8.52 0 0 1-5.33 1.84q-.51 0-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/><!-- HTML_TAG_END --></svg></a>
+                </li></ul>
+             
+              <share-button class="svelte-1isqcnz"><button class="flex button svelte-1isqcnz" href="#ddd">Paylaş <svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M12 1L8 5h3v9h2V5h3m2 18H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3v2H6v12h12V9h-3V7h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2"/><!-- HTML_TAG_END --></svg></button></share-button>
+            
+            <a class="button" href="/donate">Bağış</a>
+        </nav></div>
+    <div class="iframe-container"><!-- HTML_TAG_START --><iframe class="mailjet_f" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hr/form?c=8870c5ff" width="100%" style="height: 0;"></iframe><!-- HTML_TAG_END --></div></div>
+    <div class="rights svelte-1isqcnz"><!-- HTML_TAG_START --><p>Uygulamalı Felsefe Derneği © 2024</p><!-- HTML_TAG_END --></div></footer></div> 
+
+      <script type="module">
+      import('/_symbols/f3808cd7-a077-4170-a16c-cec73c4b035f.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-4accd2ee'),
+              hydrate: true,
+              props: {"heading":"Bize ulaşın","subheading":"Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.","social":[],"inputs":[{"type":"Metin","label":"İsim","placeholder":""},{"type":"e-posta","label":"E-posta","placeholder":"isim@email.com"}],"submit_label":"Gönder"}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/48d0b7c8-cb51-4997-a118-c07fe3a25592.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-fcb954ce'),
+              hydrate: true,
+              props: {"content":{"html":"<p>Uygulamalı Felsefe Derneği © 2024</p>","markdown":"Uygulamalı Felsefe Derneği © 2024\n\n"},"menus":[{"links":[{"link":{"url":"/donate","label":"Bağış","active":false}}],"title":""}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees","label":"Linkedin","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}},{"icon":"mdi:twitter","link":{"url":"https://twitter.com/Ufelsefeder","label":"Twitter","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/b4fe99f3-c71a-498d-ada4-31680af358d3.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-799ce9e7'),
+              hydrate: true,
+              props: {"":"","logo":{"image":{"alt":"Uygulamalı Felsefe Derneği","url":"https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png"},"title":""},"site_nav":[{"link":{"url":"","label":"Bilgi","active":false},"submenu":[{"link":{"url":"/about-us","label":"Hakkımızda","active":false}},{"link":{"url":"/articles-of-association","label":"Tüzük","active":false}},{"link":{"url":"/executive-board","label":"Yönetim Kurulu","active":false}},{"link":{"url":"/our-representations","label":"Temsilciliklerimiz","active":false}},{"link":{"url":"/contact","label":"İletişim","active":false}}]},{"link":{"url":"","label":"Blog","active":false},"submenu":[{"link":{"url":"/blog","label":"Tüm Yazılar","active":false}},{"link":{"url":"/blog/uygulamali-felsefe-nedir","label":"Uygulamalı Felsefe Nedir?","active":false}},{"link":{"url":"/kitap-nceleme","label":"Kitap İnceleme","active":false}}]},{"link":{"url":"/announcements","label":"Etkinlikler","active":false},"submenu":[{"link":{"url":"/seminar","label":"Seminer","active":false}},{"link":{"url":"/symposium","label":"Sempozyum","active":false}},{"link":{"url":"/speeches","label":"Konuşmalar","active":false}},{"link":{"url":"/workshop","label":"Atölye Çalışmaları","active":false}}]}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi","label":"Linkedin","active":false}},{"icon":"mdi:twitter","link":{"url":"https://x.com/Ufelsefeder","label":"X","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    </script>
+    </body>
+  </html>
+  
