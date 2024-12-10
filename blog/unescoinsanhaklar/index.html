@@ -1,0 +1,334 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta name="generator" content="Primo" />
+      <title>Uygulamalı Felsefe Derneği</title><!-- HEAD_svelte-1jqlmi7_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q9K3TS78QE');
+</script><script type="module" src="https://www.unpkg.com/@daviddarnes/share-button@1.1.3/share-button.js"></script><meta name="description" content="Uygulamalı Felsefe Derneği, 2024 yılında Türkiye'de kurulmuş bir felsefe derneğidir."><style>/* Reset & standardize default styles */
+@import url("https://unpkg.com/@primo-app/primo@1.3.64/reset.css") layer;
+
+/* Design tokens (apply to components) */
+:root {
+  --color-primary: #9b8580;
+  --color-primary-light: #e9e2e2;
+  --color-accent: #6371a2;
+  --color-dark: #6c6e83;
+  --color-light: linear-gradient(to bottom, #76a6b5 0%, #ffffff 60%, #cccccc 85%, rgba(0, 0, 0, 0.5) 100%);
+  
+  /* Base values */
+  --box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 0;
+  --border-color: #e0e1e1;
+  --transition: 0.1s ease-in-out;
+}
+
+html {
+  font-size: 14px;
+  background: var(--color-light);
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 13px; /* Daha iyi uyum için */
+  }
+}
+
+@media (max-width: 440px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* Root element (use instead of body) */
+#page {
+  font-family: 'Merriweather', serif;
+  color: #111;
+  line-height: 1.5;
+  font-size: 1.125rem;
+  background: var(--color-light);
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Elements */
+.section-container {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+a.link {
+  line-height: 1.3;
+  border-bottom: 2px solid var(--color-accent);
+  transform: translateY(-2px);
+  transition: border var(--transition);
+}
+
+a.link:hover {
+    border-color: transparent;
+  }
+
+.heading {
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+/* Buttons */
+.button {
+  color: white;
+  background: var(--color-dark);
+  border-radius: 8px;
+  padding: 9px 16px;
+  transition: box-shadow var(--transition);
+  border: 0;
+}
+/* reset */
+@media (max-width: 600px) {
+.button {
+    padding: 6px 12px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
+}
+  }
+.button:hover {
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+.button.inverted {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Content Section */
+.content {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.content p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+.content img {
+    width: 100%;
+    margin: 2rem 0;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+  }
+.content a.link {
+    font-weight: 500;
+    border-bottom: 2px solid var(--color-accent);
+    transform: translateY(-2px);
+    transition: border var(--transition);
+  }
+.content a.link:hover {
+      border-color: transparent;
+    }
+.content h1 {
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+.content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content ul {
+    list-style: disc;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content ol {
+    list-style: decimal;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content blockquote {
+    padding: 2rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid var(--color-accent);
+  }
+
+/* Flex utility */
+.flex {
+  display: flex;
+  flex-wrap: wrap; /* Mobil uyumlu olması için */
+}
+</style><!-- HEAD_svelte-1jqlmi7_END -->
+      <style>header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding-block:2rem;padding:1rem;margin:1rem;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%);border-radius:8px;position:relative;box-shadow:0 4px 8px rgba(0, 0, 0, 0.5);z-index:10}@media(max-width: 800px){header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{padding:0 1rem 1rem;margin:0.3rem
+}}.logo.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:2.25rem;font-weight:600;line-height:1.2;width:12rem}.logo.svelte-l8sb3e img.svelte-l8sb3e.svelte-l8sb3e{filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7))}.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none;align-items:center;justify-content:space-between;width:100%}.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e.svelte-l8sb3e{display:flex;gap:2rem}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e{border-color:transparent;transition:border-color 0.1s;font-size:0.95rem;font-weight:300}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e:hover,.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e a.link .active.svelte-l8sb3e{border-color:initial}@media(min-width: 800px){.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex
+}}.subnav-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:relative}.subnav-container.svelte-l8sb3e button.svelte-l8sb3e.svelte-l8sb3e{white-space:nowrap;font-weight:600}.subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex !important;flex-direction:column;position:absolute;z-index:20;top:100%;background-color:#fff;padding:1em}.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:500}@media(min-width: 800px){.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none
+}}.mobile-subnav-title.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{text-align:left;background-color:rgba(0, 0, 0, 0.1);padding:3px 10px}.mobile-subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-direction:column;align-items:flex-start;gap:1em;margin-bottom:1em}.mobile-subnav.svelte-l8sb3e a.svelte-l8sb3e.svelte-l8sb3e{font-size:0.8em}#popup.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:1.25rem;display:grid;gap:1rem;position:absolute;text-align:center;background-color:var(--background-color, white);box-shadow:var(--box-shadow, 0px 4px 30px rgba(0, 0, 0, 0.1));border-radius:var(--border-radius);inset:0.5rem;bottom:initial;padding:2rem;z-index:1}#popup.svelte-l8sb3e button#close.svelte-l8sb3e.svelte-l8sb3e{position:absolute;right:1rem;top:1rem}.language-picker.svelte-l8sb3e select.svelte-l8sb3e.svelte-l8sb3e{background-color:transparent}.mobile-actions-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:flex-end;-moz-column-gap:0.5em;column-gap:0.5em;row-gap:0.5em}.lang-swither-mobile.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{vertical-align:top;padding:4px}.top-bar.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{width:100%}ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;justify-content:flex-end;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{gap:0.3rem
+}}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:0.1s transform}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{transform:scale(1.1)}ul.socials.svelte-l8sb3e li.svelte-l8sb3e a.svelte-l8sb3e{font-size:1.5rem;padding:0.75rem}.search-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{margin-left:auto;background-color:#fff;display:flex;align-items:center;border-radius:8px;overflow:hidden;position:relative}.search-container.svelte-l8sb3e .search.svelte-l8sb3e.svelte-l8sb3e{padding:0.4rem 1rem}.hidden.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none!important}.searchResults.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:absolute;background-color:#fff;top:100%;left:0;width:100%}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{cursor:pointer;padding:1rem}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{background-color:#ddd}
+.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:2rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:2rem}.teaser.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:1rem}.teaser.text_under_image.svelte-1bbd13f.svelte-1bbd13f{display:flex;flex-direction:column;align-items:center;width:100%}.teaser.text_under_image.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;max-width:900px;min-width:300px;-o-object-fit:contain;object-fit:contain;margin-bottom:1rem;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.text_image_right.svelte-1bbd13f.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f.svelte-1bbd13f{display:flex;align-items:center;justify-content:space-between;width:100%}.teaser.text_image_right.svelte-1bbd13f .image-right.svelte-1bbd13f{order:1;margin-left:1rem;width:50%}.teaser.text_image_left.svelte-1bbd13f .image-left.svelte-1bbd13f{order:0;margin-right:1rem;width:50%}.teaser.text_image_right.svelte-1bbd13f img.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;-o-object-fit:cover;object-fit:cover;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:50%;min-height:300px;text-align:justify;padding:1rem;box-sizing:border-box}.teaser.only_text.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:2rem;font-weight:600;text-align:center}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{line-height:1.5;text-align:justify}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{display:inline-block;padding:10px 20px;background-color:#6371a2;color:white;text-decoration:none;border-radius:5px;font-size:16px;font-weight:600;text-align:center;transition:background-color 0.3s ease;margin-top:1rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f:hover{background-color:#45a049}@media(max-width: 768px){.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:1rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{grid-template-columns:1fr}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:1.5rem}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{font-size:0.9rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{padding:8px 16px;font-size:14px}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:90%}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{min-height:auto}}
+.section-container.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:2rem;transform:scale(0.9);border-radius:20px;box-shadow:0px 8px 20px;width:auto}@media(min-width: 800px){.section-container.svelte-cdvhfw.svelte-cdvhfw{grid-template-columns:3fr 2fr;gap:14rem
+}}.content.svelte-cdvhfw.svelte-cdvhfw{display:grid;place-content:flex-start;gap:1rem}.content.svelte-cdvhfw .body.svelte-cdvhfw{margin-bottom:.5rem}.content.svelte-cdvhfw .social-links.svelte-cdvhfw{display:grid;gap:0.75rem}.content.svelte-cdvhfw .social-links a.svelte-cdvhfw{display:flex;align-items:center;gap:0.75rem}.content.svelte-cdvhfw .social-links a .icon.svelte-cdvhfw{font-size:1.75rem;color:var(--color-accent, rebeccapurple);transition:var(--transition, 0.1s transform)}.content.svelte-cdvhfw .social-links a:hover .icon.svelte-cdvhfw{transform:scale(1.1)}form.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:1rem;padding:2rem;border:1px solid var(--border-color, #eee);border-radius:var(--border-radius)}form.svelte-cdvhfw label.svelte-cdvhfw{display:grid;gap:0.25rem}form.svelte-cdvhfw label span.svelte-cdvhfw{font-size:1rem;font-weight:500}form.svelte-cdvhfw label input.svelte-cdvhfw,form.svelte-cdvhfw label textarea.svelte-cdvhfw{font-size:1rem;padding:0.5rem;outline-color:transparent;transition:var(--transition, 0.1s outline-color);border:1.5px solid var(--border-color, #eee);border-radius:4px}form.svelte-cdvhfw label input.svelte-cdvhfw:focus,form.svelte-cdvhfw label textarea.svelte-cdvhfw:focus{outline-color:var(--color-accent, rebeccapurple)}form.svelte-cdvhfw .button.svelte-cdvhfw{margin-top:1rem}
+.share-container.svelte-1isqcnz.svelte-1isqcnz{width:100%;display:flex;justify-content:space-between}button.svelte-1isqcnz.svelte-1isqcnz{background-color:var(--color-dark)}footer.svelte-1isqcnz.svelte-1isqcnz{padding-top:2em;color:black;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%)}.section-container.svelte-1isqcnz.svelte-1isqcnz{display:flex;justify-content:space-between;gap:4rem}@media(max-width: 500px){.section-container.svelte-1isqcnz.svelte-1isqcnz{flex-wrap:wrap}}share-button.svelte-1isqcnz.svelte-1isqcnz{display:inline-block;margin-top:1rem;margin-right:1rem;margin-bottom:1rem}share-button.svelte-1isqcnz button.svelte-1isqcnz{align-items:center;gap:0.2rem;width:auto}.nav-items.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;gap:4rem}.nav-items.svelte-1isqcnz ul.svelte-1isqcnz{display:grid;gap:0.5rem}.nav-items.svelte-1isqcnz h3.svelte-1isqcnz{font-weight:500;font-size:1.5rem;margin-bottom:1rem}ul.socials.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0.2rem;justify-content:flex-start;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-1isqcnz.svelte-1isqcnz{gap:0.3rem
+  }}ul.socials.svelte-1isqcnz li.svelte-1isqcnz{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:flex-start;border-radius:50%;transition:0.1s transform}ul.socials.svelte-1isqcnz li.svelte-1isqcnz:hover{transform:scale(1.1)}ul.socials.svelte-1isqcnz li a.svelte-1isqcnz{font-size:1.5rem;padding:0 0.75rem 0 0}.mailjet_f{height:220px!important;margin:auto;flex:0 0 310px;width:310px}.rights.svelte-1isqcnz.svelte-1isqcnz{text-align:center;padding-bottom:1rem}</style>
+    </head>
+    <body id="page">
+       
+<div class="section" id="section-276e7d0b"><header class=" svelte-l8sb3e"><div class="top-bar svelte-l8sb3e"><ul class="socials svelte-l8sb3e"><li class="svelte-l8sb3e"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi" aria-label="Linkedin" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://x.com/Ufelsefeder" aria-label="X" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.2 4.2 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.52 8.52 0 0 1-5.33 1.84q-.51 0-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/><!-- HTML_TAG_END --></svg></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-l8sb3e"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"/><!-- HTML_TAG_END --></svg></a>
+    </li></ul></div>
+  <div class="desktop-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <nav class="svelte-l8sb3e"><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Bilgi</button>
+                <a class="hidden link svelte-l8sb3e" href="">Bilgi</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Blog</button>
+                <a class="hidden link svelte-l8sb3e" href="">Blog</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Etkinlikler</button>
+                <a class="hidden link svelte-l8sb3e" href="/announcements">Etkinlikler</a>
+              </div>
+        <div class="language-picker svelte-l8sb3e"><select class="svelte-l8sb3e"><option value="tr">TR </option><option value="en">EN </option><option value="it">IT </option></select></div></nav></div>
+  <div class="mobile-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <div class="mobile-actions-container svelte-l8sb3e"><button id="open" aria-label="Open mobile navigation"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="30" height="30" viewBox="0 0 24 24" class="iconify iconify--eva"><!-- HTML_TAG_START --><rect width="18" height="2" x="3" y="11" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="16" fill="currentColor" rx=".95" ry=".95"/><rect width="18" height="2" x="3" y="6" fill="currentColor" rx=".95" ry=".95"/><!-- HTML_TAG_END --></svg></button>
+        <button class="lang-swither-mobile svelte-l8sb3e">EN</button></div>
+    </div>
+
+  <div class="flex search-container svelte-l8sb3e"><input class="search svelte-l8sb3e" type="text" placeholder="search" value="">
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" style="font-size: 2rem;color: #999; " class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5l-1.5 1.5l-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16A6.5 6.5 0 0 1 3 9.5A6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14S14 12 14 9.5S12 5 9.5 5"/><!-- HTML_TAG_END --></svg></div>
+    </header>
+
+ 
+          </div> 
+<div class="section" id="section-f638529c"><section class="section-container svelte-1bbd13f"><div class="teasers svelte-1bbd13f">
+      <div class="teaser text_under_image svelte-1bbd13f"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1733797148258Flag_of_UNESCO.svg" alt="" class="svelte-1bbd13f">
+
+        
+
+        <div class="body svelte-1bbd13f"><h2 class="title svelte-1bbd13f">UNESCO Genel Direktörü Sayın Audrey Azoulay'ın mesajı, İnsan Hakları Günü vesilesiyle 10 Aralık  2023</h2> 
+          <div class="description svelte-1bbd13f"><!-- HTML_TAG_START --><p>10 Aralık 1948'de Birleşmiş Milletler Genel Kurulu İnsan Hakları Evrensel Beyannamesi'ni kabul etti. İkinci Dünya Savaşı'nın enkazının ortasında uluslararası toplum, evrensel hak ve özgürlüklere dayalı kalıcı bir barış inşa etmeyi amaçlayan bir bildiri ile "tüm halklar ve tüm uluslar için ortak bir başarı standardı" belirledi.
+<br><br>
+Çatışmaların ve krizlerin arttığı bir dünyada, 10 Aralık İnsan Hakları Günü bize, kökleri ortak değerlere dayanan ortak bir insanlık vizyonuna olan sarsılmaz bağlılığımızı bir kez daha teyit etme fırsatı sunmaktadır. Zira temel haklar tehdit altında olduğunda, tüm toplumlarımız tehlikeye girer.
+<br><br>
+İşte bu nedenle UNESCO 75 yıldır kendisini insan haklarını ve insan onurunu korumaya ve desteklemeye adamıştır.
+<br><br>
+Bu nedenle UNESCO ırkçılık, antisemitizm ve her türlü nefret ve ayrımcılıkla mücadelede ön saflarda yer almaktadır. Brezilya'nın São Paulo kentinde 29 Kasım - 1 Aralık tarihleri arasında düzenlenen Irkçılık ve Ayrımcılığa Karşı Küresel Forum'un üçüncü edisyonu bu taahhüdü pekiştirmiştir. Forum, siyasi karar alıcıları, araştırmacıları, sanatçıları ve sivil toplum mensuplarını bir araya getirerek ırksal kapsayıcılığı ve toplumsal cinsiyet eşitliğini destekleyen ve Yerli Halkların haklarını güçlendiren yenilikçi çözümler üretmelerini sağlamıştır.
+<br><br>
+İnsan haklarını ve insan onurunu savunmak, Örgütün evrensel ve temel bir hak olan eğitimi dönüştürme çabalarının da temelini oluşturmaktadır. UNESCO sadece 250 milyon çocuğun okullaşmasını sağlamak için değil, aynı zamanda herkesin kaliteli eğitime - çağımızın sorunlarıyla ilgili eğitime - erişimini sağlamak için çalışmaktadır.
+<br><br>
+Bu çabalar, demokratik toplumlarımızın temelinin bir parçası olan bir başka temel hakkın, ifade özgürlüğünün korunmasıyla el ele gitmektedir. İfade özgürlüğü sadece gazeteciler, sanatçılar ve yaratıcılar için değil, aynı zamanda yayınları nedeniyle giderek daha fazla saldırı altında olan bilim insanları için de geçerlidir. İşte bu nedenle UNESCO, dünya çapında araştırmacıların korunmasını güçlendirmeyi ve çalışmalarının bağımsızlığını garanti altına almayı amaçlayan yasal araçlar ve eğitim programları geliştirmiştir.
+<br><br>
+Örgüt ayrıca, bilimsel ve teknolojik gelişmelerin toplumlarımızın barış ve istikrarı için hayati önem taşıyan etik konuları gündeme getirdiği bir dönemde, bilimsel ilerlemelerin insan hakları veya insan onuru pahasına olmamasını sağlamak için çalışmaktadır.
+<br><br>
+UNESCO'nun 2021 yılında kabul ettiği Yapay Zeka Etiği konusundaki öncü Tavsiye Kararının sahada uygulanmasını sağlamak için her gün gösterdiği çabaların ardında yatan neden de budur. Halihazırda 50'den fazla ülke, ilgili algoritmaların işleyişinin özünde insan haklarına, mahremiyete ve toplumsal cinsiyet eşitliğine saygı olmasını sağlamak amacıyla mevzuatlarını Tavsiye Kararı hükümlerine uyarlamak için çalışıyor.
+<br><br>
+Yine yeni teknolojiler konusunda, Kasım ayında toplanan UNESCO Genel Konferansı, nöroteknoloji etiği konusunda yeni bir standart belirleme aracı geliştirmeye karar vererek, etik tehlikelerle dolu olduğu kadar umut verici de olan bir alanda düzenleme yapılması olasılığını ortaya koymuştur.
+Dolayısıyla İnsan Hakları Günü bize bu hakların hafife alınamayacağını ve etkinliğinin düzenli olarak kolektif bir kararlılık gerektirdiğini hatırlatmaktadır. Barış ve toplumsal ilerlemenin koşulu budur. UNESCO'nun misyonu budur. Çalışmalarının özü de budur.
+<br><br>
+Orijinal yazıya şu bağlantıdan ulaşabilirsiniz: <a href="https://unesdoc.unesco.org/ark:/48223/pf0000388005_eng#:~:text=In%20a%20world%20of%20where,all%20our%20societies%20are%20endangered.">UNESCO - Orijinal Yazı</a></p><!-- HTML_TAG_END --></div>
+          </div>
+
+        
+      </div></div></section></div> 
+<div class="section" id="section-678e367d"><section class="section-container svelte-cdvhfw"><div class="content svelte-cdvhfw"><h2 class="heading">Bize ulaşın</h2>
+    <div class="body svelte-cdvhfw"><!-- HTML_TAG_START -->Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.<!-- HTML_TAG_END --></div>
+    <div class="social-links svelte-cdvhfw"></div></div>
+  <form action="https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5" method="POST" class="svelte-cdvhfw"><input type="hidden" name="_subject" value="New Contact Form Submission" class="svelte-cdvhfw">
+    <input type="hidden" name="_next" value="https://uygulamalifelsefedernegi.org/success" class="svelte-cdvhfw">
+    <label class="svelte-cdvhfw"><span class="svelte-cdvhfw">İsim</span>
+          <input name="İsim" type="Metin" placeholder="" class="svelte-cdvhfw">
+        </label><label class="svelte-cdvhfw"><span class="svelte-cdvhfw">E-posta</span>
+          <input name="E-posta" type="e-posta" placeholder="isim@email.com" class="svelte-cdvhfw">
+        </label>
+    <button class="button svelte-cdvhfw" type="submit">Gönder</button></form></section></div> 
+<div class="section" id="section-af9e6e88"><footer class="svelte-1isqcnz"><div class="share-container svelte-1isqcnz"></div>
+  <div class="section-container svelte-1isqcnz"><div class="nav-items svelte-1isqcnz"><nav><h3 class="svelte-1isqcnz"></h3>
+           <ul class="socials svelte-1isqcnz"><li class="svelte-1isqcnz"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees" aria-label="Linkedin" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="m10 15l5.19-3L10 9zm11.56-7.83c.13.47.22 1.1.28 1.9c.07.8.1 1.49.1 2.09L22 12c0 2.19-.16 3.8-.44 4.83c-.25.9-.83 1.48-1.73 1.73c-.47.13-1.33.22-2.65.28c-1.3.07-2.49.1-3.59.1L12 19c-4.19 0-6.8-.16-7.83-.44c-.9-.25-1.48-.83-1.73-1.73c-.13-.47-.22-1.1-.28-1.9c-.07-.8-.1-1.49-.1-2.09L2 12c0-2.19.16-3.8.44-4.83c.25-.9.83-1.48 1.73-1.73c.47-.13 1.33-.22 2.65-.28c1.3-.07 2.49-.1 3.59-.1L12 5c4.19 0 6.8.16 7.83.44c.9.25 1.48.83 1.73 1.73"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://twitter.com/Ufelsefeder" aria-label="Twitter" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M22.46 6c-.77.35-1.6.58-2.46.69c.88-.53 1.56-1.37 1.88-2.38c-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29c0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15c0 1.49.75 2.81 1.91 3.56c-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.2 4.2 0 0 1-1.93.07a4.28 4.28 0 0 0 4 2.98a8.52 8.52 0 0 1-5.33 1.84q-.51 0-1.02-.06C3.44 20.29 5.7 21 8.12 21C16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56c.84-.6 1.56-1.36 2.14-2.23"/><!-- HTML_TAG_END --></svg></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-1isqcnz"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 0 1-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 0 1 7.8 2m-.2 2A3.6 3.6 0 0 0 4 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 0 0 3.6-3.6V7.6C20 5.61 18.39 4 16.4 4zm9.65 1.5a1.25 1.25 0 0 1 1.25 1.25A1.25 1.25 0 0 1 17.25 8A1.25 1.25 0 0 1 16 6.75a1.25 1.25 0 0 1 1.25-1.25M12 7a5 5 0 0 1 5 5a5 5 0 0 1-5 5a5 5 0 0 1-5-5a5 5 0 0 1 5-5m0 2a3 3 0 0 0-3 3a3 3 0 0 0 3 3a3 3 0 0 0 3-3a3 3 0 0 0-3-3"/><!-- HTML_TAG_END --></svg></a>
+                </li></ul>
+             
+              <share-button class="svelte-1isqcnz"><button class="flex button svelte-1isqcnz" href="#ddd">Paylaş <svg xmlns="http://www.w3.org/2000/svg" aria-hidden role="img" width="1em" height="1em" viewBox="0 0 24 24" class="iconify iconify--mdi"><!-- HTML_TAG_START --><path fill="currentColor" d="M12 1L8 5h3v9h2V5h3m2 18H6a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3v2H6v12h12V9h-3V7h3a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2"/><!-- HTML_TAG_END --></svg></button></share-button>
+            
+            <a class="button" href="/donate">Bağış</a>
+        </nav></div>
+    <div class="iframe-container"><!-- HTML_TAG_START --><iframe class="mailjet_f" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hr/form?c=8870c5ff" width="100%" style="height: 0;"></iframe><!-- HTML_TAG_END --></div></div>
+    <div class="rights svelte-1isqcnz"><!-- HTML_TAG_START --><p>Uygulamalı Felsefe Derneği © 2024</p><!-- HTML_TAG_END --></div></footer></div> 
+
+      <script type="module">
+      import('/_symbols/f3808cd7-a077-4170-a16c-cec73c4b035f.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-678e367d'),
+              hydrate: true,
+              props: {"heading":"Bize ulaşın","subheading":"Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.","social":[],"inputs":[{"type":"Metin","label":"İsim","placeholder":""},{"type":"e-posta","label":"E-posta","placeholder":"isim@email.com"}],"submit_label":"Gönder"}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/48d0b7c8-cb51-4997-a118-c07fe3a25592.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-af9e6e88'),
+              hydrate: true,
+              props: {"content":{"html":"<p>Uygulamalı Felsefe Derneği © 2024</p>","markdown":"Uygulamalı Felsefe Derneği © 2024\n\n"},"menus":[{"links":[{"link":{"url":"/donate","label":"Bağış","active":false}}],"title":""}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees","label":"Linkedin","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}},{"icon":"mdi:twitter","link":{"url":"https://twitter.com/Ufelsefeder","label":"Twitter","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/b4fe99f3-c71a-498d-ada4-31680af358d3.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-276e7d0b'),
+              hydrate: true,
+              props: {"":"","logo":{"image":{"alt":"Uygulamalı Felsefe Derneği","url":"https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png"},"title":""},"site_nav":[{"link":{"url":"","label":"Bilgi","active":false},"submenu":[{"link":{"url":"/about-us","label":"Hakkımızda","active":false}},{"link":{"url":"/articles-of-association","label":"Tüzük","active":false}},{"link":{"url":"/executive-board","label":"Yönetim Kurulu ve Üyelerimiz","active":false}},{"link":{"url":"/our-representations","label":"Temsilciliklerimiz","active":false}},{"link":{"url":"/contact","label":"İletişim","active":false}}]},{"link":{"url":"","label":"Blog","active":false},"submenu":[{"link":{"url":"/blog","label":"Tüm Yazılar","active":false}},{"link":{"url":"/blog/uygulamali-felsefe-nedir","label":"Uygulamalı Felsefe Nedir?","active":false}},{"link":{"url":"/kitap-nceleme","label":"Kitap İnceleme","active":false}}]},{"link":{"url":"/announcements","label":"Etkinlikler","active":false},"submenu":[{"link":{"url":"/seminar","label":"Seminer","active":false}},{"link":{"url":"/symposium","label":"Sempozyum","active":false}},{"link":{"url":"/speeches","label":"Konuşmalar","active":false}},{"link":{"url":"/workshop","label":"Atölye Çalışmaları","active":false}}]}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi","label":"Linkedin","active":false}},{"icon":"mdi:twitter","link":{"url":"https://x.com/Ufelsefeder","label":"X","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    </script>
+    </body>
+  </html>
+  
