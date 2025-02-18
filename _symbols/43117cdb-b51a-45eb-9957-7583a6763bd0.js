@@ -1,4 +1,4 @@
-// Social Icons - Updated February 18, 2025
+// Social Icons - Updated February 19, 2025
 function noop() { }
 function assign(tar, src) {
     // @ts-ignore
