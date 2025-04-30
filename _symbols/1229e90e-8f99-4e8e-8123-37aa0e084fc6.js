@@ -1,4 +1,4 @@
-// Slider - Updated April 22, 2025
+// Slider - Updated April 30, 2025
 function noop() { }
 function run(fn) {
     return fn();

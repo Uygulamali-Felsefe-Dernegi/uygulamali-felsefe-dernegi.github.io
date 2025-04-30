@@ -1,0 +1,720 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta name="generator" content="Primo" />
+      <title>Uygulamalı Felsefe Derneği</title><!-- HEAD_svelte-1jqlmi7_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q9K3TS78QE');
+</script><script type="module" src="https://www.unpkg.com/@daviddarnes/share-button@1.1.3/share-button.js"></script><meta name="description" content="Uygulamalı Felsefe Derneği, 2024 yılında Türkiye'de kurulmuş bir felsefe derneğidir."><style>/* Reset & standardize default styles */
+@import url("https://unpkg.com/@primo-app/primo@1.3.64/reset.css") layer;
+
+/* Design tokens (apply to components) */
+:root {
+  --color-primary: #9b8580;
+  --color-primary-light: #e9e2e2;
+  --color-accent: #6371a2;
+  --color-dark: #6c6e83;
+  --color-light: linear-gradient(to bottom, #76a6b5 0%, #ffffff 60%, #cccccc 85%, rgba(0, 0, 0, 0.5) 100%);
+  
+  /* Base values */
+  --box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 0;
+  --border-color: #e0e1e1;
+  --transition: 0.1s ease-in-out;
+}
+
+html {
+  font-size: 14px;
+  background: var(--color-light);
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 13px; /* Daha iyi uyum için */
+  }
+}
+
+@media (max-width: 440px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* Root element (use instead of body) */
+#page {
+  font-family: 'Merriweather', serif;
+  color: #111;
+  line-height: 1.5;
+  font-size: 1.125rem;
+  background: var(--color-light);
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Elements */
+.section-container {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+a.link {
+  line-height: 1.3;
+  border-bottom: 2px solid var(--color-accent);
+  transform: translateY(-2px);
+  transition: border var(--transition);
+}
+
+a.link:hover {
+    border-color: transparent;
+  }
+
+.heading {
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+/* Buttons */
+.button {
+  color: white;
+  background: var(--color-dark);
+  border-radius: 8px;
+  padding: 9px 16px;
+  transition: box-shadow var(--transition);
+  border: 0;
+}
+/* reset */
+@media (max-width: 600px) {
+.button {
+    padding: 6px 12px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
+}
+  }
+.button:hover {
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+.button.inverted {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Content Section */
+.content {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.content p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+.content img {
+    width: 100%;
+    margin: 2rem 0;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+  }
+.content a.link {
+    font-weight: 500;
+    border-bottom: 2px solid var(--color-accent);
+    transform: translateY(-2px);
+    transition: border var(--transition);
+  }
+.content a.link:hover {
+      border-color: transparent;
+    }
+.content h1 {
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+.content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content ul {
+    list-style: disc;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content ol {
+    list-style: decimal;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content blockquote {
+    padding: 2rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid var(--color-accent);
+  }
+
+/* Flex utility */
+.flex {
+  display: flex;
+  flex-wrap: wrap; /* Mobil uyumlu olması için */
+}
+</style><!-- HEAD_svelte-1jqlmi7_END -->
+      <style>header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding-block:2rem;padding:1rem;margin:1rem;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%);border-radius:8px;position:relative;box-shadow:0 4px 8px rgba(0, 0, 0, 0.5);z-index:10}@media(max-width: 800px){header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{padding:0 1rem 1rem;margin:0.3rem
+}}.logo.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:2.25rem;font-weight:600;line-height:1.2;width:12rem}.logo.svelte-l8sb3e img.svelte-l8sb3e.svelte-l8sb3e{filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7))}.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none;align-items:center;justify-content:space-between;width:100%}.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e.svelte-l8sb3e{display:flex;gap:2rem}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e{border-color:transparent;transition:border-color 0.1s;font-size:0.95rem;font-weight:300}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e:hover,.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e a.link .active.svelte-l8sb3e{border-color:initial}@media(min-width: 800px){.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex
+}}.subnav-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:relative}.subnav-container.svelte-l8sb3e button.svelte-l8sb3e.svelte-l8sb3e{white-space:nowrap;font-weight:600}.subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex !important;flex-direction:column;position:absolute;z-index:20;top:100%;background-color:#fff;padding:1em}.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:500}@media(min-width: 800px){.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none
+}}.mobile-subnav-title.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{text-align:left;background-color:rgba(0, 0, 0, 0.1);padding:3px 10px}.mobile-subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-direction:column;align-items:flex-start;gap:1em;margin-bottom:1em}.mobile-subnav.svelte-l8sb3e a.svelte-l8sb3e.svelte-l8sb3e{font-size:0.8em}#popup.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:1.25rem;display:grid;gap:1rem;position:absolute;text-align:center;background-color:var(--background-color, white);box-shadow:var(--box-shadow, 0px 4px 30px rgba(0, 0, 0, 0.1));border-radius:var(--border-radius);inset:0.5rem;bottom:initial;padding:2rem;z-index:1}#popup.svelte-l8sb3e button#close.svelte-l8sb3e.svelte-l8sb3e{position:absolute;right:1rem;top:1rem}.language-picker.svelte-l8sb3e select.svelte-l8sb3e.svelte-l8sb3e{background-color:transparent}.mobile-actions-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:flex-end;-moz-column-gap:0.5em;column-gap:0.5em;row-gap:0.5em}.lang-swither-mobile.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{vertical-align:top;padding:4px}.top-bar.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{width:100%}ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;justify-content:flex-end;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{gap:0.3rem
+}}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:0.1s transform}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{transform:scale(1.1)}ul.socials.svelte-l8sb3e li.svelte-l8sb3e a.svelte-l8sb3e{font-size:1.5rem;padding:0.75rem}.search-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{margin-left:auto;background-color:#fff;display:flex;align-items:center;border-radius:8px;overflow:hidden;position:relative}.search-container.svelte-l8sb3e .search.svelte-l8sb3e.svelte-l8sb3e{padding:0.4rem 1rem}.hidden.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none!important}.searchResults.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:absolute;background-color:#fff;top:100%;left:0;width:100%}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{cursor:pointer;padding:1rem}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{background-color:#ddd}
+@media(min-width: 900px){}section.svelte-envz82.svelte-envz82{margin:1rem;display:flex;justify-content:var(--align);gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden;border-radius:12px;box-shadow:1px 8px 15px rgba(0, 0, 0, 0.2);background:linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(235, 245, 255, 0.9), rgba(220, 230, 240, 0.9), rgba(255, 228, 196, 0.9))}section.svelte-envz82 .banner.svelte-envz82{z-index:auto;height:200px;width:100%;position:absolute}section.svelte-envz82 .banner img.svelte-envz82{position:absolute;-o-object-fit:cover;object-fit:cover;width:100%;height:100%;opacity:0.6}section.svelte-envz82 div.svelte-envz82{z-index:5}section.svelte-envz82 div a.svelte-envz82{margin:0.5em 0}section.svelte-envz82 .heading.svelte-envz82{line-height:1.1;margin-left:0}.content.svelte-envz82.svelte-envz82{padding:0;line-height:1.75}.button.alternate.svelte-envz82.svelte-envz82{display:block;flex:0 0 auto;font-weight:bold;white-space:nowrap;background-color:#6371a2;border-radius:8px;box-shadow:1px 1px 4px rgba(0, 0, 0, 0.2)}.container.svelte-envz82.svelte-envz82{padding:2rem}
+.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:2rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:2rem}.teaser.svelte-1bbd13f.svelte-1bbd13f{display:grid;gap:1rem}.teaser.text_under_image.svelte-1bbd13f.svelte-1bbd13f{display:flex;flex-direction:column;align-items:center;width:100%}.teaser.text_under_image.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;max-width:900px;min-width:300px;-o-object-fit:contain;object-fit:contain;margin-bottom:1rem;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.text_image_right.svelte-1bbd13f.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f.svelte-1bbd13f{display:flex;align-items:center;justify-content:space-between;width:100%}.teaser.text_image_right.svelte-1bbd13f .image-right.svelte-1bbd13f{order:1;margin-left:1rem;width:50%}.teaser.text_image_left.svelte-1bbd13f .image-left.svelte-1bbd13f{order:0;margin-right:1rem;width:50%}.teaser.text_image_right.svelte-1bbd13f img.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f img.svelte-1bbd13f{width:100%;height:auto;-o-object-fit:cover;object-fit:cover;border:2px solid transparent;border-radius:8px;box-shadow:0 0 25px rgba(0, 0, 0, 0.8)}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:50%;min-height:300px;text-align:justify;padding:1rem;box-sizing:border-box}.teaser.only_text.svelte-1bbd13f .body.svelte-1bbd13f{width:80%;text-align:justify;padding:0.5rem 0}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:2rem;font-weight:600;text-align:center}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{line-height:1.5;text-align:justify}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{display:inline-block;padding:10px 20px;background-color:#6371a2;color:white;text-decoration:none;border-radius:5px;font-size:16px;font-weight:600;text-align:center;transition:background-color 0.3s ease;margin-top:1rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f:hover{background-color:#45a049}@media(max-width: 768px){.section-container.svelte-1bbd13f.svelte-1bbd13f{padding:1rem}.teasers.svelte-1bbd13f.svelte-1bbd13f{grid-template-columns:1fr}.teaser.svelte-1bbd13f .title.svelte-1bbd13f{font-size:1.5rem}.teaser.svelte-1bbd13f .description.svelte-1bbd13f{font-size:0.9rem}.teaser-button.svelte-1bbd13f.svelte-1bbd13f{padding:8px 16px;font-size:14px}.teaser.text_under_image.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{width:90%}.teaser.text_image_right.svelte-1bbd13f .body.svelte-1bbd13f,.teaser.text_image_left.svelte-1bbd13f .body.svelte-1bbd13f{min-height:auto}}
+a.svelte-dujuug.svelte-dujuug{display:inline-block}h2.svelte-dujuug.svelte-dujuug{font-weight:550;text-align:left}h4.svelte-dujuug.svelte-dujuug{font-weight:600;display:inline-block}.container.svelte-dujuug.svelte-dujuug{padding:1rem;display:flex;gap:3rem;transform:scale(0.9)}@media(max-width: 768px){.container.svelte-dujuug.svelte-dujuug{flex-wrap:wrap;gap:1rem;transform:scale(1)}}.container.svelte-dujuug>div.svelte-dujuug{border-radius:8px;padding:1rem;flex:1 0 270px;background:#bbc1c9;box-shadow:0 4px 8px rgba(0, 0, 0, 0.3)}ul.svelte-dujuug.svelte-dujuug{max-height:200px;overflow-y:auto;margin-bottom:1rem;border-bottom:1px solid #999}ul.svelte-dujuug li.svelte-dujuug{display:flex;gap:0.7rem;white-space:pre-wrap;padding:0.5rem;border-bottom:1px solid #999;box-shadow:0 2px 4px rgba(0, 0, 0, 0.2)}ul.svelte-dujuug li .date.svelte-dujuug{background-color:var(--color-dark, rebeccapurple);color:#fff;padding:0.3rem 0.7rem;width:-webkit-min-content;width:-moz-min-content;width:min-content;border-radius:8px 0 0 8px;opacity:0.5}ul.svelte-dujuug li p.svelte-dujuug{white-space:pre-wrap;padding-right:1rem}@media(max-width: 480px){h2.svelte-dujuug.svelte-dujuug{font-size:1.5rem;text-align:center}.container.svelte-dujuug.svelte-dujuug{padding:0.5rem}ul.svelte-dujuug.svelte-dujuug{max-height:150px}ul.svelte-dujuug li.svelte-dujuug{padding:0.4rem}.date.svelte-dujuug.svelte-dujuug{padding:0.2rem 0.5rem}}
+.section-container.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:2rem;transform:scale(0.9);border-radius:20px;box-shadow:0px 8px 20px;width:auto}@media(min-width: 800px){.section-container.svelte-cdvhfw.svelte-cdvhfw{grid-template-columns:3fr 2fr;gap:14rem
+}}.content.svelte-cdvhfw.svelte-cdvhfw{display:grid;place-content:flex-start;gap:1rem}.content.svelte-cdvhfw .body.svelte-cdvhfw{margin-bottom:.5rem}.content.svelte-cdvhfw .social-links.svelte-cdvhfw{display:grid;gap:0.75rem}.content.svelte-cdvhfw .social-links a.svelte-cdvhfw{display:flex;align-items:center;gap:0.75rem}.content.svelte-cdvhfw .social-links a .icon.svelte-cdvhfw{font-size:1.75rem;color:var(--color-accent, rebeccapurple);transition:var(--transition, 0.1s transform)}.content.svelte-cdvhfw .social-links a:hover .icon.svelte-cdvhfw{transform:scale(1.1)}form.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:1rem;padding:2rem;border:1px solid var(--border-color, #eee);border-radius:var(--border-radius)}form.svelte-cdvhfw label.svelte-cdvhfw{display:grid;gap:0.25rem}form.svelte-cdvhfw label span.svelte-cdvhfw{font-size:1rem;font-weight:500}form.svelte-cdvhfw label input.svelte-cdvhfw,form.svelte-cdvhfw label textarea.svelte-cdvhfw{font-size:1rem;padding:0.5rem;outline-color:transparent;transition:var(--transition, 0.1s outline-color);border:1.5px solid var(--border-color, #eee);border-radius:4px}form.svelte-cdvhfw label input.svelte-cdvhfw:focus,form.svelte-cdvhfw label textarea.svelte-cdvhfw:focus{outline-color:var(--color-accent, rebeccapurple)}form.svelte-cdvhfw .button.svelte-cdvhfw{margin-top:1rem}
+.share-container.svelte-1isqcnz.svelte-1isqcnz{width:100%;display:flex;justify-content:space-between}button.svelte-1isqcnz.svelte-1isqcnz{background-color:var(--color-dark)}footer.svelte-1isqcnz.svelte-1isqcnz{padding-top:2em;color:black;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%)}.section-container.svelte-1isqcnz.svelte-1isqcnz{display:flex;justify-content:space-between;gap:4rem}@media(max-width: 500px){.section-container.svelte-1isqcnz.svelte-1isqcnz{flex-wrap:wrap}}share-button.svelte-1isqcnz.svelte-1isqcnz{display:inline-block;margin-top:1rem;margin-right:1rem;margin-bottom:1rem}share-button.svelte-1isqcnz button.svelte-1isqcnz{align-items:center;gap:0.2rem;width:auto}.nav-items.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;gap:4rem}.nav-items.svelte-1isqcnz ul.svelte-1isqcnz{display:grid;gap:0.5rem}.nav-items.svelte-1isqcnz h3.svelte-1isqcnz{font-weight:500;font-size:1.5rem;margin-bottom:1rem}ul.socials.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0.2rem;justify-content:flex-start;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-1isqcnz.svelte-1isqcnz{gap:0.3rem
+  }}ul.socials.svelte-1isqcnz li.svelte-1isqcnz{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:flex-start;border-radius:50%;transition:0.1s transform}ul.socials.svelte-1isqcnz li.svelte-1isqcnz:hover{transform:scale(1.1)}ul.socials.svelte-1isqcnz li a.svelte-1isqcnz{font-size:1.5rem;padding:0 0.75rem 0 0}.mailjet_f{height:220px!important;margin:auto;flex:0 0 310px;width:310px}.rights.svelte-1isqcnz.svelte-1isqcnz{text-align:center;padding-bottom:1rem}</style>
+    </head>
+    <body id="page">
+       
+<div class="section" id="section-54a9c4f2"><header class=" svelte-l8sb3e"><div class="top-bar svelte-l8sb3e"><ul class="socials svelte-l8sb3e"><li class="svelte-l8sb3e"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi" aria-label="Linkedin" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://x.com/Ufelsefeder" aria-label="X" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-l8sb3e"></a>
+    </li></ul></div>
+  <div class="desktop-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <nav class="svelte-l8sb3e"><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Bilgi</button>
+                <a class="hidden link svelte-l8sb3e" href="">Bilgi</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Blog</button>
+                <a class="hidden link svelte-l8sb3e" href="">Blog</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Etkinlikler</button>
+                <a class="hidden link svelte-l8sb3e" href="/announcements">Etkinlikler</a>
+              </div>
+        <div class="language-picker svelte-l8sb3e"><select class="svelte-l8sb3e"><option value="tr">TR </option><option value="en">EN </option><option value="it">IT </option></select></div></nav></div>
+  <div class="mobile-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <div class="mobile-actions-container svelte-l8sb3e"><button id="open" aria-label="Open mobile navigation"></button>
+        <button class="lang-swither-mobile svelte-l8sb3e">EN</button></div>
+    </div>
+
+  <div class="flex search-container svelte-l8sb3e"><input class="search svelte-l8sb3e" type="text" placeholder="search" value="">
+    </div>
+    </header>
+
+ 
+          </div> 
+<div class="section" id="section-6676e059"><section style="--align: flex-end" class="svelte-envz82"><div class="banner svelte-envz82"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1726483782061shutterstock_86973980.jpg" class="svelte-envz82"></div>
+    <div class="container svelte-envz82">
+      <div class="svelte-envz82"><a href="/contact" class="button alternate svelte-envz82">İletişim</a>
+        
+        <a href="/membership" class="button alternate svelte-envz82">Üyelik</a></div></div></section>
+  </div> 
+<div class="section" id="section-5d9b56da"><section class="section-container svelte-1bbd13f"><div class="teasers svelte-1bbd13f">
+      <div class="teaser text_under_image svelte-1bbd13f"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1745932716743collage-diegoooo.jpg" alt="" class="svelte-1bbd13f">
+
+        
+
+        <div class="body svelte-1bbd13f"><h2 class="title svelte-1bbd13f">Çalışma ve Emek</h2> 
+          <div class="description svelte-1bbd13f"><!-- HTML_TAG_START --><hr />
+<p>Bu çeviri, 1 Mayıs Emek ve Dayanışma Günü vesilesiyle hazırlanmıştır. Emek kavramı yalnızca ekonomik değil, aynı zamanda derin bir felsefi meseledir. Bu nedenle, çalışmanın anlamı, adaletle ilişkisi ve geleceği üzerine yürütülen teorik tartışmaların, emek dünyasında yaşanan güncel dönüşümlerle birlikte yeniden düşünülmesi gerekmektedir. Aşağıda sunulan metin, Stanford Felsefe Ansiklopedisi’nde yer alan “Philosophical Approaches to Work and Labor” başlıklı makalenin tamamının Türkçeye çevrilmiş halidir. Metnin içeriği hem akademik araştırmalarda hem de toplumsal adalet tartışmalarında çalışmanın merkezî yerini kavramamıza katkı sunmayı amaçlamaktadır.
+<br>
+</br>
+Çalışma, uzun bir felsefi geçmişe sahip bir konudur. En etkili felsefi sistemlerden bazıları, kimin çalışması gerektiği, nasıl çalışması gerektiği ve neden çalışması gerektiğiyle ilgili sorulara önemli ölçüde dikkat ayırır. Örneğin, Devlet (<em>Republic</em>)’te ana hatları çizilen ideal olarak adil şehirde Platon, bireylerin doğuştan gelen yeteneklerine göre üç ekonomik tabakadan birine atandığı bir emek uzmanlaşma sistemi önerdi: emekçi veya tüccar sınıfı, barışı korumak ve şehri savunmakla görevli yardımcılar sınıfı veya ‘filozof-krallar’ yönetici sınıfı. Platon, böyle bir işbölümünün, şehrin gelişmesi için gerekli olan görevlerin bunları yerine getirme konusunda en yetenekli olanlar tarafından yerine getirilmesini sağlayacağını savundu.
+<br>
+</br>
+Platon, adil bir toplumun işin nasıl ve kim tarafından yapıldığıyla ilgilenmesi gerektiğini öne sürerken, işin sosyal ve kişisel yaşamdaki merkeziliğini kabul etmiştir. Gerçekten de yetişkinlerin çoğu önemli bir zamanını çalışarak geçirmektedir ve birçok çağdaş toplum tartışmasız bir şekilde “istihdam merkezlidir” (Gorz 2010). Bu tür toplumlarda çalışma birincil gelir kaynağıdır ve sosyolojik anlamda ‘normatiftir’, yani çalışmanın en azından yetişkinler için günlük yaşamın merkezinde olması beklenir.
+<br>
+</br>
+O halde, hiçbir olgu insan yaşamının kalitesi ve koşulları üzerinde işten daha büyük bir etkiye sahip değildir. Dolayısıyla çalışma, ekonomik faaliyetin (örneğin piyasalar veya mülkiyet) veya kolektif yaşamın (örneğin aile) merkezinde yer alan diğer olgularla aynı düzeyde felsefi incelemeyi hak etmektedir.
+<br>
+</br>
+Felsefe tarihi, çalışmanın insan hayatındaki yerine ilişkin bir dizi farklı bakış açısı içermektedir (Applebaum 1992, Schaff 2001, Budd 2011, Lis ve Soly 2012, Komlosy 2018). Örneğin geleneksel Konfüçyüs düşüncesi sıkı çalışmayı, azmi, profesyonel ilişkilerin sürdürülmesini ve örgütsel değerlerle özdeşleşmeyi benimser. Platon ve Aristoteles tarafından örneklenen eski Akdeniz geleneği, zanaat ve bilgi odaklı üretken faaliyetlere hayranlık duyarken, erdemli bir yaşam için boş zaman ve özgürlüğün gerekliliğini de benimsemiştir. Hıristiyan geleneği, çalışmanın günaha karşılık bir zahmet, yük, bedel olduğu, çalışmanın Tanrı’yı yüceltmek ya da Tanrı’nın isteğini yerine getirmek için bir çağrı ya da meslek olması gerektiği ve çalışmanın kişinin Tanrı’nın gözünde seçilmiş olarak statüsünü ortaya koyduğu bir arena olduğu (“Protestan çalışma etiği”) gibi birkaç farklı çalışma görüşü içerir. Sanayi Devrimi’nin başlaması ve sanayi işçiliğinin olumsuz çalışma koşulları, çalışma konusuna olan felsefi ilginin yeniden canlanmasına yol açmış, özellikle de modern kapitalizm altında işçilerin yabancılaşmasını ve çalışmanın en aza indirildiği veya eşit olarak dağıtıldığı sınıfsız bir toplumun ortaya çıkmasını öngören Marksist çalışma ve emek eleştirilerinde kendini göstermiştir.
+<br>
+</br>
+Çalışma biçimleri ya da çalışmanın değerlerindeki dalgalanma ve değişim ile işe ve emeğe yönelik felsefi ilginin artması birbirine paraleldir. Örneğin, son yıllarda işe yönelik felsefi araştırmalarda bir artış gözlemlenmiştir. Bu artış, en azından kısmen, çalışmanın bir “kriz” içinde olduğu algısıyla ilişkilidir: İstihdama dayalı toplumlarda ekonomik eşitsizlik artmaya devam etmekte, teknolojik otomasyonun işler üzerinde ciddi bir tehdit oluşturarak kalıcı yüksek işsizlik dönemine yol açacağı düşünülmekte ve günümüz işlerinin niteliği ya da anlamlılığı konusunda duyulan memnuniyetsizlik giderek büyümektedir (Schwartz 2015, Livingston 2016, Graeber 2018, Danaher 2019). Günümüzde birçok akademisyen, çalışmanın modern toplumlarda “verili” olarak kabul edilip edilmemesi gerektiğini açıkça sorgulamaktadır (Weeks 2011).
+<br>
+</br>
+Bu konu başlığında tanımlanan madde, iş ve emek felsefesindeki mevcut literatüre sistematik bir yaklaşım getirmeye çalışacak; çalışmadaki temel kavramsal, etik ve politik soruları inceleyecektir (Appiah 2021).
+<br>
+</br>
+<strong>1. Kavramsal Ayrımlar: İş, Emek, İstihdam, Boş Zaman</strong>
+<br>
+</br>
+İş örnekleri sıralamak zor değildir. Samuel Clark şöyle der:
+<br>
+</br>
+“ İşten kastım, tarlalarda, fabrikalarda, ofislerde, okullarda, dükkânlarda, şantiyelerde, çağrı merkezlerinde, evlerde ve benzeri yerlerde hayat kurmak ve geçim sağlamak için yaptığımız tanıdık şeylerdir.</p>
+<p>Ticarete dayalı toplumumuzda işe örnek olarak taksi sürmek, çamaşır makinesi satmak, bir yazılım geliştirici grubunu yönetmek, bir süpermarkette kasiyerlik yapmak, bir montaj hattında akıllı telefonlara ekran takmak, bir çağrı merkezinde müşteri şikayetlerini karşılamak ve bir okulda öğretmenlik yapmak gösterilebilir.” (Clark 2017: 62)
+<br>
+</br>
+Bazı güncel yorumcular, insan hayatının giderek daha fazla iş, çalışma benzeri terimlerle anlaşıldığını gözlemlemişlerdir: Ebeveynlik sıklıkla bir iş olarak tanımlanır, romantik sorunlar yaşayanlara ilişkileri üzerinde “çalışmaları” tavsiye edilir, kayıplar yaşayanlara “yas çalışması” yapmaları önerilir ve eskiden talim/alıştırma (“exercise”) olarak adlandırılan şey artık “antrenman” (work out) olarak ifade edilir (Malesic 2017).
+<br>
+</br>
+“İş” olarak adlandırdığımız uğraşların çeşitliliği ve bunlar arasındaki belirgin farklılıklar, bazı filozofları işin tanımının zor olduğuna (Muirhead 2007: 4, Svendsen 2015) veya en iyi ihtimalle farklı iş örneklerinin “ailevi benzerlikler” taşıdığı gevşek bir kavram olduğuna (Pence 2001: 96–97) inanmaya sevk etmiştir.
+<br>
+</br>
+İş kavramı, görüldüğü gibi geçirgen ve gözenekli anlamlarına rağmen, işin tanımlanmasında bazı ilerlemeler sağlamak mümkündür. Bu da öncelikle iş teriminin nasıl kurulduğuna bakılarak yapılabilir.
+<br>
+</br>
+Örneğin, günümüz iş tartışmalarının çoğu esasen istihdama odaklansa da her iş istihdam biçiminde gerçekleşmez.
+<br>
+</br>
+Bu nedenle, işi doğrudan istihdamla özdeşleştirmemek önemlidir. Çünkü istihdam hakkında geçerli olan her felsefi iddia, iş için de geçerli olmak zorunda değildir ve bunun tersini düşündüğümüzde de böyle bir benzeşme söz konusu değildir. Dolayısıyla iş ve istihdam arasında bu türden bir karşılıklılıktan bahsedilemez.
+<br>
+</br>
+Şöyle ki, istihdam ilişkisinde, çalışan birey emeğini başkasına satar ve karşılığında genellikle para olmak üzere bir ücret alır. Aracı olan işveren, tipik olarak, hangi malların üretileceğine, üretim sürecinin nasıl organize edileceğine vb. ilişkin şartların çoğunu belirleyerek işe alınan işçileri -çalışanları- yönetmeye (ya da yönetenleri atamaya) hizmet eder. Böyle bir düzenleme, bizim tipik olarak “iş sahibi olmak”tan anladığımız şeydir.
+<br>
+</br>
+Ancak bir çalışan, üretimini bu şekilde bir aracılık olmadan da gerçekleştirebilir. Bazı durumlarda, çalışan aynı zamanda üretim sürecine katılan bir işletme sahibidir (örneğin, restoran sahibi olup baş aşçı olarak çalışan biri gibi). Bu türden bir iş düzeni, serbest meslek olarak adlandırılabilir ve sadece yatırım yapıp doğrudan çalışmayan mülk sahiplerinden farklıdır. Bazı mülk sahipleri aynı zamanda işverendir; başka çalışanları işe alıp üretim sürecine katkıda bulunmalarını sağlarlar. Tarih boyunca baskın iş biçiminin serbest meslek ya da girişimcilik olduğu ve hâlâ birçok bölgede bu biçimin yaygın olduğu söylenebilir. Örneğin Afrika ve Güney Asya gibi yerlerde çalışanların yarısından fazlası serbest çalışmaktadır ve dünya genelinde serbest çalışanların sayısı artmaktadır (Uluslararası Çalışma Örgütü 2019). Buna karşılık, bu görece daha kalıcı istihdam ilişkilerindeki “işler”, sanayi modernitesinin bir yan ürünü olmaktan öteye gitmemektedir (Suzman 2021). Çalışanlar ve mülk sahipleri çoğunlukla tüketicilerle bir alım-satım ilişkisi içindedir: Basitçe ifade etmek gerekirse, çalışanlar ve mülk sahipleri, tüketen kesimin kendi gelirleriyle aldıkları malları üretirler. Ancak bu her zaman böyle olmak zorunda değildir. Örneğin ücretsiz bir klinikte çalışan hekimler, hastalardan doğrudan ücret almaz; maaşları devlet kurumları, hayır kuruluşları vb. tarafından ödenir. Yine de bu çalışanlar, emeklerine karşılık bir kaynaktan gelir kazanmayı beklerler. Buna karşılık, bazı iş türleri tamamen ücretsizdir. Köleler ve mahkûmlar, bazı durumlarda, çalışır ancak emeklerinin karşılığı “ödenmez”.
+Benzer şekilde, hayır kurumlarında gönüllü olarak çalışanlar veya çocuklara, yaşlılara ya da hastalara karşılıksız bakım hizmeti sunanlar da böyledir.
+Dolayısıyla iş, her zaman başkası için çalışmayı ya da maddi bir karşılık almayı gerektirmez.
+Bu gözlemler, çalışma için gerekli olduğunu varsaydığımız bazı koşulların (çalışıyor olmak, parasal olarak tazmin edilmek) aslında çalışma için gerekli olmadığını göstermesi bakımından yararlıdır.
+<br>
+</br>
+Ancak bunlar yalnızca işin ne olmadığını anlamamıza yardımcı olur.</p>
+<p>Peki, işin tam olarak ne olduğunu daha belirgin bir şekilde söyleyebilir miyiz?</p>
+<p>İşi tanımlamanın güçlüğü kısmen şuradan kaynaklanır:
+<br>
+</br>
+Bir kişinin eylemlerinin iş sayılıp sayılmadığı, hem bu eylemlerin dünyayı nasıl değiştirdiğine hem de kişinin bu eylemler hakkındaki tutumuna bağlıdır.</p>
+<p>Bir yandan, iş faaliyetleri nedenseldir; dünyayı rastlantısal olmayan, doğrudan felsefi karşılığı olarak ilineksel olmayan, bir şekilde değiştirir.</p>
+<p>Bertrand Russell’ın (1932) ifadesiyle:
+<br>
+</br>
+“İş iki türdendir: Birincisi, yer yüzeyinde veya yakınındaki maddenin başka bir maddeye göre konumunun değiştirilmesi; ikincisi, başkalarına bunu yapmalarını söylemektir.”
+<br>
+</br>
+Ancak iş, dünyayı belirli bir değere sahip olacak biçimde değiştirmeyi amaçlar. Bu yönüyle iş, Raymond Geuss’un (2021: 5) “nesnel değer” dediği şeyin üretimiyle yakından ilişkilidir:
+<br>
+</br>
+“Üretim süreci ya da üreticiler hakkında herhangi bir bilgi olmaksızın ölçülebilecek ve değerlendirilebilecek dışsal ürünlerin değerleri.
+İş yoluyla, başkalarının kendi başına değer verip keyif alabileceği nesneler, deneyimler, ruh halleri vb. üretiriz.”
+<br>
+</br>
+Çoğu işte (örneğin, istihdam halinde çalışırken), kişi yalnızca çalıştığı için değil, emeği başkaları için nesnel değeri olan ürünler ürettiği için ücret alır.
+ Ancak işin sonucu olan nesnel değer her zaman başkalarınca tüketilmez.</p>
+<p>Örneğin, yalnızca kendi kullanımı için gıda üreten bir çiftçi, kimseye satmadan üretim yapar; bu durumda işin nesnel değerini tüketen bizzat üreticinin kendisidir.</p>
+<p>Benzer şekilde, pazar için sebze üreten bir çiftçi, ürünlerini satamadığında da bir nesnel değer üretmiş olur, ancak bu değer tüketilmemiş olur.</p>
+<p>Geuss, işin bir diğer özelliğinin hem bireyler hem de “bir bütün olarak toplumlar” için gerekli olduğunu öne sürmüştür (2021:18). Mevcut ve tarihsel insan yaşamı örüntüleri göz önüne alındığında, çalışmak insan ihtiyaçlarını karşılamak için zorunlu olmuştur. Ancak otomasyon ve yapay zekâ hakkındaki bazı öngörüler gerçekleşirse (bkz. Bölüm 4: Çalışmanın Geleceği), bugüne dek insanlık durumunu tanımlayan kıtlık ortadan kalkabilir ve böylece bireysel ve toplumsal düzeyde çalışmanın gerekliliği de geçerliliğini yitirebilir. Dahası, Geuss’un gözlemine göre, bazı işler insanların ihtiyaçlarına değil, sadece isteklerine (yani lükslere) karşılık gelen mallar üretmeyi amaçlar ve bazı bireyler ise önceden sahip oldukları servet sayesinde çalışmanın gerekliliğinden kurtulabilir.
+<br>
+</br>
+Yine de iş, temel özelliklerinden biri olarak dünyada nesnel (ya da öznelerarası) değeri artıran bir etkinlik olarak görünmektedir. Bu nedenle bazı insan faaliyetlerinin iş olmadığı öne sürülebilir. Çünkü bu faaliyetler başkaları için değil, yalnızca yapan kişi için değer üretmektedir. Örneğin, iş boş zamanla tezat oluşturur. Boş zaman sadece tembellik ya da çalışmanın yokluğu değildir; tümüyle eylemsizlik de değildir (Pieper 1952; Walzer 1983: 184–87; Adorno 2001; Haney ve Kline 2010). Boş zamanda bireyler, büyük ölçüde bu faaliyetlerin başkaları için ne tür nesnel değerler üretebileceğini umursamadan, kendi keyifleri için mallar üreten etkinliklerle meşgul olurlar. Bir kişinin boş zamanından doğan değer, o kişinin bu değeri kendi etkinliğiyle üretmiş olmasıyla yakından bağlantılıdır. Güneşlenmek ya da bir müzik performansından keyif almak gibi etkinlikleri başkaları bizim yerimize yapamaz. Çünkü bu tür boş zaman faaliyetlerinin değeri, bu eylemleri bizzat gerçekleştirmemize bağlıdır. Boş zaman, böylece, kendimiz için “ürettiğimiz” öznel bir değer yaratır. Bu değer, çalışmadan elde edilen nesnel değerin aksine, başkalarına devredilemez veya onlarla değiş tokuş edilemez.
+<br>
+</br>
+Bununla birlikte, boş zamanda olunmasına rağmen çalışmayla ilişkili nesnel değerlerin üretildiği durumlar da olabilir. Örneğin profesyonel bir sporcu, sporu boş zaman faaliyeti olarak yapmaya motive olabilir; fakat bu sırada başkaları (sporu izleyen seyirciler) için nesnel bir değer üretir ve bu üretim karşılığında maddi gelir elde edebilir. Bu tür örnekler, boş zaman ve işin bir arada bulunduğu ya da boş zaman aracılığıyla yapılan çalışma örnekleri olabilir.
+<br>
+</br>
+Bazı iş tanımları ise işin ne tür bir değer ürettiğine değil, bireyin çalışmaya yönelik tutumlarına odaklanır. Örneğin, birçok iş tanımı, işin bir zorlanma ya da çaba olarak deneyimlendiğini vurgular (Budd 2011: 2; Veltman 2016: 24–25; Geuss 2021: 9–13). Bu görüşe göre iş, kaçınılmaz olarak zahmetlidir. Elbette iş çoğu zaman yorucudur. Ancak işi bu şekilde tanımlamak, işin çalışan için o kadar keyifli olduğu durumları dışarıda bırakıyor gibi görünür. Örneğin bir oyuncu, sahneye çıkmaktan büyük keyif alabilir ve bu onun için neredeyse hiç zahmetli gelmeyebilir. Buna rağmen, performans sergilemesi, başkaları için nesnel bir değer üretmeye yönelik bilinçli bir etkinlik olduğu sürece iştir. Oyuncunun performansı, bu değeri üretme amacıyla repliklerini hatırlaması ve iletmesi gibi eylemlere odaklanmadıkça başarılı olamaz. Hatta oyuncunun sahnede olmaktan keyif almasının nedeni, başkaları için bu nesnel değeri üretmekten duyduğu memnuniyet olabilir.
+<br>
+</br>
+Bazı işler ise neredeyse tamamen pasif olduğundan pek az çaba gerektirir; örneğin tıbbi araştırmalarda denek olan bireyler, araştırma sürecine aktif katkı sunmalarından çok, bu sürece “katlanmaları” ve başkalarının iradesine boyun eğmeleri karşılığında ödeme alırlar (Malmqvist 2019). Yine de araştırma deneği, geçerliliği sağlamak adına belirli protokollere uymak gibi bilinçli davranışlar sergilemelidir. Bu tür örnekler, işin ihmal edilen bir boyutunu gözler önüne serer: çalışırken çoğunlukla başkalarının iradesine göre hareket ederiz, çünkü amacımız başkalarının keyif alabileceği mallar üretmektir.
+<br>
+</br>
+<strong>2. İşin Değeri</strong>
+<br>
+</br>
+İşin, başkalarının keyif alabileceği ya da tüketebileceği emtiaları (piyasada işlem görebilen standartlaştırılmış mal ya da üretim nesneleri) üretmeye yönelik bilinçli bir çaba olarak tanımlanması, çalışmanın çalışan dışındaki kişiler için taşıdığı değerin nerede yattığını gösterir. Ayrıca, işin başkalarına olan değeri, yalnızca belirli bireylerin bizim ürettiğimiz emtialardan keyif alması ya da onları tüketmesiyle sınırlı biçimde tanımlanmak zorunda değildir. Bazı dini geleneklerde çalışma, Tanrı’ya ya da topluma hizmet etmenin bir yolu olarak kabul edilir.</p>
+<p>Ancak bu değerlendirmeler, çalışmanın çalışan açısından —yani birinci şahıs bakış açısından— ne anlama geldiğine çok fazla ışık tutmaz: Bir kişinin işi, o kişi için ne tür bir değer taşır? Başkalarının yararlanabileceği emtialar ürettiğimizde, biz bundan nasıl yararlanırız?
+<br>
+</br>
+<strong>2.1 İşin Sağladığı Emtialar</strong></p>
+<p>İşin değerine dair en katı görüşlere göre, onun yalnızca değişim değeri vardır. Bu görüşte, işin değeri sadece çalışanın kazandığı maddi getirilerle ya da işin doğrudan ürünü olan emtialarla (örneğin kendi sebzesini yetiştirmek) ölçülür. Çalışmayı yalnızca değişim değeri olan bir şey olarak görmek, onun değerini tümüyle dışsal olarak görmektir; yani işin kendisinde bir değer yoktur, sadece onun somut olarak ürettiği şeylerden elde edilen bir değer vardır. Eğer iş yalnızca değişim değeri taşıyorsa, o zaman iş sadece bir maliyet ya da yük olarak görülür, asla kendi başına yapılmaya değer bir etkinlik olarak değerlendirilmez. Bu görüş, insanlığın düşüşüne dair İncil anlatısını andırarak, çalışmayı insanın sınırlılıkları ya da yetersizlikleri nedeniyle başına gelen bir "lanet" olarak tasvir eder.
+<br>
+</br>
+Fakat iş çoğu zaman başka nedenlerle de değerli bulunur. İşin değişim değerinden bağımsız nedenlerle de değerli olduğuna dair güçlü bir kanıt, (zorunlu) işsizlik üzerine yapılan çalışmalarda ortaya konmuştur. İşsizlik genellikle işçilerin gelirlerini (en azından geçici olarak) kaybetmelerine yol açarak ekonomik anlamda olumsuz etkiler yaratır. Ancak uzun süreli işsizlik, bireylerin hem fiziksel hem de zihinsel sağlığı üzerinde ölçülebilir düzeyde olumsuz etkiler yaratmaktadır (Calvo ve diğerleri 2015; Margerison-Zilko ve diğerleri 2016; Helliwell ve diğerleri 2017) ve aynı zamanda yaşamda en fazla stres yaratan olaylardan biri olarak kabul edilir (Holmes ve Rahe 1967). İşten mahrum kalmanın bireylerin iyilik hali üzerinde bu denli yıkıcı etkiler yaratması, işin maaştan çok daha fazlası olduğunu ortaya koyar.
+<br>
+</br>
+Çalışma’nın sunduğu pek çok emtia, işin neredeyse her zaman toplumsal bir uğraş olmasıyla ilgilidir. Cynthia Estlund’un (2003:7) da belirttiği gibi, “işyeri, aile dışında yetişkin yurttaşlar arasında işbirliği ve sosyalliğin gerçekleştiği en önemli alandır.” Dolayısıyla bireyler, iş yoluyla pek çok toplumsal emtiaya ulaşmaya çalışır. Gheaus ve Herzog (2016), çalışmanın bize yalnızca maaş sağlamadığını, aynı zamanda çeşitli toplumsal rolleri de yerine getirdiğini savunur. Örneğin iş, bireylerin topluluk hissi geliştirebilmesi için temel bir araçtır. Başkalarıyla birlikte çalışırken, aidiyet duygumuzu besleyen bağlar kurarız ve kendimizi belirli bir işyeri kültürüne katkıda bulunurken buluruz. Benzer biçimde toplumcu kuramcılar, çalışmanın bizi ortak pratiklere veya geleneklere yerleştirerek toplumsal yaşam için vazgeçilmez olduğunu ileri sürer (Walzer 1983; Breen 2007). MacIntyre (1984:187), bir pratiği şöyle tanımlar: “Herhangi bir bütünlüklü ve karmaşık biçimde toplumsal olarak kurulmuş işbirlikçi etkinlik; bu etkinlik biçiminde, ona içkin olan emtialar (iyeler) bu etkinlik biçimine uygun olan ve onu kısmen tanımlayan mükemmellik standartlarına ulaşma çabasıyla gerçekleştirilir.” Bir fırında birlikte çalışan bireyler, o etkinliğe içkin emtiayı (örneğin ekmek) üretmek üzere işbirliği yaparlar ve bu süreçte hem yetilerini geliştirirler hem de ortaklaşa ürettikleri bu emtiaları daha derinlemesine takdir ederler.
+<br>
+</br>
+Birçok filozof, çalışmanın değerini insan aklının farklı yönleriyle yakından ilişkilendirmiştir. Örneğin Aristoteles gibi düşünürlerden ilham alan filozoflar, çalışmanın bizi geliştirme ve akli potansiyelimizi değerli yollarla kullanma imkânı sunduğunu vurgulamışlardır. Bu görüşe göre, çalışma yaşam boyu doğalarımızı gerçekleştirdiğimiz temel bir alandır (Clark 2017). Marksistler de çalışmanın insanın akli yetilerini geliştirmesine ve kullanmasına olanak tanıdığı konusunda hemfikirdir. Fakat buna ek olarak, çalışmanın bu yetileri görünür kıldığını ve insan biçimini doğaya vererek onu bize yabancı olmaktan çıkardığını da savunurlar. Bu nedenle Marksistlere göre çalışma, insanın etkin doğasının bir dışavurumudur; insan iradesini “nesnelleştiren” ürünler yaratarak kendini gerçekleştirme yoludur. Bu anlamda çalışma, modern toplumlara özgü pasif tüketim alışkanlıklarına bir karşı duruştur (Elster 1989; Sayers 2005).
+<br>
+</br>
+Çalışmaya atfedilen bir başka değer de anlamlılıktır. Anlamlı çalışmaya dair felsefi sorgulamalar, genellikle yaşamın anlamına dair sorgularla paralel yürür. Anlamlı çalışmayla ilgili temel tartışmalardan biri, onun esasen öznel mi (çalışanın işiyle ilgili hislerine mi bağlı), nesnel mi (işin veya üretilen emtiaların özelliklerine mi bağlı), yoksa her ikisini birden mi içerdiğidir (Yeoman 2014; Michaelson 2021). Bazı yaklaşımlar genel olarak Kantçı bir çizgide ilerleyerek, anlamlı çalışmayı özerklik ilkesine dayandırır (Schwartz 1982; Bowie 1998; Roessler 2012). Bu yaklaşımlara göre iş, bireyin özgürce işini icra etmesi, bağımsız yargılarını kullanmasına imkân tanıması ve işverenin amaçlarından kısmen ayrışan kendi hedeflerini takip edebilmesine imkân verdiği ölçüde anlamlıdır. Diğer yaklaşımlar ise işin anlamını, bireyin yeteneklerini geliştirme, gurur veya özdisiplin gibi erdemleri sergileme ya da yaşam amacına duygusal bağ kurma potansiyelinde bulur (Beadle ve Knight 2012; Svendsen 2015; Yeoman 2014; Veltman 2016).
+<br>
+</br>
+Aynı zamanda bazı düşünürler, anlamlı çalışmanın başka önemli emtiaların da ön koşulu olduğunu savunurlar. Örneğin John Rawls, anlamlı çalışma fırsatındaki yoksunluğun özsaygıyı zedelediğini öne sürer. Özsaygı, kişinin yaşam planının hem peşinden gidilmeye değer olduğuna hem de bilinçli çabalarla ulaşılabilir olduğuna dair inancıdır. Rawls’a göre anlamlı çalışma, özellikle karmaşık yetilerimizi kullanmaktan keyif aldığımız etkinlikleri içerir. Anlamlı çalışmanın özsaygının “toplumsal temeli” olduğunu kabul edersek, adil ve istikrarlı bir toplum, bu tür işler başka türlü sağlanamıyorsa, “son çare işvereni” olarak hareket etmek zorunda kalabilir (Rawls 1996; Moriarty 2009).
+<br>
+</br>
+Son yıllarda, çalışmanın onuru üzerine yeniden canlanan bir felsefi ilgi söz konusudur. Hristiyan düşüncesi ve özellikle Katoliklik (John Paul II 1981), uzun süredir çalışmanın insana içkin olan onuru yansıttığını savunmaktadır. “Her işin onuru vardır” iddiası, işin niteliğinden ya da toplumdaki itibardan bağımsız olarak, emeğe dair eşitlikçi ideallere dayanır. Bu idealler, Booker T. Washington ve Martin Luther King, Jr. gibi Siyahi Amerikalı düşünürlerce dile getirilmiştir. Washington’un ifadesiyle: “Bir tarlayı sürmekte de bir şiir yazmakta olduğu kadar onur vardır” (Washington 1901:220). Ancak aynı gelenek, onur kavramını eleştirel bir araç olarak da kullanmış; emeğe yönelik adaletsizlikleri ifşa etmek ve kölelik gibi insan onurunu hiçe sayan sömürü biçimlerini kınamak için başvurmuştur (Washington 1901:148; King 2011:171–172; Veltman 2016:29–31). Bu pozisyon, çalışmanın kendinde bir onuru olduğunu, ancak işçilerin ekonomik koşullarına veya toplumsal statülerine göre bu onurun farklılık gösterebileceğini öne sürer.
+<br>
+</br>
+Çalışma onuru üzerine yapılan daha yeni felsefi çalışmalar, bu kavramın insan haklarıyla ilişkisini de incelemiştir. Örneğin Paolo Gilabert (2018), statü olarak onur (dignity as a status) ile koşul olarak onur (dignity as a condition) arasında bir ayrım yapar. Statü onuru, bireylerin sahip olduğu belli değerli kapasiteleri temel alır ve bu kapasiteler, işçilerin saygı ve özenle muamele görmelerini gerektirir. Koşul onuru ise, bireylerin bu saygı ve özen normlarına uygun şekilde muamele gördüklerinde gerçekleşir. Gilabert’in yaptığı bu ayrım, bir yandan çalışmanın, insanın saygıya değer kapasitelerini görünür kıldığı ölçüde, içkin bir onur taşıdığını; diğer yandan ise uygun çalışma koşulları sağlanmadığında bunun onura aykırı olduğunu ama onuru tümüyle ortadan kaldırmadığını savunmayı mümkün kılar.
+<br>
+</br>
+<strong>2.2. Çalışmaya ve İş Merkezli Kültüre Karşı Eleştiriler</strong>
+<br>
+</br>
+Çalışmanın gelir, toplumsal ve kişisel faydalar, anlam ya da onur gibi değerlerin potansiyel bir kaynağı olması, onun gerçekten bu faydaları sağladığı ya da nihai olarak bizim için iyi olduğu anlamına gelmez. Özellikle Sanayi Devrimi’nden bu yana pek çok filozof ve toplumbilimci, çalışmanın değeri ve günümüz zengin toplumlarına özgü iş merkezli kültürlerin kıymeti konusunda kuşkulu bir tutum takınmıştır (Deranty 2015).
+<br>
+</br>
+Önemli olan nokta, çalışmanın değerine yönelik bu kuşkuların çoğunun çalışmanın kendisine değil, çağdaş toplumsal koşullardaki çalışmanın değerine ya da “Protestan iş ahlakı” (Weber 1904–05) gibi işin kutsandığı iş merkezli toplumlara yönelik olmasıdır. İş merkezli kültüre karşı kuşkucu olanlar, işe duyulan yaygın coşkunun rasyonel ya da bilgiye dayalı olup olmadığını; bu kültüre alternatiflere yeterince değer verilip verilmediğini sorgular (Cholbi 2018b, Sage 2019). Gerçekten de çağdaş iş düzenlerini eleştiren pek çok kişi, iyi ya da arzu edilir işin mümkün olduğunu, ancak tahmin edilenden daha nadir bulunduğunu öne sürmektedir.
+<br>
+</br>
+Örneğin sosyalist aktivist William Morris, “Yararlı İş ile Yararlı Meşakkat” (Kitap, Türkçeye “Yararlı İşler Faydasız Uğraşlar” olarak çevrilmiştir) (1884) adlı metninde, “modern ahlakın tüm emeğin kendiliğinden iyi olduğu inancı”nı reddeder ve “hayata bir nimet, bir hafiflik” katan işle “yalnızca bir lanet, yaşam için bir yük” olan iş arasında bir ayrım yapılması gerektiğini savunur. Morris’e göre bu tür işler bize ne dinlenme, ne gerçekten yararlı bir şey üretme, ne de çalışmanın kendisinde bir haz umudu sunmaktadır.</p>
+<p>Benzer biçimde, anarşist Bob Black “Çalışmanın Lağvedilmesi” (1985) başlıklı makalesine şu cümleyle başlar:
+<br>
+</br>
+“Hiç kimse çalışmamalıdır. Çalışma, dünyadaki neredeyse tüm mutsuzlukların kaynağıdır. Aklınıza gelebilecek neredeyse her kötülük ya çalışmaktan ya da çalışmaya göre tasarlanmış bir dünyada yaşamaktan kaynaklanır. Acıyı durdurmak için çalışmayı bırakmamız gerekir.”
+<br>
+</br>
+Ancak Black, çalışmayı “zorunlu üretim, yani zorla yaptırılan emek” olarak tanımlar. Bu nedenle, onun çalışmanın feshedilmesi çağrısı, kişilerin gönüllü olarak ekonomik anlamda üretken faaliyetlere katılmalarıyla çelişmez—ki bu faaliyetler öz itibarıyla çalışmaya benzeyebilir.
+<br>
+</br>
+Danaher (2019: 54), çalışmanın insan refahına katkıda bulunabileceğini kabul eder. Ancak günümüzdeki haliyle iş dünyasının “yapısal olarak kötü” olduğunu ve bu kötü yapının değişmesinin pek mümkün olmadığını savunur:</p>
+<p>“Gelişmiş ülkelerdeki işgücü piyasası, pek çok insan için çalışmayı çok kötü kılan, teknik ve kurumsal değişimlerin etkisiyle daha da kötüleşen ve bu olumsuz özelliklerinden arındırılması çok zor olan bir denge durumuna ulaşmıştır.”</p>
+<p>Dolayısıyla, açıkça “çalışma karşıtı” görüşleri savunanlar dahi genellikle çalışmanın kendisini değil, onun çağdaş dünyada nasıl örgütlendiğini ya da anlaşıldığını hedef alır. Aslında eleştirilerinin önemli kısmı, daha önce belirtildiği gibi, yalnızca istihdam koşullarına yöneliktir—ki bu, çalışmanın yalnızca bir biçimidir.</p>
+<p>Çalışma ya da iş kültürüne dair kuşkucu yaklaşım çok boyutludur; fakat bu yaklaşım dört başlık altında incelenebilir:
+<br>
+</br>
+<strong>1. Elde Edilemeyen Yararlar</strong>
+<br>
+</br>
+İş, çeşitli yararların kaynağı olabilir; ne var ki pek çok insanın çalışma yaşamı bu yararları onlara sunmaz. Bu nedenle, işe duyulan yaygın coşku, iş karşıtı düşünürlere göre yersizdir; zira “emeğin ahlaki kutsallığı, insanların büyük çoğunluğunun işlerini gerçekten deneyimleme biçimiyle acı verici biçimde uyumsuzdur” (Frayne 2015: 62–63).</p>
+<p>İşin değişim değeri açısından bakıldığında, birçok iş yetersiz ücretlendirilmekte ya da güvencesiz koşullarda sürdürülmektedir. Günümüz ekonomileri, giderek orta sınıf emeğinin “içinin boşaltılması” ile karakterize olmaktadır: Ücret skalasının üst dilimindeki çalışanlar için maaşlar artmaya devam ederken, alt dilimdeki ücretler duraksamakta ve orta kesimdeki işçi sayısı azalmaktadır. Bunun sonucu olarak, çalışıyor olmalarına rağmen barınma ya da beslenme gibi temel ihtiyaçlarını karşılayacak gelire sahip olmayan bireylerden oluşan bir “çalışan yoksullar” sınıfı ortaya çıkmıştır.</p>
+<p>İşin diğer potansiyel yararları bazı çalışanlar tarafından deneyimleniyor olsa da, birçok kişi yaptığı işten toplumsal takdir görmemekte ya da bu yolla daha güçlü bir topluluk duygusu geliştirememektedir. Toplumsal açıdan değerli ya da “temel” işler önemli yararlar üretse de, bu yararlar çoğu zaman onları deneyimleyenler tarafından görünmezdir. Pek çok iş sıkıcı ya da zihinsel olarak uyarıcı olmaktan uzaktır; bu da, daha gelişkin insani yetilerimizin gelişimine ya da kullanımına katkı sunmaz. Örneğin, gişe görevlilerinin yaptıkları işi uyarıcı ya da zorlayıcı bulmalarını hayal etmek zordur (tekrar ve sıkıntıya katlanma yetileri dışında).
+<br>
+</br>
+Modern çalışma biçimi büyük ölçüde işbölümüne dayanır; yani üretim süreçlerinin giderek daha küçük ve basit görevlere ayrılması üzerine kuruludur. (Bu konuda fabrika montaj hattı model teşkil eder.) İşbölümü, çalışanların dar kapsamlı ya da basit görevleri tekrar eden aşırı uzmanlara dönüşmesiyle sonuçlanır. Bu yapı genel ekonomik verimliliği artırsa da, klasik iktisatçı Adam Smith gibi eleştirmenler bunun uzun vadede çalışanları “bir insan yaratığın olabileceği kadar aptal ve cahil” hale getireceğinden endişe duymuştur (Smith 1776 [1976]: V.1.178). Anlam ya da onur açısından bakıldığında ise, insan emeğinin geniş bir kısmı ne çalışanları içine çeker ne de onların özerk yargılarını kullanmalarına imkân tanır; birçok kişi, yaptıkları işin kendine atfedilen değeriyle açıkça çelişen baskıcı ya da sömürücü koşullarda çalışmaktadır.
+<br>
+</br>
+<strong>2. İş Yararları Arasındaki İçsel Gerilimler</strong>
+<br>
+</br>
+İş merkezli toplumların karakteristik özelliği, üyelerinin işten birçok farklı fayda beklemesidir. Ancak iş (özellikle istihdam), bu karmaşık fayda paketini sağlamakta yetersiz kalabilir; bazı faydalar, diğerlerinin pahasına elde edilebilir. Örneğin, bireylerin anlamlı iş açısından en fazla fırsat sunduğunu düşündüğü meslekler (eğitim, danışmanlık, hasta, çocuk ya da engelli bakımı gibi) genellikle en düşük ücretli işlerdir. Günümüz işgücü piyasası, çalışanlara ya yetersiz gelir ya da anlamlı iş seçeneklerinden yalnızca birini sunar—ikisini birden nadiren.</p>
+<p>Psikolog Barry Schwartz (2015), anlam, sosyal etkileşim ve özerklik arayışı gibi maddi olmayan iş güdülerinin, çalışmaya bağlı maddi teşviklerle motivasyonel rekabet içinde olduğunu belirtir. Bu maddi teşvikler, işyerindeki tutumları ve davranışları çarpıtarak, çalışmada aradığımız manevi faydaların yerini üretkenliğe ve ekonomik kazançlara bırakmasına neden olur. İşgücü piyasalarının rekabetçi doğası aynı zamanda işin sosyal faydalarını da zayıflatır; zira piyasada başarılı olanlar, bunu diğer çalışanlarla rekabet ederek elde eder ve bu durum toplumsal dayanışmayı zedeler. Bireyler birbirlerinin çıkarlarına kayıtsız ya da düşman hale gelir (Hussain 2020).
+<br>
+</br>
+<strong>3. Fark Edilmeyen Zararlar veya Maliyetler</strong>
+<br>
+</br>
+Kuşkucular ayrıca çalışmayla ilişkili, ancak çoğu zaman fark edilmeyen bazı zararları veya maliyetleri de vurgular. Bunların en açık olanı, çalışmaya ayrılan zamanın doğurduğu fırsat maliyetleridir. Genellikle tam zamanlı çalışanlar yılda 1.500 ila 2.500 saat arasında çalışmaktadır—bu, yaklaşık olarak yılda dokuz ila on beş haftalık bir zamana denk gelir. Bu saatler, eğer çalışmaya ayrılmasaydı boş zaman, uyku, egzersiz, aile hayatı, yurttaşlık ve toplumsal katılım gibi faaliyetlere ayrılabilirdi (Rose 2016).</p>
+<p>Bu hesaplamaya iş için eğitim alma ya da işe gidip gelme gibi faaliyetlere harcanan önemli zaman dahil değildir. Ayrıca pek çok maaşlı çalışan, işverenleri tarafından “bağlantıda” veya “erişilebilir” olmaya da zorlanmaktadır. Resmî istihdam biçimi, çalışanların işverenleri için yaptıkları iş dışında başka işlerle ilgilenmesini de çoğunlukla engellediğinden, bireyler kendi işleri dışındaki pek çok iş için başka işçilere ödeme yapmak zorunda kalır. Bu da temizlik görevlisi, çocuk bakıcısı, bakım uzmanı, bahçıvan gibi hizmetlerin ücretlerini kapsar.</p>
+<p>İşsizlik fiziksel ve ruhsal sağlık üzerinde olumsuz etkiler yaratabiliyor olsa da, çalışmanın kendisi de bazı olumsuz sağlık etkilerinden muaf değildir. Bunlara stres, duygusal yorgunluk ve tekrar eden işlerden ya da ergonomik açıdan yetersiz işyeri tasarımından kaynaklanan fiziksel rahatsızlıklar dâhildir.
+<br>
+</br>
+Kuşkucular ayrıca, çalışma belirli türden faydaları sağlayamadığında, işçilerin bazı psikolojik zararlar yaşadığını da savunur. Bu tür üç zarar özellikle dikkat çekicidir:
+<br>
+</br>
+1-  Marx’ın kapitalizm altında emeğe yönelik eleştirisi, çalışmanın sıklıkla bazı faydalardan yoksun olduğu ve bu eksikliklerin yabancılaşma biçiminde kendini gösterdiği düşüncesine dayanır. Marx (1844), kapitalizm altında çalışmanın işçileri ürettikleri şeylerden yabancılaştırdığını öne sürer; çünkü işçilerin ne üretileceği ve nasıl üretileceği üzerinde çok az söz hakkı vardır ya da hiç yoktur. İşçileri çalışmanın kendisinden yabancılaştırır; çünkü ekonomik zorunlulukla çalışmaya mecbur bırakılan işçiler, çalışmadan içsel bir tatmin duymazlar. İşçileri kendi insan doğalarından ya da “türsel özlerinden” yabancılaştırır; çünkü işçiler, eylemlerinin ya da niyetlerinin ürünlerde “nesnelleşmiş” halini göremezler. Ve diğer işçilerden yabancılaştırır; çünkü kapitalizm işçileri birbirinin yerine geçebilecek üretim girdileri olarak görür ve onları rekabete sokar. Daha önce işin faydalarını sıralarken belirttiğimiz gibi, Marx’ın yabancılaşma kavramı, bu faydaların yokluğunun yalnızca bir eksiklik değil, bizzat çalışmanın içinde yer alan olumlu bir zarar olduğunu ima eder (Elster 1989, Brudney 1998, Kandiyali 2020).
+<br>
+</br>
+2- Pek çok iş kuşkucusu, çalışmanın değerlerimizi veya önceliklerimizi nasıl çarpıttığını vurgular. Onlara göre çalışmanın değeri artık sorgulanamaz bir ahlaki dogmaya dönüşmüştür. Paul LaFargue’a (1883) göre, “ekonomistler ve ahlakçılar çalışmanın etrafına kutsal bir hale çizmiştir” ve bizi “çalışma sevgisi” yanılgısına sürüklemişlerdir. (Bkz. ayrıca Frayne 2015.) Bertrand Russell (1932), çalışmanın kutsallaştırılmasının boş zaman ve tembelliğin değerine dair takdirimizi aşındırdığını öne sürmüştür. (Bkz. ayrıca O’Connor 2018.) Keynes gibi iktisatçılar (1930), ekonomik üretkenlikteki büyük artışların çoğu zaman çalışma süresinin azalmasına yol açmadığını gözlemlemiştir; bunu da boş zaman ve bolluğu değerlendirme yetimizi engelleyen bir iş ahlakına bağlar.
+<br>
+</br>
+3- Çalışmanın toplumsal itibarı, kendimize yönelik ahlaki yaklaşımımızı da bozabilir; kendimizi içsel değeri olan varlıklar olarak değil, yalnızca üretim araçları olarak görmemize neden olabilir. Hannah Arendt (1958), kendimizi öncelikle “çalışan” olarak düşünmenin, hem kendimize hem de diğer insanlara yönelik araçsal bir bakış geliştirdiğini savunur. Bu durumda kendimizi yalnızca üretim için kaynak ya da tüketim için birer araç olarak görmeye başlarız. Daha yakın tarihli eleştiriler, iş merkezli kültürlerin bireyin kendisini potansiyel işverenlere pazarlanacak bir “marka” gibi görmesine yol açtığını ileri sürmüştür (Davis 2003).
+<br>
+</br>
+Son olarak, çalışmanın yalnızca işçilere değil, başkalarına da maliyetleri olabilir. Çalışmaya ayrılan zamanın yol açtığı fırsat maliyetleri, işçilerin başkalarıyla olan ilişkilerini zayıflatabilir ya da topluluklarının bu bireylerin becerilerinden toplumsal açıdan değerli biçimde yararlanmasını engelleyebilir. Bazı işler, işçileri zararlı ya da adaletsiz pratiklerin suç ortağı haline de getirebilir—örneğin tütün veya sağlıksız gıda satışı gibi. İşçiler çalışmaları aracılığıyla dışsal zararlar da yaratabilir. Örneğin ev dışında çalışmak genellikle daha büyük bir çevresel etki yaratır ve bu, küresel iklim değişikliğinden sorumlu karbon salınımına katkıda bulunur (James 2018).
+<br>
+</br>
+<strong>4. İşe İlişkin Yararların Alternatif Kaynakları</strong>
+<br>
+</br>
+“İş karşıtı” düşünce içerisindeki son bir hat, işin iyi olduğu ölçüde bile, sağladığı faydaların yalnızca işe özgü olmayabileceğini savunur. Sosyal tanınma ya da kimlik hissi, istihdam dışında insan yaşamının başka alanlarında da kök salabilir—örneğin gönüllü işler, aile yaşamı, din veya dostluk gibi. “Ludic” (oyunsal) etkinlikler, rasyonel kapasitelerimizi kullanma ve geliştirme fırsatları sunabilir (Black 1985, Nguyen 2019). Bazı kişiler, sanal gerçekliğin bize işe benzeyen etkinliklerin simülasyonlarını sunabileceğini ve bu yolla çalışmanın yerine geçebileceğini ileri sürmüştür. Dolayısıyla Gheaus ve Herzog’un (2016) savunduğunun aksine, iş, ona atfedilen faydaların gerçekleştirileceği “ayrıcalıklı bağlam” olmak zorunda değildir.</p>
+<p>İş karşıtı teorisyenler genellikle çalışmanın yeniden değerlendirilmesini ve bireylerin “yaşamak için çalışması, çalışmak için yaşamaması” gerektiğini savunurlar. Bu kapsamda, haftalık zorunlu çalışma süresinin azaltılması gibi politikaların benimsenmesini ve böylece çalışmanın yaşam kalitemiz üzerindeki etkisinin asgariye indirilmesini önerirler. Çalışmanın hem kaçınılmaz hem de görünüşte gerekli ama aynı zamanda bezdirici olması, çalışmaya karşı ironik bir duruşun akıllıca olabileceğini düşündürebilir (de Botton 2010).
+<br>
+</br>
+<strong>3. Adalet ve Çalışmanın Politikası</strong></p>
+<p>İnsan toplulukları, üyelerinin çıkarlarını güvence altına almayı amaçlayan işbirlikçi çabalar olarak görülebilir. Bu doğruysa, toplumsal adalet, bireylerin birbirleri için kullanılmak üzere mal üretmek amacıyla işbirliği yaptığı toplumsal uygulamalarla yakından ilgili olacaktır. Bu nedenle çalışma, toplumsal adaletin temel meselelerinden biridir. Çalışma ve adalete dair sorular hem kurumların tasarımıyla hem de bireylerin seçimleriyle ilgili olarak ortaya çıkar.
+<br>
+</br>
+<strong>3.1 Dağıtıcı Adalet</strong></p>
+<p>Adaletle ilgili çoğu kuram, belirli bir toplum içindeki çok sayıda bireyin ücretli işlerde çalışacağını varsayar. O halde temel ahlaki soru, bireylerin çalışmanın hem faydaları hem de zararları açısından neye hak kazandıklarıdır. Başka bir deyişle, çalışmanın iyi ve kötü yanları adil biçimde nasıl dağıtılır?</p>
+<p>Bu soruya verilebilecek olası bir yanıt, her çalışanın, yetenekleri ve becerileri doğrultusunda, yalnızca arz ve talep tarafından yönetilen bir işgücü piyasasında elde edebildiği her türlü faydaya hak kazandığıdır. Bu yaklaşım, yetenekleri veya becerileri yüksek talep gören ya da az bulunan kişilerin, yetenekleri düşük talep gören veya bolca bulunan kişilere göre işverenlerden daha büyük faydalar elde etmesini beraberinde getirir (Boatright 2010). (Bu mantık, işgücü piyasasında bir iş ilişkisi içinde olmayan fakat emeklerini satarak ürün ortaya koyan kişiler için de geçerlidir.)</p>
+<p>Yirminci yüzyılın ilk birkaç on yılından sonra, birçok ülke bu “saf piyasa” anlayışına karşıt politikalar uygulamaya başlamıştır. Örneğin çoğu ülkede asgari ücret uygulamaları vardır ve belirli bir asgari ücret düzeyi zorunlu kılınmıştır. Ancak bu asgari ücret seviyelerinin adil olup olmadığı tartışmalıdır. Bazı kuramcılar, bir kişinin emeğini kendi uygun bulduğu bir fiyata satmasına izin vermemenin kişisel özgürlüğünü ihlal ettiğini savunur. Pek çok liberteryen düşünceye göre, emeğimiz vücudumuzun ya da yeteneklerimizin bir ifadesidir ve bunlar da özel mülkiyete benzer şekilde bize aittir. Dolayısıyla, bir kişinin emeğini çok düşük bir ücretle dahi olsa satma hakkının elinden alınması, onun kendilik mülkiyeti haklarını ihlal eder (Mack 2002). Ücret farklarının adilliği de tartışmalıdır. Ücretler bir çalışanın ekonomik katkısıyla mı yoksa çabasıyla mı orantılı olmalıdır, yoksa ücretler esas olarak çalışanın motivasyonunu artırmak için mi verilmektedir? (Heath 2018, Moriarty 2020). Bazı kuramcılar, ücret eşitsizliklerinin tamamen ortadan kaldırılması gerektiğini öne sürerken (Örtenblad 2021), bazı koşulsuz temel gelir savunucuları ise—kişilere çalışma durumuna bakılmaksızın düzenli ödeme yapılmasını öneren sistem—temel gelir uygulamasını, işsiz kalınsa bile yeterli bir minimum gelir düzeyinin sağlanmasının alternatifi olarak görür (van Parijs ve Vanderbroght 2017).
+<br>
+</br>
+Dağıtıcı adalet, ayrıca çalışmayla ilişkili zarar ya da haksızlıklara karşı çeşitli koruma önlemleriyle de ilgilidir. Yine, çoğu toplum, çalışma koşulları üzerinde yasal sınırlamalar getirmiştir. Bu sınırlamalar arasında, çalışma günü ya da haftasının uzunluğuna sınırlama getirilerek aşırı çalışmanın önlenmesi; ırk, cinsiyet, din veya diğer toplumsal kategorilere dayalı işe alım ya da terfilerde ayrımcılığın yasaklanması; işyerinde risklerin ve tehlikelerin azaltılması; ve daha geniş toplumsal düzeyde, bireylerin yaşamlarının belirli dönemlerinde çalışmanın yaşamlarını bütünüyle ele geçirmemesi için getirilen yasaklar (çocuk işçiliği yasakları ve emekliliği mümkün kılacak düzenlemeler) yer alır. Bu korumalara dair önemli bir ahlaki soru, çalışanların daha yüksek ücret ya da başka korumalar karşılığında bu korumalardan bazılarını pazarlık yoluyla feragat etme hakkına sahip olup olmayacağıdır.
+<br>
+</br>
+<strong>3.2 Destekleyici ve Üretici Adalet</strong></p>
+<p>Bir önceki bölümde ele alınan dağıtıcı adalet, çalışanların bir işte çalıştıkları takdirde ne tür faydalar elde ettiklerini ele alıyordu. Ancak adalete dair önemli sorular, bireylerin çalışmaya hakkı olup olmadığı ve çalışmakla yükümlü olup olmadıklarıyla da ilgilidir. Dolayısıyla çalışma, destekleyici ve üretici adalet bağlamında da sorular ortaya çıkarır.
+<br>
+</br>
+Öncelikle, bireylerin çalışmaya hakkı var mıdır? İnsan Hakları Evrensel Bildirgesi bu hakkı güvence altına alır ve her bireyin “çalışma, özgürce iş seçme, adil ve elverişli çalışma koşullarına sahip olma ve işsizliğe karşı korunma” hakkı olduğunu belirtir (Birleşmiş Milletler 1948, Madde 23). Bu hakkın yalnızca negatif özgürlük anlamına gelmeyeceği, yani başkalarının bireyin çalışmasına engel olmamasıyla sınırlı kalmayıp, kişinin çalışmak istemesi durumunda kendisine iş sağlanmasını da içerdiği düşünülmektedir (Schaff 2017). Çalışma hakkı, hem belirli gruplar için (örneğin engelliler için; bkz. Kavka 1992) hem de genel nüfus için (Tcherneva 2020) savunulmuştur. Böyle bir hakkın var olması, çalışmanın hayati faydaları elde etmenin temel (veya en azından baskın) yolu olmasından kaynaklanıyor olabilir. Elster (1988), çalışmanın öz-gerçekleşme için vazgeçilmez olduğunu öne sürerek devlet garantili istihdam önermektedir. Gomberg (2007), çalışmanın toplumsal olarak onaylanmış bir katkı sağlama ve anlam duygusu kazanma yoluyla önemli bir toplumsal fayda olduğunu savunur. Bu varsayımsal çalışma hakkına ilişkin iki önemli soru ortaya çıkar: (a) bu hak kime karşı ileri sürülebilir, yani bireylerin çalışmaya hakkı varsa, bu hakkı yerine getirmek kimin sorumluluğundadır; (b) bu hakkı yerine getirmek amacıyla sağlanan iş gerçekten çalışmaya dayalı hakka temel oluşturan faydaları sağlar mı (örneğin, devlet tarafından garanti edilen bir iş, tatmin edici olmayabilir).
+<br>
+</br>
+Çalışma hakkı, çalışmak isteyen herhangi bir kişinin (ya da en azından her yetişkinin) bunu yapabilmesi gerektiği anlamına gelir. Peki bireylerin çalışmama hakkı var mıdır ya da çalışma herhangi bir anlamda ahlaki bir yükümlülük müdür? Bu tür bir yükümlülüğün en açık temeli, “adil oyun” ya da karşılıklılık kavramlarına dayanır: Bireyler, kendilerine fayda sağlayan toplumsal girişimlere katkıda bulunmadıklarında yanlış davranırlar; üretken ekonomi bir toplumdaki hemen herkesin faydalandığı bir sistem olduğuna göre, bireylerin üretken ekonomiye katkıda bulunma yükümlülüğü vardır (Becker 1980, White 2003). Ancak bu karşılıklılık ilkesine karşı çıkanlar, toplumlarla belirli gruplar (örneğin gettoda yaşayan yoksullar; bkz. Shelby 2012) arasında adil karşılıklı ilişkilerin mevcut olmadığını ve bu nedenle bu grupların üyelerinin çalışmakla yükümlü olmadıklarını savunurlar. Ya da çağdaş ekonomik gelişmelerin bu yükümlülüğün geçerli olabilmesi için gereken arka plan koşullarını sağlamadığını öne sürerler (Cholbi 2018a). Çalışma yükümlülüğüne karşı çıkan diğerleri ise bunun, devletin vatandaşlarını eşit biçimde muamele etme yükümlülüğünü ihlal ettiğini savunur; çalışmaya zorlanan vatandaşlar, belki de hiç katılmadıkları bir iyi yaşam anlayışını izlemeye mecbur bırakılmış olur ve adil bir devlet, farklı iyi yaşam anlayışları arasında tarafsız kalmalıdır (van Parijs 1991, Levine 1995). Çalışma yükümlülüğü, fiilen devletin “iş ahlakı”nı benimseyip bu ahlaka karşı olan yaşam tarzlarını (örneğin sahilde yaşayıp geçinen birini) reddetmesi anlamına gelir. Diğer eleştirmenler, bireyleri çalışmaya zorlamanın bazı insanlar için öz-gerçekleşmenin önünde engel olacağını savunur (Maskivker 2012).
+<br>
+</br>
+Başka bir olasılık da, genel bir çalışma yükümlülüğü olmasa bile, dağıtıcı adaletin gereklerini yerine getirmek amacıyla çalışma özgürlüklerimiz üzerinde bazı sınırlamalara tabi tutulabileceğimizdir. Adil bir toplumun sağladığı pek çok fayda—eğitim ve sağlık hizmetleri gibi—yoğun emek gerektirir. Ancak toplumlar, genellikle bu faydaları sağlayan mesleklerde çalışan açığıyla karşı karşıya kalır. Bazı filozoflar, dağıtıcı adaletin gereklerinin, bireylerin iş tercihlerine meşru biçimde sınırlama getirebileceğini ve hatta savaş zamanındaki askerlik yükümlülüğüne benzer şekilde, bu hizmetleri sağlamak üzere devletin işgücünü zorunlu kılmasına izin verebileceğini öne sürmüştür (Fabré 2008, Stanczyk 2012). Benzer kaygılar, toplumsal olarak gerekli fakat istenmeyen “pis işler” için de geçerlidir (Walzer 1983, Schmode 2019). Öte yandan, eğer adalet bireylerden belirli türden işleri yapmalarını gerektirebiliyorsa, bu durum grev hakkına (özellikle de temel hizmet sunan çalışanların grev hakkına) karşı bir argüman olarak kullanılabilir (Borman 2017, Gourevitch 2018; ayrıca bkz. Munoz 2014).
+<br>
+</br>
+Bir kişinin iş tercihlerinin adalete ve toplumsal faydaya katkısı da bireylerin karşı karşıya kaldığı ahlaki sorulardan biridir. Örneğin kiralık katil gibi bazı meslekler doğası gereği ahlaka aykırı görünmektedir. Ancak bizler adaleti veya başkalarının refahını destekleyen kariyerleri seçmekle ne ölçüde yükümlüyüz? Bir yandan, seçtiğimiz iş ve kariyerlerin başkalarını ve toplumu etkilediği dikkate alındığında, iş ve meslek tercihleri ahlaki değerlendirmelerden muaf görünmemektedir. Üstelik dünyanın mevcut iç karartıcı durumu göz önüne alındığında, belki de sadece kişisel çıkar temelinde değil, ahlaki nedenlerle iş seçmekle yükümlüyüzdür. Norman Care (1984:285), “bugünün dünyasında ahlakın, kariyer seçiminde öz-gerçekleşmeden önce başkalarına hizmetin konulmasını gerektirdiğini” öne sürmektedir. Buna karşılık, toplumda yalnızca kurumların değil bireylerin de adaletin gereklerine tabi olduğunu düşünen bazı filozoflar, bireylerin meslek seçimlerinde belirli bir takdir yetkisine sahip olması gerektiğini savunurlar. Örneğin G.A. Cohen, her bireyin başkalarının refahı için bir makineye ya da toplumsal adaletin kölesine dönüşmeden, “kişisel bir ayrıcalık” alanına sahip olması gerektiğini ileri sürer (2008:10). Benzer şekilde, iş ve kariyer seçimlerimizin yalnızca adalet ya da toplumsal fayda açısından en uygun olmasını zorunlu kılmanın çok talepkâr bir yaklaşım olabileceği yönünde kaygılar da mevcuttur; zira bu seçimler aynı zamanda kimliğimizi hem yansıtan hem de şekillendiren kararlardır (Cholbi 2020).
+<br>
+</br>
+<strong>3.3 Eşitlik ve İşyerinde Yönetişim</strong></p>
+<p>Son yıllarda, eşitlikçi filozoflar, tipik işyeri düzenlemelerini, bireyler arasında toplum içinde eşit ilişkilere duyulan gereksinimle çelişen yapılar olarak eleştirmeye başlamışlardır. Bu konuda özellikle etkili olan, Anderson’ın birçok işyerinin “özel hükümet” biçiminde örgütlendiği ve en az birçok devlet yönetimi kadar otoriter olduğu yönündeki önerisidir.</p>
+<p>“Şöyle bir hükümet hayal edin: Hemen herkese uymak zorunda olduğu bir üst atanır. Üstler, astlara genellikle uymaları gereken bir rutin verir, ancak ortada hukukun üstünlüğü diye bir şey yoktur. Emirler keyfi olabilir ve herhangi bir zamanda, önceden haber verilmeden veya itiraz hakkı tanınmadan değiştirilebilir. Üstler, emir verdikleri kişilere karşı hesap vermezler. Astları tarafından ne seçilirler ne de görevden alınabilirler. … Bu hükümet özel ya da kişisel bir alanı, yaptırımdan azade bir özerklik alanını tanımaz. Giyim kuralları koyabilir, belirli saç stillerini yasaklayabilir. Herkes gözetim altında yaşar; bu da emirlerin yerine getirilip getirilmediğinin denetlenmesi içindir. … Bu hükümetin yönettiği toplumun ekonomik sistemi komünisttir. Devlet, yönettiği toplumdaki tüm emek dışı üretim araçlarına sahiptir. Üretimi merkezi planlama yoluyla düzenler. Hükümet biçimi diktatörlüktür.” (Anderson 2017: 37–38)
+<br>
+</br>
+Anderson’ın bizi hayal etmeye davet ettiği bu “toplum”, aslında çağdaş işyeridir—en azından Amerika Birleşik Devletleri’nde ve pek çok başka ülkede olduğu haliyle. Anderson ve diğer ilişkisel eşitlikçiler, işverenlerin genellikle çalışanları üzerindeki yetkileriyle tanımlanan ilişkileri baskıcı ve adaletsiz olarak görürler. Çalışanlar işverenlerin “yönetişimine” tabi kılınmıştır; ancak bu yönetişim, işçilerin işverenin iradesine keyfi ve hesap sorulamaz biçimde tabi tutulmaları biçiminde işler. İlişkisel eşitlikçi yaklaşım bu nedenle, bugünkü haliyle işyerlerinde çalışanlarla işverenlerin gerçek anlamda eşit bireyler olarak ilişki kurmadıkları sonucuna varır. Ve her ne kadar çalışanların iş ilişkilerinden ayrılma hakkı genelde mevcut olsa da, Anderson’ın tarif ettiği şekilde düzenlenmiş işyerlerinin yaygınlığı göz önüne alındığında, bu ayrılma hakkı baskıya karşı yeterli bir koruma sağlamayabilir.
+<br>
+</br>
+Anderson’ın işaret ettiği eşitsizliklerin bir ölçüde her ülkeye özgü iş hukuku ve politikalardan kaynaklandığı söylenebilir. Ancak işverenlerle çalışanlar arasındaki ilişkileri değiştirerek bu (ve diğer) eşitsizlikleri potansiyel olarak önlemenin ya da ele almanın yolları da vardır.
+<br>
+</br>
+Belki de bu yolların en bilinen olanı sendikalaşma ya da toplu pazarlıktır. İşçi sendikaları, işverenleri çalışanlarla toplu olarak sözleşme yapmaya zorlayarak bireysel işçilerin gücünü artırır. Sendikalar belirli bir meslek dalı içinde, birçok mesleği kapsayacak şekilde ya da yalnızca belirli bir işyeri ya da işletme içinde işçileri örgütleyebilir. Toplumlar, çalışanlarının sendikalaşma oranı ve sendika kurma ile sendikal yetkiyi destekleyen iş yasaları bakımından oldukça farklılık gösterir. Sendikaların meşruluğu genellikle, işçilerin ortak çıkarları paylaşan diğer bireylerle bir araya gelerek bu çıkarları ilerletmek üzere özgürce birleşme hakkını kullanmaları temelinde savunulur (Lindblom 2019). Ancak belirli bir işyeri ya da sektörde istihdam edilebilmek için sendika üyeliğinin zorunlu olması, bireylerin istemedikleri kişilerle birleşmeme veya kendi tercih ettikleri taraflarla birleşme hakkını ihlal edebilir (White 1998). Mark Reiff (2020), “cumhuriyetçi özgürlük” kavramına başvurarak, sendikaların işçileri işverenlerin sömürüsüne karşı koruyan temel toplumsal kurumlar olarak görülmesi gerektiğini savunur. Reiff’e göre, sendikalaşma evrensel ve zorunlu olmalıdır.
+<br>
+</br>
+İşverenlerle çalışanlar arasındaki görünüşte eşitsiz ve baskıcı ilişkileri düzeltmeye yönelik diğer yöntemler, genellikle karar alma yetkisinin yalnızca yönetime ait olduğu işyeri düzenini kırmayı amaçlar. Tipik işyerleri demokratik değil, hiyerarşiktir. Pek çok eşitlikçi çalışma eleştirmeni, işyerlerinin demokratikleştirilmesini savunur; yani çalışanların yalnızca kendi çalışma koşulları hakkında değil, aynı zamanda normalde yönetime ayrılmış kararlar üzerinde de daha fazla söz sahibi olmaları gerektiğini savunurlar. İşyeri demokrasisini savunanlar, bu düzenlemenin işçilerin çıkarlarını korumada en etkili örgütlenme biçimi olduğunu öne sürer (González-Ricoy 2014). Diğerleri, işyerinin daha geniş toplumun bir mikrokozmosu olduğunu ve bu nedenle demokratik bir toplumda yaşamak için gerekli erdemlerin gelişiminde bir eğitim alanı işlevi gördüğünü vurgular (Pateman 1970, Estlund 2003). Ancak belki de işyeri demokrasisine yönelik en temel argüman, işletmelerin devletlere benzetilmesidir: Eğer devletin demokratik biçimde yönetilmesi gerekiyorsa, o zaman işletmelerin ve diğer işyerlerinin de öyle yönetilmesi gerekir (Dahl 1986, Mayer 2000, Landemore &amp; Ferreras 2016). İşyerinde demokrasi, işçilerin koşullarını kısmen kendi rızalarının ürünü ve özerkliklerinin bir yansıması haline getirdiği ölçüde, işyerini daha adil hale getiriyor gibi görünür (Schaff 2012).
+<br>
+</br>
+<strong>3.4 Toplumsal Cinsiyet, Bakım ve Duygusal Emek</strong></p>
+<p>Çalışmanın adaletle ilişkisi, çalışmanın pek çok toplumda yoğun biçimde toplumsal cinsiyetle ilişkili bir olgu olması nedeniyle daha da karmaşık hale gelir. Örneğin kadınlar, genellikle para karşılığı yapılmayan ev işleri ve çocuk bakımı gibi görevlerin büyük kısmını yerine getirir. Resmî iş gücü piyasasında ise pek çok toplumda kadınlar benzer işlerde erkeklerden daha az ücret almakta; bazı mesleklerde toplumsal cinsiyet temelli temsil farklılıkları gözlemlenmektedir (kadınlar genellikle ilkokul öğretmenliği, hemşirelik ve sosyal hizmet gibi alanlarda yoğunlaşırken; erkekler mühendislik ve finans gibi alanlarda yoğun temsil edilir). Feminist filozoflar, bu farklılıklarda özellikle kadınların sıklıkla yerine getirdiği bakım emeği türlerinin değersizleştirilmesini ve adalet teorilerindeki temel kör noktaları tespit etmişlerdir; özellikle de piyasa aracılığıyla sağlanmayan fakat yaşam şanslarımız açısından önemli olan ‘ilişkisel’ faydaların göz ardı edilmesini (Gurtler ve Smith 2005; Gheaus 2009). Buradaki karmaşık meselelerden biri, nedensellik ilişkisini açıklamaktır: Cinsiyetçi normlara sahip toplumlarda kadınlar düşük ücretli ya da düşük prestijli işlere mi itiliyor, yoksa bu işler kadınlar tarafından yapıldıkları için mi düşük ücretli veya düşük prestijli sayılıyor (ya da her ikisi birden)? Benzer şekilde, toplumsal cinsiyet normları ile toplumsal cinsiyetli işbölümü arasındaki etkileşimi de sorgulayabiliriz (örneğin, kadınların çocuklara bakım vermeye daha istekli olduğu yönündeki klişe, cinsiyetli işbölümünü mi besliyor, yoksa cinsiyetli işbölümü bu klişeyi mi pekiştiriyor, ya da her ikisi birden?).
+<br>
+</br>
+Toplumsal cinsiyet temelli işbölümüne farklı türden itirazlar yöneltilebilir: Bir yandan, bu işbölümü kadınların gelir, boş zaman gibi işle ilgili faydalara sistematik olarak daha az erişim sağladığı bir dağılıma yol açar. Buna ek olarak, bu işbölümü toplumsal cinsiyetler arasında hiyerarşi yaratarak onları eşitsiz hale getirir (Hartley ve Watson 2018). Schouten (2019), geleneksel toplumsal cinsiyet normlarını ve bunların getirdiği işbölümünü benimseyen birçok birey bulunsa da, toplumsal cinsiyet eşitliğini temel alan yaşam biçimlerini tercih eden bireylerin, bu tür yaşam biçimlerini engelleyen beklentileri—başta toplumsal cinsiyetli işbölümü olmak üzere—destekleyen kurumsal yapılar ve politikalar karşısında haklı şikâyetleri olduğunu savunur. Schouten’a göre, adil bir toplum iş zamanı, aile izni ve bakıma muhtaç bireylerin desteklenmesi gibi alanları toplumsal cinsiyet eşitliğini temel alan yaşam biçimlerini teşvik edecek ve toplumsal cinsiyet temelli olmayan bir işbölümünü mümkün kılacak biçimde düzenlemelidir. (Bkz. ayrıca Wright ve Brighouse 2008, Gheaus 2012.)
+<br>
+</br>
+Çalışmaya ilişkin feminist düşünce içinde öne çıkan bir başka yaklaşım, Hochschild’in (2012) duygusal emek üzerine yaptığı çalışmalardan türemiştir. Bazı işler, kişinin kendi duygularını dikkatle gözlemlemesini veya yönetmesini ve başkalarının duygularına hitap etmesini ya da onları yönlendirmesini gerektirir. Hochschild bu tür duygusal emeğe hem kadınlar hem erkekler tarafından örnekler verir; ancak kadınların yoğun bulunduğu bazı mesleklerin duygusal emekle daha fazla yüklü olduğunu belirtir. Örneğin, kadın kabin görevlileri, yolcularla ilişkilerinde çok çeşitli duygusal beklentilere tabidir (gülümsemek, samimi sohbet, yolcuların gideceği yerlerle ya da meslekleriyle ilgilenmek vb.). Akademisyenler, duygusal emeğin etik açıdan dikkate değer pek çok yönünü vurgulamıştır (bu konuda kapsamlı bir özet için bkz. Barry, Olekalns ve Rees 2019); ancak bu olgu, sistematik felsefi analizden çok az nasibini almıştır. Hochschild, duygusal emeğin işçilerin kendisi üzerindeki olumsuz etkilerini vurgular ve bunun çalışanları kendi duygularından yabancılaştırabileceğini, hem iş yerinde hem iş dışındaki yaşamlarında otantik duyguları tanımakta ya da ifade etmekte zorluk yaşamalarına neden olabileceğini savunur. Ayrıca duygusal emek, çalışanların içsel duygularıyla çelişen duygusal ifadeler sergilemeleri anlamına gelen “yüzeysel rol yapma”ya yol açtığında, bu durum çalışanların sağlığını da olumsuz etkileyebilir. Diğer etik kaygılar daha çok kişiler arası boyuttadır—örneğin, duygusal emeğin aldatıcı ya da samimiyetsiz olduğu savı gibi. Barry, Olekalns ve Rees (2019), duygusal emeğin çalışanların hakları ile işverenlerin hakları, çalışanların hakları ile görevleri ve işverenlerin hakları ile görevleri arasında çatışmalar yaratma potansiyeline sahip olduğunu belirterek tartışma için verimli bir başlangıç sunarlar.
+<br>
+</br>
+<strong>4. Çalışma ve Geleceği</strong>
+<br>
+</br>
+Pek çok toplumsal yorumcu, ekonomik ve teknolojik eğilimlerin yakın gelecekte toplumların giderek “çalışma sonrası” hale geleceğini öngörmektedir. Yani, çok daha az sayıda birey ücretli işlerde çalışacak, çalışma saatleri dramatik biçimde azalacak ve çalışma, bireylerin değerleri ya da kaygıları arasında çok daha küçük bir yer tutacaktır (Frey ve Osborne 2013, Thompson 2015, Brynjolofsson ve McAfee 2014). Bu olasılığın memnuniyetle karşılanıp karşılanmaması, büyük ölçüde bu makalede daha önce ele alınan meselelere bağlıdır: çalışmanın gerçekten ne kadar iyi olduğu, çalışmayla ilişkilendirilen faydaların başka yollarla elde edilip edilemeyeceği gibi sorulara.
+<br>
+</br>
+Bazıları, çalışma sonrası bir geleceği özgürleştirici olarak karşılamaktadır (Livingston 2016, Chamberlain 2018, James 2018, Danaher 2019); çalışmanın merkezi rolündeki azalmaların bize daha fazla boş zaman, özgürlük ya da topluluk hissi sağlayacağını ve özellikle oyun ya da doğayla etkileşim gibi faaliyetlerin çalışmanın yerini alması durumunda bu geleceğin daha da arzu edilir olacağını savunmaktadırlar. Diğerleri ise, çalışmanın gerilemesinin, doğamızla özdeşleştirilen bazı önemli faydaları gerçekleştirdiğimiz temel bir alanı elimizden alacağından endişe etmektedir (Deranty 2015) ya da bu dönüşümün yüksek düzeyde eşitsizlik veya ekonomik sıkıntıya yol açacağını öne sürmektedir (Frase 2016). Bir başka kaygı ise, bireylerin çalışma merkezli bir toplumdan çalışmanın isteğe bağlı olduğu bir topluma psikolojik olarak geçiş yapabilme becerisine ilişkindir (Cholbi 2018b).
+<br>
+</br>
+<strong>5. Sonuç</strong></p>
+<p>Çalışma ve emek, doğaları gereği felsefi olarak ilgi çekicidir. Ancak insanlık durumuna olan merkezî rolleri, çalışmanın ve emeğin, insan iyiliği ve insan toplumlarının adil biçimde örgütlenmesine dair daha geniş felsefi sorularla da kesiştiği anlamına gelir. Çalışma dünyasında süregiden ve öngörülen değişiklikler, önümüzdeki on yıllarda felsefi araştırmalar için zengin bir zemin sağlayacaktır. Felsefenin, Appiah’ın (2021:7) “zor sorun” olarak adlandırdığı meseleyi ele almakta özel bir rol oynaması muhtemeldir: “İhtiyacımız olan mal ve hizmetleri üretirken, insanlara gelir, toplumsallık ve anlam kazandırmanın yollarını bulmak.”
+<br>
+</br>
+<strong>Kaynakça</strong></p>
+<p>Adorno, Theodor, 2001. “Free Time,” J.M. Bernstein (ed.), The Culture Industry: Selected Essays on Mass Culture, London: Routledge, ss. 187–198.</p>
+<p>Anderson, Elizabeth, 2017. Private Government: How Employers Rule Our Lives (and Why We Don’t Talk About It), Princeton: Princeton University Press.</p>
+<p>Appiah, Kwame Anthony, 2021. “The Philosophy of Work,” D. Sobel, P. Vallentyne ve S. Wall (eds.), Oxford Studies in Political Philosophy (Cilt 7), Oxford: Oxford University Press, ss. 1–22.</p>
+<p>Applebaum, Herbert, 1992. The Concept of Work: Ancient, Medieval, and Modern, Albany: State University of New York Press.</p>
+<p>Arendt, Hannah, 1958. The Human Condition, Chicago: University of Chicago Press.</p>
+<p>Barry, Bruce, Olekalns, Mara ve Rees, Laura, 2019. “An Ethical Analysis of Emotional Labor,” Journal of Business Ethics, 160: 17–34.</p>
+<p>Beadle, Ron ve Knight, Kelvin, 2012. “Virtue and Meaningful Work,” Business Ethics Quarterly, 22: 433–450.</p>
+<p>Becker, Lawrence C., 1980. “The Obligation to Work,” Ethics, 91: 35–49.</p>
+<p>Black, Bob, 1985. “The Abolition of Work,” The Abolition of Work and Other Essays, Port Townsend: Loompanics Unlimited, ss. 17–34.</p>
+<p>Boatright, J.R., 2010. “Executive Compensation: Unjust or Just Right?,” G.G. Brenkert &amp; T. L. Beauchamp (eds.), Oxford Handbook of Business Ethics, New York: Oxford University Press, ss. 161–201.</p>
+<p>Borman, D.A., 2017. “Contractualism and the Right to Strike,” Res Publica, 23: 81–98.</p>
+<p>Bowie, Norman E., 1998. “A Kantian Theory of Meaningful Work,” Journal of Business Ethics, 17: 1083–1092.</p>
+<p>Breen, Keith, 2007. “Work and Emancipatory Practice,” Res Publica, 13: 381–414.</p>
+<p>Brudney, Daniel, 1998. Marx’s Attempt to Leave Philosophy, Cambridge, MA: Harvard University Press.</p>
+<p>Brynjolfsson, Erik ve McAfee, Andrew, 2014. The Second Machine Age, New York: Norton.</p>
+<p>Budd, John W., 2011. The Thought of Work, Ithaca, NY: Cornell University Press.</p>
+<p>Care, Norman S., 1984. “Career Choice,” Ethics, 94: 283–302.</p>
+<p>Chamberlain, James A., 2018. Undoing Work, Rethinking Community, Ithaca, NY: Cornell University Press.</p>
+<p>Cholbi, Michael, 2018a. “The Duty to Work,” Ethical Theory and Moral Practice, 21: 1119–1133.</p>
+<p>–––, 2018b. “The Desire to Work as an Adaptive Preference,” Autonomy, 04 (Temmuz).</p>
+<p>–––, 2020. “The Ethics of Choosing Jobs and Careers,” B. Fischer (ed.), College Ethics (2. baskı), Oxford: Oxford University Press, ss. 878–889.</p>
+<p>Clark, Samuel, 2017. “Good Work,” Journal of Applied Philosophy, 34: 61–73.</p>
+<p>Cohen, G.A., 2008. Rescuing Justice and Equality, Cambridge, MA: Harvard University Press.</p>
+<p>Dahl, Robert A., 1986. A Preface to Economic Democracy, Berkeley: University of California Press.</p>
+<p>Danaher, John, 2019. Automation and Utopia, Cambridge, MA: Harvard University Press.</p>
+<p>Davis, Joseph E., 2003. “The Commodification of Self,” Hedgehog Review, Summer.</p>
+<p>De Botton, Alain, 2010. The Pleasures and Sorrows of Work, New York: Penguin.</p>
+<p>Deranty, Jean-Philippe, 2015. “Historical Objections to the Centrality of Work,” Constellations, 22: 105–121.</p>
+<p>Elster, Jon, 1988. “Is There (or Should There Be) a Right to Work?,” A. Gutmann (ed.), Democracy and the Welfare State, Princeton: Princeton University Press, ss. 53–78.</p>
+<p>–––, 1989. “Self-realisation in Work and Politics,” J. Elster and K.O. Moene (eds.), Alternatives to Capitalism, Cambridge: Cambridge University Press, ss. 127–158.</p>
+<p>Estlund, Cynthia, 2003. Working Together, New York: Oxford University Press.</p>
+<p>Fabré, Cecile, 2008. Whose Body Is It?, Oxford: Oxford University Press.</p>
+<p>Frase, Peter, 2016. Four Futures, London: Verso.</p>
+<p>Frayne, David, 2015. The Refusal of Work, London: Zed.</p>
+<p>Gheaus, Anca, 2009. “The Challenge of Care,” L. Tessman (ed.), Feminist Ethics and Social and Political Philosophy, Dordrecht: Springer, ss. 105–119.</p>
+<p>–––, 2012. “Gender Justice,” Journal of Ethics and Social Philosophy, 6: 1–24.</p>
+<p>Gheaus, Anca ve Herzog, Lisa, 2016. “The Goods of Work (Other Than Money!),” Journal of Social Philosophy, 47: 70–89.</p>
+<p>Gilabert, Pablo, 2018. “Dignity at Work,” H. Collins, G. Lester, V. Mantouvalou (eds.), Philosophical Foundations of Labour Law, Oxford: Oxford University Press, ss. 68–86.</p>
+<p>Gomberg, Paul, 2007. How to Make Opportunity Equal, Oxford: Blackwell.</p>
+<p>González-Ricoy, Ínigo, 2014. “The Republican Case for Workplace Democracy,” Social Theory and Practice, 40: 232–254.</p>
+<p>Gorz, Andre, 2010. Critique of Economic Reason, London: Verso.</p>
+<p>Gourevitch, Alex, 2018. “The Right to Strike,” American Political Science Review, 112: 905–917.</p>
+<p>Graeber, David, 2018. Bullshit Jobs, New York: Simon and Schuster.</p>
+<p>Gurtler, Sabine ve Smith, Andrew F., 2005. “The Ethical Dimension of Work,” Hypatia, 20: 119–134.</p>
+<p>Haney, Mitchell R. ve Kline, A. David, 2010. The Value of Time and Leisure, Lanham, MD: Lexington Books.</p>
+<p>Hartley, Christie ve Watson, Lori, 2018. Equal Citizenship and Public Reason, New York: Oxford University Press.</p>
+<p>Heath, Joseph, 2018. “On the Very Idea of a Just Wage,” Erasmus Journal for Philosophy and Economics, 11: 1–33.</p>
+<p>Hochschild, Arlie, 2012. The Managed Heart, Berkeley: University of California Press.</p>
+<p>Hussain, Waheed, 2020. “Pitting People Against Each Other,” Philosophy and Public Affairs, 48: 79–111.</p>
+<p>James, Aaron, 2018. Surfing with Sartre, New York: Penguin/Random House.</p>
+<p>Kandiyali, Jan, 2020. “The Importance of Others,” Ethics, 130: 555–587.</p>
+<p>Kavka, Gregory, 1992. “Disability and the Right to Work,” Social Philosophy and Policy, 9: 262–280.</p>
+<p>Keynes, John Maynard, 1930. “Economic Possibilities for Our Grandchildren,” Essays in Persuasion, New York: Norton, ss. 358–373.</p>
+<p>LaFargue, Paul, 1883. The Right to Be Lazy, Chicago: Charles H. Kerr &amp; Co.</p>
+<p>Landemore, Hélène ve Ferreras, Isabelle, 2016. “In Defense of Workplace Democracy,” Political Theory, 44: 53–81.</p>
+<p>Lindblom, Lars, 2019. “Consent, Contestability, and Unions,” Business Ethics Quarterly, 29: 189–211.</p>
+<p>Livingston, James, 2016. No More Work, Chapel Hill: University of North Carolina Press.</p>
+<p>MacIntyre, Alasdair, 1984. After Virtue (2. baskı), Notre Dame: University of Notre Dame Press.</p>
+<p>Mack, Eric, 2002. “Self-Ownership, Marxism, and Egalitarianism,” Politics, Philosophy, and Economics, 1: 75–108.</p>
+<p>Malesic, Jonathan, 2017. “Parenting is Not a ‘Job,’ and Marriage is Not ‘Work,’” New Republic, 9 Ağustos 2017.</p>
+<p>Malmqvist, Erik, 2019. “Paid to Endure,” American Journal of Bioethics, 19: 11–20.</p>
+<p>Marx, Karl, 1844. Economic and Philosophic Manuscripts of 1844, M. Milligan (trans. &amp; ed.), Mineola, NY: Dover.</p>
+<p>Maskivker, Julia, 2012. Self-Realization and Justice, New York: Routledge.</p>
+<p>Mayer, Robert, 2000. “Is there a Moral Right to Workplace Democracy?” Social Theory and Practice, 26: 301–325.</p>
+<p>Michaelson, Christopher, 2021. “A Normative Meaning of Meaningful Work,” Journal of Business Ethics, 170: 413–428.</p>
+<p>Moriarty, Jeffrey, 2009. “Rawls, Self-Respect, and the Opportunity for Meaningful Work,” Social Theory and Practice, 35: 441–459.</p>
+<p>–––, 2020. “What’s in a Wage?,” Business Ethics Quarterly, 30: 119–137.</p>
+<p>Morris, William, 1884. “Useful Work Versus Useless Toil,” Collected Works of William Morris, Cambridge: Cambridge University Press, ss. 98–120.</p>
+<p>Muñoz, Cristian Pérez, 2014. “Essential Services, Workers’ Freedom, and Distributive Justice,” Social Theory and Practice, 40: 649–672.</p>
+<p>Nguyen, C. Thi, 2019. “Games and the Art of Agency,” Philosophical Review, 128: 423–462.</p>
+<p>O’Connor, Brian, 2018. Idleness: A Philosophical Essay, Princeton: Princeton University Press.</p>
+<p>Örtenblad, A., 2021. Debating Equal Pay for All, London: Palgrave Macmillan.</p>
+<p>Pateman, Carole, 1970. Participation and Democratic Theory, Cambridge: Cambridge University Press.</p>
+<p>Pieper, Josef, 1952. Leisure, the Basis of Culture, A. Dru (trans.), London: Faber and Faber.</p>
+<p>Reiff, Mark, 2020. In the Name of Liberty, Cambridge: Cambridge University Press.</p>
+<p>Rawls, John, 1996. Political Liberalism, New York: Columbia University Press.</p>
+<p>Rose, Julie, 2016. Free Time, Princeton: Princeton University Press.</p>
+<p>Russell, Bertrand, 1932. “In Praise of Idleness,” Harper’s Magazine, Ekim 1932.</p>
+<p>Sayers, Sean, 2005. “Why Work? Marx and Human Nature,” Science and Society, 69: 606–616.</p>
+<p>Schaff, Kory, 2001. Philosophy and the Problems of Work, Lanham, MD: Rowman and Littlefield.</p>
+<p>–––, 2012. “Democratic Rights in the Workplace,” Inquiry, 55: 386–404.</p>
+<p>–––, 2017. “A Right to Work and Fair Conditions of Employment,” Fair Work, London: Rowman and Littlefield, ss. 41–56.</p>
+<p>Schmode, Frauke, 2019. “What Difference Does It Make?,” The Future of Work, Technology, and Basic Income, New York: Routledge, ss. 151–170.</p>
+<p>Schwartz, Barry, 2015. Why We Work, New York: Simon and Schuster.</p>
+<p>Shelby, Tommie, 2012. “Justice, Work, and the Ghetto Poor,” The Law and Ethics of Human Rights, 6 Aralık 2012.</p>
+<p>Smith, Adam, 1776 [1976]. An Inquiry into the Nature and Causes of the Wealth of Nations, Chicago: University of Chicago Press.</p>
+<p>Stanczyk, Lucas, 2012. “Productive Justice,” Philosophy and Public Affairs, 40: 144–164.</p>
+<p>Suzman, James, 2021. Work: A History of How We Spend Our Time, London: Bloomsbury.</p>
+<p>Svendsen, Lars Fredrik, 2015. Work (2. baskı), London: Routledge.</p>
+<p>Tcherneva, Pavlina R., 2020. The Case for a Job Guarantee, New York: John Wiley &amp; Sons.</p>
+<p>Thompson, Derek, 2015. “A World Without Work,” The Atlantic, Temmuz–Ağustos.</p>
+<p>United Nations, 1948. Universal Declaration of Human Rights.</p>
+<p>Van Parijs, Philippe, 1991. “Why Surfers Should Be Fed,” Philosophy &amp; Public Affairs, 20: 101–131.</p>
+<p>Van Parijs, Philippe ve Vanderbroght, Yannick, 2017. Basic Income, Cambridge, MA: Harvard University Press.</p>
+<p>Veltman, Andrea, 2016. Meaningful Work, Oxford: Oxford University Press.</p>
+<p>Walzer, Michael, 1983. Spheres of Justice, New York: Basic Books.</p>
+<p>Washington, Booker T., 1901. Up From Slavery: An Autobiography, New York: Doubleday.</p>
+<p>Weber, Max, 1904–05. The Protestant Ethic and the Spirit of Capitalism, New York: Charles Scribner’s Sons, 1930.</p>
+<p>Weeks, Kathi, 2011. The Problem with Work, Durham: Duke University Press.</p>
+<p>White, Stuart, 1998. “Trade Unionism in a Liberal State,” Freedom of Association, Princeton: Princeton University Press, ss. 330–356.</p>
+<p>–––, 2003. The Civic Minimum, Oxford: Oxford University Press.</p>
+<p>Wright, Erik Olin ve Brighouse, Harry, 2008. “Strong Gender Egalitarianism,” Politics and Society, 36: 360–372.</p>
+<p>Yeoman, Ruth, 2014. “Conceptualizing Meaningful Work as a Fundamental Human Need,” Journal of Business Ethics, 124: 235–251.</p>
+<hr />
+<p><strong><em>Çeviren</em></strong>: Ahmet Er, Murat Berkay Özbek</p>
+<p><strong><em>Dipnot</em></strong>: Bu metin, <a href="https://plato.stanford.edu/entries/work-labor/">Stanford Encyclopedia of Philosophy</a> sitesinde yayımlanan <em>“Work and Labor”</em> başlıklı makalenin tamamının Türkçeye çevrilmiş halidir.  </p>
+<p><strong>Yazar</strong>: Michael Cholbi</p>
+<p><strong>Yayın bilgisi</strong>:</p>
+<p>Cholbi, Michael, "Philosophical Approaches to Work and Labor", <em>The Stanford Encyclopedia of Philosophy</em> (Summer 2023 Edition), Edward N. Zalta &amp; Uri Nodelman (eds.), URL = <a href="https://plato.stanford.edu/archives/sum2023/entries/work-labor/">https://plato.stanford.edu/archives/sum2023/entries/work-labor/</a>.</p><!-- HTML_TAG_END --></div>
+          </div>
+
+        
+      </div></div></section></div> 
+<div class="section" id="section-01051575"><div class="container svelte-dujuug">
+  <div class="svelte-dujuug"><h2 class="svelte-dujuug">Duyurular </h2>
+<ul class="svelte-dujuug"><li class="svelte-dujuug"><div class="date svelte-dujuug">28 Şub 2025</div>
+      <div><a href="/speeches/dnce-ve-felsefe-sohbetleri" class="svelte-dujuug"><h4 class="svelte-dujuug"><!-- HTML_TAG_START -->Düşünce ve Felsefe Sohbetleri<!-- HTML_TAG_END --></h4></a>
+        <p class="svelte-dujuug"><!-- HTML_TAG_START -->Gümüşlük Kültür ve Sanat Derneği ile Erkan Oğur Müzik Okulu işbirliğinde 28 Şubat’ta Bodrum Gümüşlük’te gerçekleşecek felsefi söyleşide, 'mesafe' kavramı Sartre, Aristoteles, Buber ve Beauvoir’ın düşünceleri ışığında disiplinlerarası bir bakışla ele alınacak.<!-- HTML_TAG_END --></p></div>
+    </li><li class="svelte-dujuug"><div class="date svelte-dujuug">09 Aralık 2024</div>
+      <div><a href="/speeches/toplumsal-dnme" class="svelte-dujuug"><h4 class="svelte-dujuug"><!-- HTML_TAG_START -->21. Yüzyılda Toplumsal Düşünme Becerileri<!-- HTML_TAG_END --></h4></a>
+        <p class="svelte-dujuug"><!-- HTML_TAG_START -->Eğitimde Yeni Yaklaşımlar Atölyeleri kapsamında gerçekleştirilen etkinlikte, İstanbul Üniversitesi’nden Prof. Dr. Nedim Yıldız, "21. Yüzyılda Toplumsal Düşünme Becerileri" temalı bir sunum yaptı.<!-- HTML_TAG_END --></p></div>
+    </li><li class="svelte-dujuug"><div class="date svelte-dujuug">24 Kasım 2024</div>
+      <div><a href="" class="svelte-dujuug"><h4 class="svelte-dujuug"><!-- HTML_TAG_START -->İlk Genel Kurul Duyurusu<!-- HTML_TAG_END --></h4></a>
+        <p class="svelte-dujuug"><!-- HTML_TAG_START -->Uygulamalı Felsefe Derneği’nin ilk genel kurulu, 11 Aralık 2024 Çarşamba günü saat 19:00’da, dernek merkezinde gerçekleştirilecektir.<!-- HTML_TAG_END --></p></div>
+    </li><li class="svelte-dujuug"><div class="date svelte-dujuug">18 Ekim 2024</div>
+      <div><a href="/speeches/btn-paralayarak-dnme" class="svelte-dujuug"><h4 class="svelte-dujuug"><!-- HTML_TAG_START -->Bütünü Parçalayarak Düşünme<!-- HTML_TAG_END --></h4></a>
+        <p class="svelte-dujuug"><!-- HTML_TAG_START -->Prof. Cengiz Çakmak, Özel Bilgin Anadolu Lisesi öğretmenleriyle gerçekleştirdiği buluşmada, "bütünü parçalayarak düşünme ve çözme" yaklaşımını gerçek olaylar üzerinden örneklendirerek eğitimde yenilikçi stratejiler geliştirmeleri için ilham verdi.<!-- HTML_TAG_END --></p></div>
+    </li><li class="svelte-dujuug"><div class="date svelte-dujuug">30 Ağu 2024</div>
+      <div><a href="/speeches/edirne-dnce-gnleri" class="svelte-dujuug"><h4 class="svelte-dujuug"><!-- HTML_TAG_START -->Edirne Düşünce Günleri<!-- HTML_TAG_END --></h4></a>
+        <p class="svelte-dujuug"><!-- HTML_TAG_START -->Üyelerimizden Nedim Yıldız, Elife Kılıç ve Can Karaböcek Edirne Düşünce Günleri etkinliğinde konuşmalarını gerçekleştirdi.<!-- HTML_TAG_END --></p></div>
+    </li></ul>
+  <a href="[object Object]" class="button svelte-dujuug">Tümünü gör</a></div></div></div> 
+<div class="section" id="section-36bd06c5"><section class="section-container svelte-cdvhfw"><div class="content svelte-cdvhfw"><h2 class="heading">Bize ulaşın</h2>
+    <div class="body svelte-cdvhfw"><!-- HTML_TAG_START -->Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.<!-- HTML_TAG_END --></div>
+    <div class="social-links svelte-cdvhfw"></div></div>
+  <form action="https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5" method="POST" class="svelte-cdvhfw"><input type="hidden" name="_subject" value="New Contact Form Submission" class="svelte-cdvhfw">
+    <input type="hidden" name="_next" value="https://uygulamalifelsefedernegi.org/success" class="svelte-cdvhfw">
+    <label class="svelte-cdvhfw"><span class="svelte-cdvhfw">İsim</span>
+          <input name="İsim" type="Metin" placeholder="" class="svelte-cdvhfw">
+        </label><label class="svelte-cdvhfw"><span class="svelte-cdvhfw">E-posta</span>
+          <input name="E-posta" type="e-posta" placeholder="isim@email.com" class="svelte-cdvhfw">
+        </label>
+    <button class="button svelte-cdvhfw" type="submit">Gönder</button></form></section></div> 
+<div class="section" id="section-c3f3f192"><footer class="svelte-1isqcnz"><div class="share-container svelte-1isqcnz"></div>
+  <div class="section-container svelte-1isqcnz"><div class="nav-items svelte-1isqcnz"><nav><h3 class="svelte-1isqcnz"></h3>
+           <ul class="socials svelte-1isqcnz"><li class="svelte-1isqcnz"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees" aria-label="Linkedin" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://twitter.com/Ufelsefeder" aria-label="Twitter" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-1isqcnz"></a>
+                </li></ul>
+             
+              <share-button class="svelte-1isqcnz"><button class="flex button svelte-1isqcnz" href="#ddd">Paylaş </button></share-button>
+            
+            <a class="button" href="/donate">Bağış</a>
+        </nav></div>
+    <div class="iframe-container"><!-- HTML_TAG_START --><iframe class="mailjet_f" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hr/form?c=8870c5ff" width="100%" style="height: 0;"></iframe><!-- HTML_TAG_END --></div></div>
+    <div class="rights svelte-1isqcnz"><!-- HTML_TAG_START --><p>Uygulamalı Felsefe Derneği © 2024</p><!-- HTML_TAG_END --></div></footer></div> 
+
+      <script type="module">
+      import('/_symbols/f3808cd7-a077-4170-a16c-cec73c4b035f.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-36bd06c5'),
+              hydrate: true,
+              props: {"heading":"Bize ulaşın","subheading":"Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.","social":[],"inputs":[{"type":"Metin","label":"İsim","placeholder":""},{"type":"e-posta","label":"E-posta","placeholder":"isim@email.com"}],"submit_label":"Gönder"}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/48d0b7c8-cb51-4997-a118-c07fe3a25592.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-c3f3f192'),
+              hydrate: true,
+              props: {"content":{"html":"<p>Uygulamalı Felsefe Derneği © 2024</p>","markdown":"Uygulamalı Felsefe Derneği © 2024\n\n"},"menus":[{"links":[{"link":{"url":"/donate","label":"Bağış","active":false}}],"title":""}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees","label":"Linkedin","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}},{"icon":"mdi:twitter","link":{"url":"https://twitter.com/Ufelsefeder","label":"Twitter","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/b4fe99f3-c71a-498d-ada4-31680af358d3.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-54a9c4f2'),
+              hydrate: true,
+              props: {"":"","logo":{"image":{"alt":"Uygulamalı Felsefe Derneği","url":"https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png"},"title":""},"site_nav":[{"link":{"url":"","label":"Bilgi","active":false},"submenu":[{"link":{"url":"/about-us","label":"Hakkımızda","active":false}},{"link":{"url":"/articles-of-association","label":"Tüzük","active":false}},{"link":{"url":"/executive-board","label":"Yönetim Kurulu ve Üyelerimiz","active":false}},{"link":{"url":"/our-representations","label":"Temsilciliklerimiz","active":false}},{"link":{"url":"/contact","label":"İletişim","active":false}}]},{"link":{"url":"","label":"Blog","active":false},"submenu":[{"link":{"url":"/blog","label":"Tüm Yazılar","active":false}},{"link":{"url":"/blog/uygulamali-felsefe-nedir","label":"Uygulamalı Felsefe Nedir?","active":false}},{"link":{"url":"/kitap-nceleme","label":"Kitap İnceleme","active":false}}]},{"link":{"url":"/announcements","label":"Etkinlikler","active":false},"submenu":[{"link":{"url":"/speeches","label":"Konuşmalar","active":false}}]}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi","label":"Linkedin","active":false}},{"icon":"mdi:twitter","link":{"url":"https://x.com/Ufelsefeder","label":"X","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    </script>
+    </body>
+  </html>
+  

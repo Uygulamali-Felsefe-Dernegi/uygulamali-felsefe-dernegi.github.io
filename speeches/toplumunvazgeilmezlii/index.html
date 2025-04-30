@@ -1,0 +1,325 @@
+  <!DOCTYPE html>
+  <html lang="en">
+    <head>
+      <meta name="generator" content="Primo" />
+      <title>Uygulamalı Felsefe Derneği</title><!-- HEAD_svelte-1jqlmi7_START --><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta charset="UTF-8"><link rel="icon" type="image/png" sizes="32x32" href="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1722343412225UFD_favicon.svg"><link rel="preconnect" href="https://fonts.bunny.net"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet"><script async src="https://www.googletagmanager.com/gtag/js?id=G-Q9K3TS78QE"></script><script>window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-Q9K3TS78QE');
+</script><script type="module" src="https://www.unpkg.com/@daviddarnes/share-button@1.1.3/share-button.js"></script><meta name="description" content="Uygulamalı Felsefe Derneği, 2024 yılında Türkiye'de kurulmuş bir felsefe derneğidir."><style>/* Reset & standardize default styles */
+@import url("https://unpkg.com/@primo-app/primo@1.3.64/reset.css") layer;
+
+/* Design tokens (apply to components) */
+:root {
+  --color-primary: #9b8580;
+  --color-primary-light: #e9e2e2;
+  --color-accent: #6371a2;
+  --color-dark: #6c6e83;
+  --color-light: linear-gradient(to bottom, #76a6b5 0%, #ffffff 60%, #cccccc 85%, rgba(0, 0, 0, 0.5) 100%);
+  
+  /* Base values */
+  --box-shadow: 0px 4px 30px rgba(0, 0, 0, 0.2);
+  --border-radius: 0;
+  --border-color: #e0e1e1;
+  --transition: 0.1s ease-in-out;
+}
+
+html {
+  font-size: 14px;
+  background: var(--color-light);
+}
+
+@media (max-width: 600px) {
+  html {
+    font-size: 13px; /* Daha iyi uyum için */
+  }
+}
+
+@media (max-width: 440px) {
+  html {
+    font-size: 12px;
+  }
+}
+
+/* Root element (use instead of body) */
+#page {
+  font-family: 'Merriweather', serif;
+  color: #111;
+  line-height: 1.5;
+  font-size: 1.125rem;
+  background: var(--color-light);
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: auto;
+  padding: 1rem;
+}
+
+/* Elements */
+.section-container {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+a.link {
+  line-height: 1.3;
+  border-bottom: 2px solid var(--color-accent);
+  transform: translateY(-2px);
+  transition: border var(--transition);
+}
+
+a.link:hover {
+    border-color: transparent;
+  }
+
+.heading {
+  font-size: 2.5rem;
+  line-height: 1.15;
+}
+
+/* Buttons */
+.button {
+  color: white;
+  background: var(--color-dark);
+  border-radius: 8px;
+  padding: 9px 16px;
+  transition: box-shadow var(--transition);
+  border: 0;
+}
+/* reset */
+@media (max-width: 600px) {
+.button {
+    padding: 6px 12px /* Küçük ekranlarda düğme içeriğini ayarlamak için */
+}
+  }
+.button:hover {
+    box-shadow: 0 0 0 2px var(--color-accent);
+  }
+.button.inverted {
+    background: transparent;
+    color: var(--color-accent);
+    border: 2px solid var(--color-accent);
+  }
+
+/* Headings */
+h1 {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+h2 {
+  font-size: 2.5rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+h4 {
+  font-size: 1.2rem;
+  font-weight: 500;
+  margin-bottom: 1rem;
+}
+
+/* Content Section */
+.content {
+  max-width: 100%; /* Güncellendi: Tüm genişlikte kullanılabilir */
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+.content p {
+    margin-bottom: 1rem;
+    line-height: 1.5;
+    text-align: justify;
+  }
+.content img {
+    width: 100%;
+    margin: 2rem 0;
+    box-shadow: var(--box-shadow);
+    border-radius: var(--border-radius);
+  }
+.content a.link {
+    font-weight: 500;
+    border-bottom: 2px solid var(--color-accent);
+    transform: translateY(-2px);
+    transition: border var(--transition);
+  }
+.content a.link:hover {
+      border-color: transparent;
+    }
+.content h1 {
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+  }
+.content h2 {
+    font-size: 1.8rem;
+    font-weight: 600;
+    margin-bottom: 1rem;
+  }
+.content h3 {
+    font-size: 1.5rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content h4 {
+    font-size: 1.3rem;
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+.content ul {
+    list-style: disc;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content ol {
+    list-style: decimal;
+    padding: 0.5rem 0;
+    padding-left: 1.25rem;
+  }
+.content blockquote {
+    padding: 2rem;
+    margin: 1.5rem 0;
+    border-left: 5px solid var(--color-accent);
+  }
+
+/* Flex utility */
+.flex {
+  display: flex;
+  flex-wrap: wrap; /* Mobil uyumlu olması için */
+}
+</style><!-- HEAD_svelte-1jqlmi7_END -->
+      <style>header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;padding-block:2rem;padding:1rem;margin:1rem;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%);border-radius:8px;position:relative;box-shadow:0 4px 8px rgba(0, 0, 0, 0.5);z-index:10}@media(max-width: 800px){header.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{padding:0 1rem 1rem;margin:0.3rem
+}}.logo.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:2.25rem;font-weight:600;line-height:1.2;width:12rem}.logo.svelte-l8sb3e img.svelte-l8sb3e.svelte-l8sb3e{filter:drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.7))}.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none;align-items:center;justify-content:space-between;width:100%}.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e.svelte-l8sb3e{display:flex;gap:2rem}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e{border-color:transparent;transition:border-color 0.1s;font-size:0.95rem;font-weight:300}.desktop-nav.svelte-l8sb3e nav a.link.svelte-l8sb3e.svelte-l8sb3e:hover,.desktop-nav.svelte-l8sb3e nav.svelte-l8sb3e a.link .active.svelte-l8sb3e{border-color:initial}@media(min-width: 800px){.desktop-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex
+}}.subnav-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:relative}.subnav-container.svelte-l8sb3e button.svelte-l8sb3e.svelte-l8sb3e{white-space:nowrap;font-weight:600}.subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex !important;flex-direction:column;position:absolute;z-index:20;top:100%;background-color:#fff;padding:1em}.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;align-items:center;justify-content:space-between;width:100%;font-weight:500}@media(min-width: 800px){.mobile-nav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none
+}}.mobile-subnav-title.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{text-align:left;background-color:rgba(0, 0, 0, 0.1);padding:3px 10px}.mobile-subnav.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-direction:column;align-items:flex-start;gap:1em;margin-bottom:1em}.mobile-subnav.svelte-l8sb3e a.svelte-l8sb3e.svelte-l8sb3e{font-size:0.8em}#popup.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{font-size:1.25rem;display:grid;gap:1rem;position:absolute;text-align:center;background-color:var(--background-color, white);box-shadow:var(--box-shadow, 0px 4px 30px rgba(0, 0, 0, 0.1));border-radius:var(--border-radius);inset:0.5rem;bottom:initial;padding:2rem;z-index:1}#popup.svelte-l8sb3e button#close.svelte-l8sb3e.svelte-l8sb3e{position:absolute;right:1rem;top:1rem}.language-picker.svelte-l8sb3e select.svelte-l8sb3e.svelte-l8sb3e{background-color:transparent}.mobile-actions-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:flex-end;-moz-column-gap:0.5em;column-gap:0.5em;row-gap:0.5em}.lang-swither-mobile.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{vertical-align:top;padding:4px}.top-bar.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{width:100%}ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;justify-content:flex-end;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{gap:0.3rem
+}}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:center;border-radius:50%;transition:0.1s transform}ul.socials.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{transform:scale(1.1)}ul.socials.svelte-l8sb3e li.svelte-l8sb3e a.svelte-l8sb3e{font-size:1.5rem;padding:0.75rem}.search-container.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{margin-left:auto;background-color:#fff;display:flex;align-items:center;border-radius:8px;overflow:hidden;position:relative}.search-container.svelte-l8sb3e .search.svelte-l8sb3e.svelte-l8sb3e{padding:0.4rem 1rem}.hidden.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{display:none!important}.searchResults.svelte-l8sb3e.svelte-l8sb3e.svelte-l8sb3e{position:absolute;background-color:#fff;top:100%;left:0;width:100%}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e{cursor:pointer;padding:1rem}.searchResults.svelte-l8sb3e li.svelte-l8sb3e.svelte-l8sb3e:hover{background-color:#ddd}
+@media(min-width: 900px){}section.svelte-envz82.svelte-envz82{margin:1rem;display:flex;justify-content:var(--align);gap:1.5rem;flex-wrap:wrap;position:relative;overflow:hidden;border-radius:12px;box-shadow:1px 8px 15px rgba(0, 0, 0, 0.2);background:linear-gradient(to right, rgba(255, 255, 255, 0.9), rgba(235, 245, 255, 0.9), rgba(220, 230, 240, 0.9), rgba(255, 228, 196, 0.9))}section.svelte-envz82 .banner.svelte-envz82{z-index:auto;height:200px;width:100%;position:absolute}section.svelte-envz82 .banner img.svelte-envz82{position:absolute;-o-object-fit:cover;object-fit:cover;width:100%;height:100%;opacity:0.6}section.svelte-envz82 div.svelte-envz82{z-index:5}section.svelte-envz82 div a.svelte-envz82{margin:0.5em 0}section.svelte-envz82 .heading.svelte-envz82{line-height:1.1;margin-left:0}.content.svelte-envz82.svelte-envz82{padding:0;line-height:1.75}.button.alternate.svelte-envz82.svelte-envz82{display:block;flex:0 0 auto;font-weight:bold;white-space:nowrap;background-color:#6371a2;border-radius:8px;box-shadow:1px 1px 4px rgba(0, 0, 0, 0.2)}.container.svelte-envz82.svelte-envz82{padding:2rem}
+.section-container.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:2rem;transform:scale(0.9);border-radius:20px;box-shadow:0px 8px 20px;width:auto}@media(min-width: 800px){.section-container.svelte-cdvhfw.svelte-cdvhfw{grid-template-columns:3fr 2fr;gap:14rem
+}}.content.svelte-cdvhfw.svelte-cdvhfw{display:grid;place-content:flex-start;gap:1rem}.content.svelte-cdvhfw .body.svelte-cdvhfw{margin-bottom:.5rem}.content.svelte-cdvhfw .social-links.svelte-cdvhfw{display:grid;gap:0.75rem}.content.svelte-cdvhfw .social-links a.svelte-cdvhfw{display:flex;align-items:center;gap:0.75rem}.content.svelte-cdvhfw .social-links a .icon.svelte-cdvhfw{font-size:1.75rem;color:var(--color-accent, rebeccapurple);transition:var(--transition, 0.1s transform)}.content.svelte-cdvhfw .social-links a:hover .icon.svelte-cdvhfw{transform:scale(1.1)}form.svelte-cdvhfw.svelte-cdvhfw{display:grid;gap:1rem;padding:2rem;border:1px solid var(--border-color, #eee);border-radius:var(--border-radius)}form.svelte-cdvhfw label.svelte-cdvhfw{display:grid;gap:0.25rem}form.svelte-cdvhfw label span.svelte-cdvhfw{font-size:1rem;font-weight:500}form.svelte-cdvhfw label input.svelte-cdvhfw,form.svelte-cdvhfw label textarea.svelte-cdvhfw{font-size:1rem;padding:0.5rem;outline-color:transparent;transition:var(--transition, 0.1s outline-color);border:1.5px solid var(--border-color, #eee);border-radius:4px}form.svelte-cdvhfw label input.svelte-cdvhfw:focus,form.svelte-cdvhfw label textarea.svelte-cdvhfw:focus{outline-color:var(--color-accent, rebeccapurple)}form.svelte-cdvhfw .button.svelte-cdvhfw{margin-top:1rem}
+.share-container.svelte-1isqcnz.svelte-1isqcnz{width:100%;display:flex;justify-content:space-between}button.svelte-1isqcnz.svelte-1isqcnz{background-color:var(--color-dark)}footer.svelte-1isqcnz.svelte-1isqcnz{padding-top:2em;color:black;background:radial-gradient(circle at 10% 50%, rgba(85, 107, 47, 0.5) 0%, rgba(189, 183, 107, 0.5) 120%)}.section-container.svelte-1isqcnz.svelte-1isqcnz{display:flex;justify-content:space-between;gap:4rem}@media(max-width: 500px){.section-container.svelte-1isqcnz.svelte-1isqcnz{flex-wrap:wrap}}share-button.svelte-1isqcnz.svelte-1isqcnz{display:inline-block;margin-top:1rem;margin-right:1rem;margin-bottom:1rem}share-button.svelte-1isqcnz button.svelte-1isqcnz{align-items:center;gap:0.2rem;width:auto}.nav-items.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;gap:4rem}.nav-items.svelte-1isqcnz ul.svelte-1isqcnz{display:grid;gap:0.5rem}.nav-items.svelte-1isqcnz h3.svelte-1isqcnz{font-weight:500;font-size:1.5rem;margin-bottom:1rem}ul.socials.svelte-1isqcnz.svelte-1isqcnz{display:flex;flex-wrap:wrap;justify-content:flex-start;gap:0.2rem;justify-content:flex-start;padding-right:15px}@media(max-width: 800px){ul.socials.svelte-1isqcnz.svelte-1isqcnz{gap:0.3rem
+  }}ul.socials.svelte-1isqcnz li.svelte-1isqcnz{color:#000;font-size:1.5rem;display:flex;align-items:center;justify-content:flex-start;border-radius:50%;transition:0.1s transform}ul.socials.svelte-1isqcnz li.svelte-1isqcnz:hover{transform:scale(1.1)}ul.socials.svelte-1isqcnz li a.svelte-1isqcnz{font-size:1.5rem;padding:0 0.75rem 0 0}.mailjet_f{height:220px!important;margin:auto;flex:0 0 310px;width:310px}.rights.svelte-1isqcnz.svelte-1isqcnz{text-align:center;padding-bottom:1rem}</style>
+    </head>
+    <body id="page">
+       
+<div class="section" id="section-00eeac56"><header class=" svelte-l8sb3e"><div class="top-bar svelte-l8sb3e"><ul class="socials svelte-l8sb3e"><li class="svelte-l8sb3e"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi" aria-label="Linkedin" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://x.com/Ufelsefeder" aria-label="X" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-l8sb3e"></a>
+    </li><li class="svelte-l8sb3e"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-l8sb3e"></a>
+    </li></ul></div>
+  <div class="desktop-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <nav class="svelte-l8sb3e"><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Bilgi</button>
+                <a class="hidden link svelte-l8sb3e" href="">Bilgi</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Blog</button>
+                <a class="hidden link svelte-l8sb3e" href="">Blog</a>
+              </div><div class="subnav-container svelte-l8sb3e"><button type="button" class="svelte-l8sb3e">Etkinlikler</button>
+                <a class="hidden link svelte-l8sb3e" href="/announcements">Etkinlikler</a>
+              </div>
+        <div class="language-picker svelte-l8sb3e"><select class="svelte-l8sb3e"><option value="tr">TR </option><option value="en">EN </option><option value="it">IT </option></select></div></nav></div>
+  <div class="mobile-nav svelte-l8sb3e"><a href="/" class="logo svelte-l8sb3e"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png" alt="Uygulamalı Felsefe Derneği" class="svelte-l8sb3e"></a>
+    <div class="mobile-actions-container svelte-l8sb3e"><button id="open" aria-label="Open mobile navigation"></button>
+        <button class="lang-swither-mobile svelte-l8sb3e">EN</button></div>
+    </div>
+
+  <div class="flex search-container svelte-l8sb3e"><input class="search svelte-l8sb3e" type="text" placeholder="search" value="">
+    </div>
+    </header>
+
+ 
+          </div> 
+<div class="section" id="section-7ac31e43"><section style="--align: flex-end" class="svelte-envz82"><div class="banner svelte-envz82"><img src="https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1726483782061shutterstock_86973980.jpg" class="svelte-envz82"></div>
+    <div class="container svelte-envz82">
+      <div class="svelte-envz82"><a href="/contact" class="button alternate svelte-envz82">İletişim</a>
+        
+        <a href="/membership" class="button alternate svelte-envz82">Üyelik</a></div></div></section>
+  </div> 
+<div class="section" id="section-dac58ee3"><section class="event-content"><h2>Felsefe ve Toplumun Vazgeçilmezliği</h2>
+  
+  <p><strong>Etkinlik Tarihi ve Yeri:</strong> 9 Nisan, TESAK, Kadıköy</p>
+<br>
+  <p>Bu etkinlikte Arzu Temelli, Nietzsche&#39;nin tarih anlayışını, birey ve toplum arasındaki etkileşimi nasıl şekillendirdiğini belirterek, geçmişin yalnızca bilgi edinme aracı değil, yaşamı güçlendiren bir araç olarak ele alınması gerektiğini ifade etmektedir. Nedim Yıldız ise, Nietzsche’nin toplumsal yapıları dışlamadığını ve toplumu vazgeçilmez bir unsur olarak gördüğünü savunmakta, Hobbes’un toplumsal sözleşme anlayışına benzer bir bakış açısı geliştirmektedir. Bu, bireylerin toplumsal bağlamda sorumluluklarını nasıl üstlendiklerini ve özgürlüklerini nasıl tanımladıklarını tartışmaya açmaktadır.</p>
+  <br>
+  <p>Felsefi metinlerden yapılan alıntılar, toplumsal yapının nasıl şekillendiğini ve bireyin toplumla olan ilişkisini irdeleyerek, Nietzsche&#39;nin toplum ve birey arasındaki gerilimi nasıl ele aldığını göstermektedir. Etkinlik, tarihsel perspektifler ışığında modern toplumların yapısal sorunlarına ve bireysel özgürlüğün sınırlarına dair yeni düşünceler geliştirmeyi amaçlamaktadır.</p>
+
+  <p>Antigone&#39;nin trajedisinden bahsedilerek yasa, ahlak ve topluluk ilişkisi felsefi bir bakış açısıyla sorgulanmaktadır. Nietzsche ve Hobbes, toplumsal değerlerin yeniden değerlendirilmesi gerektiğini vurgulamakta, sosyal yapılar ile bireysel kimlik arasında bir denge kurmanın önemini dile getirmektedirler.</p>
+<br>
+  <p>Etkinlik, tarihsel bağlamın, değerler ve toplumla ilgili modern anlayışları nasıl şekillendirdiğini tartışarak, hukuk, ahlak ve topluluk arasındaki gerilimi incelemektedir. Nietzsche’nin görüşleri, toplumsal normlar ve özgürlük arasındaki dengeyi sorgularken, modern toplumda bu gerilimin nasıl sürdüğünü düşündürmektedir.</p>
+
+  <p>Aşağıdaki videoyu izleyerek etkinlikte yapılan bu tartışmaları daha yakından keşfedebilirsiniz:</p>
+<br>
+  <iframe width="100%" height="400" src="https://www.youtube.com/embed/LurdAzH_m60?si=5TzlbXwP4d41bYup" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></section></div> 
+<div class="section" id="section-7df15a73"><section class="section-container svelte-cdvhfw"><div class="content svelte-cdvhfw"><h2 class="heading">Bize ulaşın</h2>
+    <div class="body svelte-cdvhfw"><!-- HTML_TAG_START -->Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.<!-- HTML_TAG_END --></div>
+    <div class="social-links svelte-cdvhfw"></div></div>
+  <form action="https://formsubmit.co/fdbdc39dcd1afac86250b8ad15536ca5" method="POST" class="svelte-cdvhfw"><input type="hidden" name="_subject" value="New Contact Form Submission" class="svelte-cdvhfw">
+    <input type="hidden" name="_next" value="https://uygulamalifelsefedernegi.org/success" class="svelte-cdvhfw">
+    <label class="svelte-cdvhfw"><span class="svelte-cdvhfw">İsim</span>
+          <input name="İsim" type="Metin" placeholder="" class="svelte-cdvhfw">
+        </label><label class="svelte-cdvhfw"><span class="svelte-cdvhfw">E-posta</span>
+          <input name="E-posta" type="e-posta" placeholder="isim@email.com" class="svelte-cdvhfw">
+        </label>
+    <button class="button svelte-cdvhfw" type="submit">Gönder</button></form></section></div> 
+<div class="section" id="section-91d9ed23"><footer class="svelte-1isqcnz"><div class="share-container svelte-1isqcnz"></div>
+  <div class="section-container svelte-1isqcnz"><div class="nav-items svelte-1isqcnz"><nav><h3 class="svelte-1isqcnz"></h3>
+           <ul class="socials svelte-1isqcnz"><li class="svelte-1isqcnz"><a href="https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees" aria-label="Linkedin" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.youtube.com/@UygulamaliFelsefeDernegi" aria-label="Youtube" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://twitter.com/Ufelsefeder" aria-label="Twitter" class="svelte-1isqcnz"></a>
+                </li><li class="svelte-1isqcnz"><a href="https://www.instagram.com/ufelsefeder/" aria-label="Instagram" class="svelte-1isqcnz"></a>
+                </li></ul>
+             
+              <share-button class="svelte-1isqcnz"><button class="flex button svelte-1isqcnz" href="#ddd">Paylaş </button></share-button>
+            
+            <a class="button" href="/donate">Bağış</a>
+        </nav></div>
+    <div class="iframe-container"><!-- HTML_TAG_START --><iframe class="mailjet_f" data-w-type="embedded" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://szwnp.mjt.lu/wgt/szwnp/x5hr/form?c=8870c5ff" width="100%" style="height: 0;"></iframe><!-- HTML_TAG_END --></div></div>
+    <div class="rights svelte-1isqcnz"><!-- HTML_TAG_START --><p>Uygulamalı Felsefe Derneği © 2024</p><!-- HTML_TAG_END --></div></footer></div> 
+
+      <script type="module">
+      import('/_symbols/f3808cd7-a077-4170-a16c-cec73c4b035f.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-7df15a73'),
+              hydrate: true,
+              props: {"heading":"Bize ulaşın","subheading":"Sorularınız, geri bildirimleriniz ve proje önerileriniz için  sizden haber almaya her zaman hazırız. Lütfen iletişim formunu doldurun ve en fazla 48 saat içinde yanıt vermek için elimizden geleni yapacağız.","social":[],"inputs":[{"type":"Metin","label":"İsim","placeholder":""},{"type":"e-posta","label":"E-posta","placeholder":"isim@email.com"}],"submit_label":"Gönder"}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/48d0b7c8-cb51-4997-a118-c07fe3a25592.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-91d9ed23'),
+              hydrate: true,
+              props: {"content":{"html":"<p>Uygulamalı Felsefe Derneği © 2024</p>","markdown":"Uygulamalı Felsefe Derneği © 2024\n\n"},"menus":[{"links":[{"link":{"url":"/donate","label":"Bağış","active":false}}],"title":""}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi?trk=org-employees","label":"Linkedin","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}},{"icon":"mdi:twitter","link":{"url":"https://twitter.com/Ufelsefeder","label":"Twitter","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    
+
+      import('/_symbols/b4fe99f3-c71a-498d-ada4-31680af358d3.js')
+      .then(({default:App}) => {
+        
+            new App({
+              target: document.querySelector('#section-00eeac56'),
+              hydrate: true,
+              props: {"":"","logo":{"image":{"alt":"Uygulamalı Felsefe Derneği","url":"https://vkicwhqjbrcbwhfzomjp.supabase.co/storage/v1/object/public/images/b274fd34-60fe-4f3f-bdfb-58926ab8f35f/1725395182330UFD_LOGO_TR.png"},"title":""},"site_nav":[{"link":{"url":"","label":"Bilgi","active":false},"submenu":[{"link":{"url":"/about-us","label":"Hakkımızda","active":false}},{"link":{"url":"/articles-of-association","label":"Tüzük","active":false}},{"link":{"url":"/executive-board","label":"Yönetim Kurulu ve Üyelerimiz","active":false}},{"link":{"url":"/our-representations","label":"Temsilciliklerimiz","active":false}},{"link":{"url":"/contact","label":"İletişim","active":false}}]},{"link":{"url":"","label":"Blog","active":false},"submenu":[{"link":{"url":"/blog","label":"Tüm Yazılar","active":false}},{"link":{"url":"/blog/uygulamali-felsefe-nedir","label":"Uygulamalı Felsefe Nedir?","active":false}},{"link":{"url":"/kitap-nceleme","label":"Kitap İnceleme","active":false}}]},{"link":{"url":"/announcements","label":"Etkinlikler","active":false},"submenu":[{"link":{"url":"/speeches","label":"Konuşmalar","active":false}}]}],"social":[{"icon":"mdi:linkedin","link":{"url":"https://tr.linkedin.com/in/uygulamalifelsefedernegi","label":"Linkedin","active":false}},{"icon":"mdi:twitter","link":{"url":"https://x.com/Ufelsefeder","label":"X","active":false}},{"icon":"mdi:instagram","link":{"url":"https://www.instagram.com/ufelsefeder/","label":"Instagram","active":false}},{"icon":"mdi:youtube","link":{"url":"https://www.youtube.com/@UygulamaliFelsefeDernegi","label":"Youtube","active":false}}]}
+            })
+          
+      })
+      .catch(e => console.error(e))
+    </script>
+    </body>
+  </html>
+  
