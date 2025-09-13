@@ -1,0 +1,37 @@
+name: Deploy to Live Branch
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    
+    - name: Make script executable
+      run: chmod +x invalidate-cache.sh
+      
+    - name: Run cache invalidation script
+      run: ./invalidate-cache.sh
+      env:
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+    
+    - name: Push to live branch
+      run: |
+        git config --global user.name 'GitHub Actions'
+        git config --global user.email 'actions@github.com'
+        # Ensure we're on main and up to date
+        git checkout main
+        git pull origin main
+        # Create or reset live branch to match main
+        git checkout -B live
+        # Push to live branch
+        git push -f origin live
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
